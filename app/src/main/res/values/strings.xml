@@ -3,5 +3,8 @@
     <string name="shr_button">Hello World</string>
     <string name="text_menu_item_1">fridge</string>
     <string name="text_menu_item_2">search</string>
-    <string name="text_menu_item_3">favorites</string>
+    <string name="text_menu_item_3">bookmarks</string>
+    <string name="hello_fridge_fragment">Hello FRIDGE fragment</string>
+    <string name="hello_search_fragment">Hello SEARCH fragment</string>
+    <string name="hello_bookmark_fragment">Hello BOOKMARK fragment</string>
 </resources>
