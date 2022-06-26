@@ -1,12 +1,17 @@
 package com.example.leftlovers;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-/*import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;*/
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-// import android.util.Log;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,9 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        showPage(new SearchFragment());*/
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        NavigationUI.setupWithNavController(bottomNav, navController);
+
+        
+
+
 
 /*        binding.bottomNavigation.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.page_fridge) {
