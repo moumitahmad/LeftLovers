@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+apply plugin: 'androidx.navigation.safeargs'
+
 android {
     compileSdk 32
 
@@ -21,11 +23,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs += 'build/generated/source/navigation-args/'
+            }
+        }
+    }
 }
+
 
 dependencies {
     api 'com.google.android.material:material:1.6.1'
@@ -41,6 +53,5 @@ dependencies {
     def nav_version = "2.4.2"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.leftlovers;
+package com.example.leftlovers.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -7,6 +7,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
+import com.example.leftlovers.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_kitchen_24"
         android:title="@string/text_menu_item_1"/>
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/recipeDetailFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/text_menu_item_2"/>
