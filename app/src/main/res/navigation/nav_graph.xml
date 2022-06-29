@@ -27,5 +27,9 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.leftlovers.view.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail" />
+        tools:layout="@layout/fragment_recipe_detail" >
+        <argument
+            android:name="choosenRecipe"
+            app:argType="com.example.leftlovers.model.Recipe" />
+    </fragment>
 </navigation>
