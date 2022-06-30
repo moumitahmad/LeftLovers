@@ -1,6 +1,5 @@
 package com.example.leftlovers.view;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.service.ReceipeDataService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class RecipeDetailFragment extends Fragment {
     private boolean isBookmarked = false;
     private Recipe choosenRecipe;
     private Handler imageHandler = new Handler();
+    ReceipeDataService rDS;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -38,7 +40,9 @@ public class RecipeDetailFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        rDS = new ReceipeDataService(getActivity());
     }
 
     @Override
@@ -48,13 +52,31 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // get choosen recipe
-        choosenRecipe = getArguments().getParcelable("recipe");
-        TextView nameText = view.findViewById(R.id.recipe_name);
-        nameText.setText(choosenRecipe.getName());
+        //choosenRecipe = getArguments().getParcelable("recipe");
+        rDS.getList("Tomato", new ReceipeDataService.VolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getActivity(), "STH went wrong", Toast.LENGTH_SHORT).show();
+                choosenRecipe = getArguments().getParcelable("recipe");
+            }
 
-        // load image from url
-        Log.i("fetching image from: ", choosenRecipe.getImgUrl());
-        new FetchRecipeImg(choosenRecipe.getImgUrl()).start();
+            @Override
+            public void onResponse(Recipe recipeName) {
+              //  Toast.makeText(getActivity(), "Returned URL" + recipeURL, Toast.LENGTH_SHORT).show();
+                //choosenRecipe = new Recipe(recipeName, " ", null, " ", "www.google.com");
+                choosenRecipe = recipeName;
+                TextView nameText = view.findViewById(R.id.recipe_name);
+                nameText.setText(choosenRecipe.getName());
+
+                // load image from url
+                Log.i("fetching image from: ", choosenRecipe.getImgUrl());
+                new FetchRecipeImg(choosenRecipe.getImgUrl()).start();
+            }
+        });
+
+
+
+
 
         // setup bookmark function
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
