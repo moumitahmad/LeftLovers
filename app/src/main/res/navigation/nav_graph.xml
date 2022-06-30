@@ -6,7 +6,7 @@
     app:startDestination="@id/searchFragment">
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.leftlovers.view.SearchFragment"
+        android:name="com.example.leftlovers.view.searchPage.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_bookmark" />
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.example.leftlovers.view.RecipeDetailFragment"
+        android:name="com.example.leftlovers.view.searchPage.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument

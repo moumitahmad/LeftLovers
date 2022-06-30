@@ -1,26 +1,24 @@
-package com.example.leftlovers.view;
+package com.example.leftlovers.view.searchPage;
 
-import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 
 /**
@@ -30,7 +28,6 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe choosenRecipe;
-    private Handler imageHandler = new Handler();
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -48,13 +45,25 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // get choosen recipe
-        choosenRecipe = getArguments().getParcelable("recipe");
+        Recipe choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
         TextView nameText = view.findViewById(R.id.recipe_name);
         nameText.setText(choosenRecipe.getName());
 
         // load image from url
         Log.i("fetching image from: ", choosenRecipe.getImgUrl());
-        new FetchRecipeImg(choosenRecipe.getImgUrl()).start();
+        new FetchImg(choosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
+
+        // setup ingredients grid
+        GridLayout ingredientGrid = view.findViewById(R.id.ingredients_grid);
+        ingredientGrid.setColumnCount(choosenRecipe.getIngredients().size()); // TODO: responsive
+
+        for (Ingredient ingredient : choosenRecipe.getIngredients()) {
+            Log.i("ingredient:", ingredient.getName());
+            // TODO: not working
+            /* IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
+            View ingView = ingFrag.getView();
+            ingredientGrid.addView(ingView); */
+        }
 
         // setup bookmark function
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
@@ -75,34 +84,5 @@ public class RecipeDetailFragment extends Fragment {
         });
 
         return view;
-    }
-
-    class FetchRecipeImg extends Thread {
-        String url;
-        Bitmap bitmap;
-
-        FetchRecipeImg(String url) {
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            InputStream inputStream = null;
-            try {
-                inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
-            } catch (IOException e) {
-                Log.e("fetching image-url: ", e.getMessage());
-            }
-
-            imageHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i("fetching image-url: ", "LOADED");
-                    ImageView iv = getView().findViewById(R.id.recipe_image);
-                    iv.setImageBitmap(bitmap);
-                }
-            });
-        }
     }
 }

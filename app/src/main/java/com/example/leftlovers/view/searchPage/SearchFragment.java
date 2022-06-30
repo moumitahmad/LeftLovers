@@ -1,11 +1,13 @@
-package com.example.leftlovers.view;
+package com.example.leftlovers.view.searchPage;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,11 +60,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: save args
-                // NavDirections action = RecipeDetailFragmentDirection
-                // NavDirections action = RecipeDetailFragment.actionSearchFragmentToRecipeDetailFragment();
-                Bundle bundle = new Bundle();
+                NavDirections action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(testRecipe);
+                Navigation.findNavController(view).navigate(action);
+                /*Bundle bundle = new Bundle();
                 bundle.putParcelable("recipe", testRecipe);
-                Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle);
+                Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle);*/
             }
         });
 
