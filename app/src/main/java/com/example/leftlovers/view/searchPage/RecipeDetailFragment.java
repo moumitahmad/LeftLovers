@@ -1,12 +1,10 @@
-package com.example.leftlovers.view;
+package com.example.leftlovers.view.searchPage;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +12,11 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.util.FetchImg;
-import com.example.leftlovers.service.ReceipeDataService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -32,8 +28,6 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe choosenRecipe;
-    private Handler imageHandler = new Handler();
-    ReceipeDataService rDS;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -42,7 +36,6 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rDS = new ReceipeDataService(getActivity());
     }
 
     @Override
@@ -52,24 +45,9 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // get choosen recipe
-        // Recipe choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
+        Recipe choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
         TextView nameText = view.findViewById(R.id.recipe_name);
         nameText.setText(choosenRecipe.getName());
-        //choosenRecipe = getArguments().getParcelable("recipe");
-        rDS.getList("Tomato", new ReceipeDataService.VolleyResponseListener() {
-            @Override
-            public void onError(String message) {
-                Toast.makeText(getActivity(), "STH went wrong", Toast.LENGTH_SHORT).show();
-                choosenRecipe = getArguments().getParcelable("recipe");
-            }
-
-            @Override
-            public void onResponse(Recipe recipeName) {
-              //  Toast.makeText(getActivity(), "Returned URL" + recipeURL, Toast.LENGTH_SHORT).show();
-                //choosenRecipe = new Recipe(recipeName, " ", null, " ", "www.google.com");
-                choosenRecipe = recipeName;
-                TextView nameText = view.findViewById(R.id.recipe_name);
-                nameText.setText(choosenRecipe.getName());
 
         // load image from url
         Log.i("fetching image from: ", choosenRecipe.getImgUrl());
