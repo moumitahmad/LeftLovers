@@ -19,23 +19,10 @@ public class ReceipeDataService {
         apiConnection = new ApiConnection(context);
     }
 
-    // Get Single Recipe
-    public Recipe getRecipe() {
-        apiConnection.getList("Tomato", new ApiConnection.VolleyResponseListener() {
-            @Override
-            public void onError(String message) {
-                Log.d("Error", "Sth went wrong");
-            }
 
-            @Override
-            public void onResponse(Recipe recipeName) {
-                //  Toast.makeText(getActivity(), "Returned URL" + recipeURL, Toast.LENGTH_SHORT).show();
-                //choosenRecipe = new Recipe(recipeName, " ", null, " ", "www.google.com");
-                choosenRecipe = recipeName;
-                Log.d("Rezept übergeben ", choosenRecipe.getName());
-            }
-        });
-        return choosenRecipe;
+    // Get Single Recipe
+    public void getRecipe(String searchtext, ApiConnection.VolleyResponseListener volleyResponseListener) {
+        apiConnection.getRecipe("Tomato", volleyResponseListener);
     }
 
     //Get Ingridient

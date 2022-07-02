@@ -2,6 +2,7 @@ package com.example.leftlovers.database;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,8 +24,8 @@ public class ApiConnection {
     public static final String QUERY_VERIFICATION = "&app_id=23b2fea2&app_key=c922aee8d3ac99a52aad47208d2b476e";
 
     Context context;
-    String nameRecipe;
-    String urlImgRecipe;
+ //   String nameRecipe;
+//    String urlImgRecipe;
 
     public ApiConnection(Context context) {
         this.context = context;
@@ -34,105 +35,46 @@ public class ApiConnection {
         void onError(String message);
 
         void onResponse(Recipe recipeURL);
-
-     //   void onResponse2(String recipeURL);
     }
 
 
-    public  void getURL(String searchText, VolleyResponseListener volleyResponseListener) {
-        // Instantiate the RequestQueue.
-        //   RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION;
 
-        // Request a string response from the provided URL.
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                JSONObject obj = response;
-                nameRecipe = "";
-                String nameRecipe1 = "";
-                String nameRecipe2 = "";
-                try {
-                    JSONArray arrRecipes = obj.getJSONArray("hits");
-                    JSONObject obj1 = arrRecipes.getJSONObject(0);
-                    JSONObject obj2 = obj1.getJSONObject("recipe");
-                    nameRecipe = obj2.getString("label");
-                    // nameRecipe1 = obj2.getString("image");
-                    // nameRecipe2 = obj2.getString("url");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
-                // Toast.makeText(context, nameRecipe1, Toast.LENGTH_SHORT).show();
-                // Toast.makeText(context, nameRecipe2, Toast.LENGTH_SHORT).show();
-
-             //   volleyResponseListener.onResponse2(nameRecipe);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //   Toast.makeText(context, "EEEror", Toast.LENGTH_SHORT).show();
-                volleyResponseListener.onError("sth went wrong");
-            }
-        });
-
-        DataSingleton.getInstance(context).addToRequestQueue(request);
-
-    }
-
-    public void getList(String searchText, VolleyResponseListener volleyResponseListener) {
-        List<String> ingridientsList = new ArrayList<>();
+    public void getRecipe(String searchText, VolleyResponseListener volleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                JSONObject obj = response;
-/*
-                for (:
-                     ) {
+                JSONObject wholeResponse = response;
 
-                }*/
-                nameRecipe = "";
-                urlImgRecipe = "";
-                Recipe test = new Recipe(searchText);
+                String nameRecipe;
+                String urlImgRecipe;
+                Recipe recipe = new Recipe(searchText);
+
                 try {
-                    JSONArray arrRecipes = obj.getJSONArray("hits");
-                    JSONObject obj1 = arrRecipes.getJSONObject(0);
-                    JSONObject obj2 = obj1.getJSONObject("recipe");
-                    nameRecipe = obj2.getString("label");
-                    urlImgRecipe = obj2.getString("image");
-                    test.setName(nameRecipe);
-                    test.setImgUrl(urlImgRecipe);
-
-                 //   ingridientsList
-
-                  //  this.ingredients = ingredients;
-                   // this.description = description;
-                   // this.link = link;
+                    JSONArray allRecipes = wholeResponse.getJSONArray("hits");
+                    JSONObject firstCell = allRecipes.getJSONObject(0);   // später probieren .getJSONObject("recipe");
+                    JSONObject firstRecipe = firstCell.getJSONObject("recipe");
+                    nameRecipe = firstRecipe.getString("label");
+                    urlImgRecipe = firstRecipe.getString("image");
+                    recipe.setName(nameRecipe);
+                    recipe.setImgUrl(urlImgRecipe);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                // Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
-                // Toast.makeText(context, nameRecipe1, Toast.LENGTH_SHORT).show();
-                // Toast.makeText(context, nameRecipe2, Toast.LENGTH_SHORT).show();
-
-                volleyResponseListener.onResponse(test);
+                volleyResponseListener.onResponse(recipe);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //   Toast.makeText(context, "EEEror", Toast.LENGTH_SHORT).show();
+                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
                 volleyResponseListener.onError("sth went wrong");
             }
         });
-
         DataSingleton.getInstance(context).addToRequestQueue(request);
-
     }
+
+
 }
 

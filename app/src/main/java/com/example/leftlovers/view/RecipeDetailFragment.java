@@ -55,16 +55,24 @@ public class RecipeDetailFragment extends Fragment {
         // get choosen recipe
         //choosenRecipe = getArguments().getParcelable("recipe");
 
-        choosenRecipe = receipeDataService.getRecipe();
+        receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Log.d("Error", "Sth went wrong in RecipeDetailFragment");
+            }
 
-        if (choosenRecipe != null) {
-            TextView nameText = view.findViewById(R.id.recipe_name);
-            nameText.setText(choosenRecipe.getName());
+            @Override
+            public void onResponse(Recipe recipe) {
+                choosenRecipe = recipe;
+                TextView nameText = view.findViewById(R.id.recipe_name);
+                nameText.setText(choosenRecipe.getName());
 
-            // load image from url
-            Log.i("fetching image from: ", choosenRecipe.getImgUrl());
-            new FetchRecipeImg(choosenRecipe.getImgUrl()).start();
-        }
+                // load image from url
+                Log.i("fetching image from: ", choosenRecipe.getImgUrl());
+                new FetchRecipeImg(choosenRecipe.getImgUrl()).start();
+            }
+        });
+
 
         /*****************************************/
 
