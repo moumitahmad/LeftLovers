@@ -3,10 +3,12 @@ package com.example.leftlovers.database;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.leftlovers.database.DataSingleton;
 import com.example.leftlovers.model.Recipe;
@@ -31,6 +33,8 @@ public class ApiConnection {
         this.context = context;
     }
 
+
+
     public interface VolleyResponseListener {
         void onError(String message);
 
@@ -53,8 +57,7 @@ public class ApiConnection {
 
                 try {
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
-                    JSONObject firstCell = allRecipes.getJSONObject(0);   // später probieren .getJSONObject("recipe");
-                    JSONObject firstRecipe = firstCell.getJSONObject("recipe");
+                    JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");   // später probieren .getJSONObject("recipe");
                     nameRecipe = firstRecipe.getString("label");
                     urlImgRecipe = firstRecipe.getString("image");
                     recipe.setName(nameRecipe);
@@ -72,6 +75,47 @@ public class ApiConnection {
                 volleyResponseListener.onError("sth went wrong");
             }
         });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void getIngredient(String searchText, VolleyResponseListener volleyResponseListener) {
+    }
+
+
+    public void getRecipeByIdentifier(String recipeUrl, VolleyResponseListener volleyResponseListener) {
+        String url = QUERY_SEARCH_BY_URL + recipeUrl + QUERY_VERIFICATION;
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONArray wholeResponse = response;
+
+                String nameRecipe;
+                String urlImgRecipe;
+                Recipe recipe = new Recipe(recipeUrl);
+
+                try {
+                    JSONObject recipeJson = wholeResponse.getJSONObject(0);
+
+                    nameRecipe = recipeJson.getString("label");
+                    urlImgRecipe = recipeJson.getString("image");
+                    recipe.setName(nameRecipe);
+                    recipe.setImgUrl(urlImgRecipe);
+                    Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                volleyResponseListener.onResponse(recipe);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
+                volleyResponseListener.onError("sth went wrong");
+            }
+        });
+
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
