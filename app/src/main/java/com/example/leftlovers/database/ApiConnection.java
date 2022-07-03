@@ -34,7 +34,6 @@ public class ApiConnection {
     }
 
 
-
     public interface VolleyResponseListener {
         void onError(String message);
 
@@ -79,6 +78,10 @@ public class ApiConnection {
     }
 
     public void getIngredient(String searchText, VolleyResponseListener volleyResponseListener) {
+    }
+
+    public void getList(String tomato, VolleyResponseListener volleyResponseListener) {
+        
     }
 
 
