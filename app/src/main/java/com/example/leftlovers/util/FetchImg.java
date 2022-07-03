@@ -37,7 +37,7 @@ public class FetchImg extends Thread {
         imageHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.i("fetching image-url: ", "LOADED");
+                Log.i("fetching image-url: ", url);
                 img.setImageBitmap(bitmap);
             }
         });

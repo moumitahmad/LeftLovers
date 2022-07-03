@@ -47,8 +47,8 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         // TODO: change to infos from api
-        Ingredient i1 = new Ingredient("Tomatos", "");
-        Ingredient i2 = new Ingredient("Beef", "");
+        Ingredient i1 = new Ingredient("Tomatos", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
+        Ingredient i2 = new Ingredient("Beef", "https://www.gourmetfleisch.de/shop/images/products/main/thumb/14254.jpg");
         List myIngredients = new ArrayList();
         myIngredients.add(i1);
         myIngredients.add(i2);
@@ -62,9 +62,6 @@ public class SearchFragment extends Fragment {
                 // TODO: save args
                 NavDirections action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(testRecipe);
                 Navigation.findNavController(view).navigate(action);
-                /*Bundle bundle = new Bundle();
-                bundle.putParcelable("recipe", testRecipe);
-                Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle);*/
             }
         });
 

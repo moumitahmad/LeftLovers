@@ -38,16 +38,18 @@
                     android:paddingBottom="10dp"/>
 
                 <TextView
-                    style="@style/TextAppearance.Material3.HeadlineMedium"
+                    style="@style/TextAppearance.Material3.HeadlineSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ingredients needed"
+                    android:text="@string/ingredient_title"
                     android:paddingBottom="10dp"/>
 
                 <GridLayout
                     android:id="@+id/ingredients_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-10dp"
+                    android:paddingBottom="20dp" />
 
                 <TextView
                     style="@style/TextAppearance.Material3.BodyLarge"
