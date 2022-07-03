@@ -1,14 +1,21 @@
 package com.example.leftlovers.service;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import com.example.leftlovers.database.ApiConnection;
-import com.example.leftlovers.model.Recipe;
+
+import java.io.UnsupportedEncodingException;
+import  java.lang.Object;
+import java.net.URLEncoder;
 
 public class ReceipeDataService {
 
     ApiConnection apiConnection;
+    Context context;
 
     public ReceipeDataService(Context context) {
+        this.context = context;
         apiConnection = new ApiConnection(context);
     }
 
@@ -34,15 +41,17 @@ public class ReceipeDataService {
     //Get Recipe List
 
     public void getList(String searchtext, ApiConnection.VolleyResponseListener volleyResponseListener) {
-        apiConnection.getRecipe("Tomato", volleyResponseListener);
+        apiConnection.getList("Tomato", volleyResponseListener);
     }
 
     //Get Recipe by Identifier (URL)
-    // Hier wird ein Encoder für urls benoetigt
 
-    public void getUrl(String recipeUrl, ApiConnection.VolleyResponseListener volleyResponseListener) {
-        // URL ENCODER !!!
-        recipeUrl = "http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_1b6dfeaf0988f96b187c7c9bb69a14fa&app_id=23b2fea2";
+    public void getUrl(String recipeUrl, ApiConnection.VolleyResponseListener volleyResponseListener) throws UnsupportedEncodingException {
+        // URL needs to be encoded to send it to Api
+        // Url zum Debugen :
+        //  recipeUrl = "http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_1b6dfeaf0988f96b187c7c9bb69a14fa&app_id=23b2fea2";
+
+        String url = URLEncoder.encode(recipeUrl, "UTF-8");
         apiConnection.getRecipeByIdentifier(recipeUrl, volleyResponseListener);
     }
 }
