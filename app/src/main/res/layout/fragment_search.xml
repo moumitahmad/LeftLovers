@@ -11,15 +11,27 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
         android:text="@string/search_title"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.06"
-        android:paddingLeft="25dp"
-        android:textSize="20dp"
-        />
+        tools:layout_editor_absoluteY="41dp" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="411dp"
+        android:layout_height="288dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.072"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </HorizontalScrollView>
 
     <SearchView
         android:id="@+id/searchView"
@@ -27,21 +39,10 @@
         android:layout_height="52dp"
         android:background="@color/primary_main"
         android:paddingLeft="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.015"></SearchView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/primary_main"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,16 +51,18 @@
             android:layout_margin="20dp"
             android:text="@string/hello_search_fragment"
             android:textSize="26sp" />
+    </SearchView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/recipePlaceholder1"
-            style="@style/MaterialAlertDialog.Material3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="spaghetti bolognese" />
-
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recipePlaceholder1"
+        style="@style/MaterialAlertDialog.Material3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="spaghetti bolognese"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        tools:layout_editor_absoluteX="126dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
