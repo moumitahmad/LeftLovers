@@ -10,7 +10,6 @@
     <string name="hello_bookmark_fragment">Hello BOOKMARK fragment</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="ingredient_title">Ingredients needed:</string>
+    <string name="search_title">Search \nfor your meal</string>
     <string name="recipe_text">This is a recipe for spaghetti bolognese. Need to be loaded from the API./nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
