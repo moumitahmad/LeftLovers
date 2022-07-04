@@ -30,9 +30,8 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
 
-    private ReceipeDataService receipeDataService;
-    private String IMAGE_EXAMPLE = "https://www.vegini.at/wp-content/uploads/2017/10/Rezeptbild-Spaghetti.jpg";
-    private String RECIPE_LINK = "https://www.gutekueche.at/spaggetti-bolognese-rezept-22388";
+    // private String IMAGE_EXAMPLE = "https://www.vegini.at/wp-content/uploads/2017/10/Rezeptbild-Spaghetti.jpg";
+    // private String RECIPE_LINK = "https://www.gutekueche.at/spaggetti-bolognese-rezept-22388";
 
     public SearchFragment() {
         // Required empty public constructor
@@ -41,7 +40,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receipeDataService = new ReceipeDataService(getActivity());
     }
 
     @Override
@@ -57,22 +55,13 @@ public class SearchFragment extends Fragment {
         myIngredients.add(i2);
         Recipe testRecipe = new Recipe("Spaghetti Bolonese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
 
-        receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
-            @Override
-            public void onError(String message) {
-                Log.d("Api Connection Error", message);
-            }
 
+        Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
+        recipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Recipe recipe) {
-                Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
-                recipeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(recipe);
-                        Navigation.findNavController(view).navigate(action);
-                    }
-                });
+            public void onClick(View view) {
+                NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragmentToSearchResultFragment("tomato");
+                Navigation.findNavController(view).navigate(action);
             }
         });
 
