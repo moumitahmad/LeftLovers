@@ -55,6 +55,34 @@ public class Recipe implements Parcelable {
         isBookmarked = bookmarked;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeModel{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+
     /*
      * Implementation of Parcelable interface
      */
@@ -83,30 +111,4 @@ public class Recipe implements Parcelable {
         public Recipe[] newArray(int size) { return new Recipe[size]; }
     };
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    @Override
-    public String toString() {
-        return "RecipeModel{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 }
