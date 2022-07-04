@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.database.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +32,7 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe choosenRecipe;
+    ReceipeDataService receipeDataService;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -48,25 +51,36 @@ public class RecipeDetailFragment extends Fragment {
 
         // setup UI
         // get choosen recipe
-        choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
-        TextView nameText = view.findViewById(R.id.recipe_name);
-        nameText.setText(choosenRecipe.getName());
-
-        // load image from url
-        new FetchImg(choosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
-
-        // setup ingredients grid
-        //TODO: make grid responsive
-
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        if(fm.findFragmentById(R.id.ingredients_grid) == null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            for (Ingredient ingredient : choosenRecipe.getIngredients()) {
-                IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
-                ft.add(R.id.ingredients_grid, ingFrag);
+        // choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
+        receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Log.d("Error", "Sth went wrong in RecipeDetailFragment");
             }
-            ft.commit();
-        }
+
+            @Override
+            public void onResponse(Recipe recipe) {
+                choosenRecipe = recipe;
+                TextView nameText = view.findViewById(R.id.recipe_name);
+                nameText.setText(choosenRecipe.getName());
+
+                // load image from url
+                new FetchImg(choosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
+
+                // setup ingredients grid
+                //TODO: make grid responsive
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                if(fm.findFragmentById(R.id.ingredients_grid) == null) {
+                    FragmentTransaction ft = fm.beginTransaction();
+                    for (Ingredient ingredient : choosenRecipe.getIngredients()) {
+                        IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
+                        ft.add(R.id.ingredients_grid, ingFrag);
+                    }
+                    ft.commit();
+                }
+            }
+        });
 
 
         // setup interactions

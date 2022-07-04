@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.database.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.service.ReceipeDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
 
+    private ReceipeDataService receipeDataService;
     private String IMAGE_EXAMPLE = "https://www.vegini.at/wp-content/uploads/2017/10/Rezeptbild-Spaghetti.jpg";
     private String RECIPE_LINK = "https://www.gutekueche.at/spaggetti-bolognese-rezept-22388";
 
@@ -46,22 +49,29 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        // TODO: change to infos from api
-        Ingredient i1 = new Ingredient("Tomatos", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
+        /*Ingredient i1 = new Ingredient("Tomatos", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
         Ingredient i2 = new Ingredient("Beef", "https://www.gourmetfleisch.de/shop/images/products/main/thumb/14254.jpg");
         List myIngredients = new ArrayList();
         myIngredients.add(i1);
         myIngredients.add(i2);
-        Recipe testRecipe = new Recipe("Spaghetti Bolonese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);
+        Recipe testRecipe = new Recipe("Spaghetti Bolonese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
 
-
-        Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
-        recipeButton.setOnClickListener(new View.OnClickListener() {
+        receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
             @Override
-            public void onClick(View view) {
-                // TODO: save args
-                NavDirections action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(testRecipe);
-                Navigation.findNavController(view).navigate(action);
+            public void onError(String message) {
+                Log.d("Api Connection Error", message);
+            }
+
+            @Override
+            public void onResponse(Recipe recipe) {
+                Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
+                recipeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(recipe);
+                        Navigation.findNavController(view).navigate(action);
+                    }
+                });
             }
         });
 
