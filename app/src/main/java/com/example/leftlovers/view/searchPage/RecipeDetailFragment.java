@@ -51,36 +51,25 @@ public class RecipeDetailFragment extends Fragment {
 
         // setup UI
         // get choosen recipe
-        // choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
-        receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
-            @Override
-            public void onError(String message) {
-                Log.d("Error", "Sth went wrong in RecipeDetailFragment");
+        choosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
+        TextView nameText = view.findViewById(R.id.recipe_name);
+        nameText.setText(choosenRecipe.getName());
+
+        // load image from url
+        new FetchImg(choosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
+
+        // setup ingredients grid
+        //TODO: make grid responsive
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        if(choosenRecipe.getIngredients() != null && fm.findFragmentById(R.id.ingredients_grid) == null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            for (Ingredient ingredient : choosenRecipe.getIngredients()) {
+                IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
+                ft.add(R.id.ingredients_grid, ingFrag);
             }
-
-            @Override
-            public void onResponse(Recipe recipe) {
-                choosenRecipe = recipe;
-                TextView nameText = view.findViewById(R.id.recipe_name);
-                nameText.setText(choosenRecipe.getName());
-
-                // load image from url
-                new FetchImg(choosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
-
-                // setup ingredients grid
-                //TODO: make grid responsive
-
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if(fm.findFragmentById(R.id.ingredients_grid) == null) {
-                    FragmentTransaction ft = fm.beginTransaction();
-                    for (Ingredient ingredient : choosenRecipe.getIngredients()) {
-                        IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
-                        ft.add(R.id.ingredients_grid, ingFrag);
-                    }
-                    ft.commit();
-                }
-            }
-        });
+            ft.commit();
+        }
 
 
         // setup interactions
