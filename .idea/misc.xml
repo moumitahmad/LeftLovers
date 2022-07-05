@@ -12,10 +12,11 @@
         <entry key="..\:/HS Bremen/Semester 8/Mobile Computing/git/LeftLovers/app/src/main/res/layout/fragment_bookmark.xml" value="0.1421875" />
         <entry key="..\:/HS Bremen/Semester 8/Mobile Computing/git/LeftLovers/app/src/main/res/layout/fragment_fridge.xml" value="0.1421875" />
         <entry key="..\:/HS Bremen/Semester 8/Mobile Computing/git/LeftLovers/app/src/main/res/layout/fragment_search.xml" value="0.15625" />
+        <entry key="..\:/hochschule/leftlovers/LeftLovers/app/src/main/res/layout/fragment_search.xml" value="0.22" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
