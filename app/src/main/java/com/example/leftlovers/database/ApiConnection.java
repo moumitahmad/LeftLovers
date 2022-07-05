@@ -70,7 +70,7 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
+                Log.e("Error", error.getMessage());  // Hier später was anderes hin
                 volleyResponseListener.onError("sth went wrong");
             }
         });
@@ -114,7 +114,7 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
+                Log.e("Error", error.getMessage());  // Hier später was anderes hin
                 volleyResponseListener.onError("sth went wrong");
             }
         });
