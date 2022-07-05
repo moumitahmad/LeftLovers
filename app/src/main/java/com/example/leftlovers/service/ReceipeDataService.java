@@ -6,7 +6,6 @@ import android.widget.Toast;
 import com.example.leftlovers.database.ApiConnection;
 
 import java.io.UnsupportedEncodingException;
-import  java.lang.Object;
 import java.net.URLEncoder;
 
 public class ReceipeDataService {
@@ -31,9 +30,9 @@ public class ReceipeDataService {
     // und ob man getrennte funktionen braucht wenn "searchtext" leer usw
 
     //Get Ingridient
-    //
+    //Weitere api einbinden
     public void getIngredient(String searchText, ApiConnection.VolleyResponseListener volleyResponseListener) {
-        apiConnection.getIngredient(searchText, volleyResponseListener);
+     //   apiConnection.getIngredient(searchText, volleyResponseListener);
     }
 
 

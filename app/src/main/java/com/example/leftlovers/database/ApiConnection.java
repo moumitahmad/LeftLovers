@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.leftlovers.database.DataSingleton;
+import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 
 import org.json.JSONArray;
@@ -33,13 +34,18 @@ public class ApiConnection {
         this.context = context;
     }
 
-
+    // Response Listeners for Callbacks
     public interface VolleyResponseListener {
         void onError(String message);
 
         void onResponse(Recipe recipeURL);
     }
 
+    public interface ListVolleyResponseListener {
+        void onError(String message);
+
+        void onResponse(List<Recipe> recipeList);
+    }
 
 
     public void getRecipe(String searchText, VolleyResponseListener volleyResponseListener) {
@@ -56,12 +62,13 @@ public class ApiConnection {
 
                 try {
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
-                    JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");   // später probieren .getJSONObject("recipe");
+                    JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");
                     nameRecipe = firstRecipe.getString("label");
                     urlImgRecipe = firstRecipe.getString("image");
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
-
+                    List<Ingredient> ingredientList = getIngredients(firstRecipe);
+                    recipe.setIngredients(ingredientList);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -70,18 +77,70 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
-                volleyResponseListener.onError("sth went wrong");
+               volleyResponseListener.onError("sth went wrong");
             }
         });
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public void getIngredient(String searchText, VolleyResponseListener volleyResponseListener) {
+    private List<Ingredient> getIngredients(JSONObject firstRecipe) {
+        List<Ingredient> ingredientList = new ArrayList<>();
+        try {
+            JSONArray ingredientsJsonArray = firstRecipe.getJSONArray("ingredients");
+            for (int i=0; i<ingredientsJsonArray.length(); i++){
+                String name = ingredientsJsonArray.getJSONObject(i).getString("food");
+                String url = ingredientsJsonArray.getJSONObject(i).getString("image");
+                String measureText = ingredientsJsonArray.getJSONObject(i).getString("text");
+                Ingredient ingredient = new Ingredient(name, url);
+                ingredient.setMeasureText(measureText);
+                ingredientList.add(ingredient);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return ingredientList;
     }
 
-    public void getList(String tomato, VolleyResponseListener volleyResponseListener) {
-        
+
+    public void getList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION;
+        List<Recipe> recipeList = new ArrayList<>();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject wholeResponse = response;
+
+                String nameRecipe;
+                String urlImgRecipe;
+
+
+                try {
+
+                    JSONArray allRecipes = wholeResponse.getJSONArray("hits");
+                    for (int i = 0; i<allRecipes.length(); i++) {
+                        JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
+                        nameRecipe = firstRecipe.getString("label");
+                        urlImgRecipe = firstRecipe.getString("image");
+                        Recipe recipe = new Recipe(nameRecipe);
+                        recipe.setImgUrl(urlImgRecipe);
+                        List<Ingredient> ingredientList = getIngredients(firstRecipe);
+                        recipe.setIngredients(ingredientList);
+                        recipeList.add(recipe);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                listVolleyResponseListener.onResponse(recipeList);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listVolleyResponseListener.onError("sth went wrong");
+            }
+        });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
 
@@ -102,6 +161,8 @@ public class ApiConnection {
 
                     nameRecipe = recipeJson.getString("label");
                     urlImgRecipe = recipeJson.getString("image");
+                    List<Ingredient> ingredientList = getIngredients(recipeJson);
+                    recipe.setIngredients(ingredientList);
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
                     Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
