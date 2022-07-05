@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.service.ReceipeDataService;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchbarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SearchbarFragment extends Fragment {
+
+    private ReceipeDataService receipeDataService;
 
 
     public SearchbarFragment() {
@@ -26,6 +25,7 @@ public class SearchbarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        receipeDataService = new ReceipeDataService(getActivity());
 
     }
 
