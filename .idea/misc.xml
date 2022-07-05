@@ -14,7 +14,11 @@
         <entry key="..\:/HS Bremen/Semester 8/Mobile Computing/git/LeftLovers/app/src/main/res/layout/fragment_search.xml" value="0.15625" />
         <entry key="..\:/hochschule/leftlovers/LeftLovers/app/src/main/res/layout/fragment_fridge.xml" value="0.358695652173913" />
         <entry key="..\:/hochschule/leftlovers/LeftLovers/app/src/main/res/layout/fragment_ingredient.xml" value="0.358695652173913" />
+<<<<<<< Updated upstream
         <entry key="..\:/hochschule/leftlovers/LeftLovers/app/src/main/res/layout/fragment_search.xml" value="0.22" />
+=======
+        <entry key="..\:/hochschule/leftlovers/LeftLovers/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+>>>>>>> Stashed changes
       </map>
     </option>
   </component>
