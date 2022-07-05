@@ -77,7 +77,8 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               volleyResponseListener.onError("sth went wrong");
+                Log.e("Error", error.getMessage());  // Hier später was anderes hin
+                volleyResponseListener.onError("sth went wrong");
             }
         });
         DataSingleton.getInstance(context).addToRequestQueue(request);
@@ -175,7 +176,7 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", "Error in Api Connection");  // Hier später was anderes hin
+                Log.e("Error", error.getMessage());  // Hier später was anderes hin
                 volleyResponseListener.onError("sth went wrong");
             }
         });
