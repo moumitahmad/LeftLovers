@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +11,6 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.leftlovers.R;
-import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.util.FetchImg;
 
@@ -59,12 +57,9 @@ public class RecipeCardFragment extends Fragment {
         text.setText(shownRecipe.getName());
 
         // setup navigation
-        view.findViewById(R.id.recipe_card).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavDirections action = (NavDirections) SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(shownRecipe);
-                Navigation.findNavController(view).navigate(action);
-            }
+        view.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
+            NavDirections action = SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(shownRecipe);
+            Navigation.findNavController(view1).navigate(action);
         });
 
         return view;

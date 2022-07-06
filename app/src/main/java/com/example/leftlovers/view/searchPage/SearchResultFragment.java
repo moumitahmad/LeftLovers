@@ -3,8 +3,6 @@ package com.example.leftlovers.view.searchPage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +19,10 @@ import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.FetchImg;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +32,8 @@ public class SearchResultFragment extends Fragment {
     private ReceipeDataService receipeDataService;
     private String searchText;
     private GridView recipeGrid;
-    private List<String> recipeNames = new ArrayList<>();
-    private List<String> recipeUrls = new ArrayList<>();
+    private final List<String> recipeNames = new ArrayList<>();
+    private final List<String> recipeUrls = new ArrayList<>();
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -54,7 +52,7 @@ public class SearchResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
 
         // setup UI
-        // get choosen recipe
+        // get chosen recipe
         searchText = SearchResultFragmentArgs.fromBundle(getArguments()).getSearchText();
 
         receipeDataService.getRecipe(searchText, new ApiConnection.VolleyResponseListener() {
@@ -73,7 +71,7 @@ public class SearchResultFragment extends Fragment {
                     recipeUrls.add(recipe.getImgUrl());
                 }
 
-                RecipeGridAdapter rga = new RecipeGridAdapter(recipeNames, recipeUrls, getActivity().getLayoutInflater());
+                RecipeGridAdapter rga = new RecipeGridAdapter(recipeNames, recipeUrls, requireActivity().getLayoutInflater());
                 recipeGrid.setAdapter(rga);
 
                 /*FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -92,9 +90,9 @@ public class SearchResultFragment extends Fragment {
     }
 
     public class RecipeGridAdapter extends BaseAdapter {
-        private List<String> imgNames;
-        private List<String> imgUrl;
-        private LayoutInflater layoutInflater;
+        private final List<String> imgNames;
+        private final List<String> imgUrl;
+        private final LayoutInflater layoutInflater;
 
         public RecipeGridAdapter(List<String> imgNames, List<String> imgUrl, LayoutInflater layoutInflater) {
             this.imgNames = imgNames;
@@ -127,7 +125,7 @@ public class SearchResultFragment extends Fragment {
             TextView name = convertView.findViewById(R.id.recipe_name);
             name.setText(imgNames.get(position));
             ImageView img = convertView.findViewById(R.id.recipe_image);
-            new FetchImg(imgUrl.get(position), img).run();
+            new FetchImg(imgUrl.get(position), img).start();
 
             return convertView;
         }

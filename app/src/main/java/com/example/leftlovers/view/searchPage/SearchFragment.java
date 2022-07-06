@@ -3,26 +3,15 @@ package com.example.leftlovers.view.searchPage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.leftlovers.R;
-import com.example.leftlovers.database.ApiConnection;
-import com.example.leftlovers.model.Ingredient;
-import com.example.leftlovers.model.Recipe;
-import com.example.leftlovers.service.ReceipeDataService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,21 +37,18 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        /*Ingredient i1 = new Ingredient("Tomatos", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
+        /*Ingredient i1 = new Ingredient("Tomatoes", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
         Ingredient i2 = new Ingredient("Beef", "https://www.gourmetfleisch.de/shop/images/products/main/thumb/14254.jpg");
         List myIngredients = new ArrayList();
         myIngredients.add(i1);
         myIngredients.add(i2);
-        Recipe testRecipe = new Recipe("Spaghetti Bolonese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
+        Recipe testRecipe = new Recipe("Spaghetti Bolognese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
 
 
         Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
-        recipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragmentToSearchResultFragment("tomato");
-                Navigation.findNavController(view).navigate(action);
-            }
+        recipeButton.setOnClickListener(view1 -> {
+            NavDirections action = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment("tomato");
+            Navigation.findNavController(view1).navigate(action);
         });
 
         return view;
