@@ -80,7 +80,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        receipeDataService.getList("", new ApiConnection.ListVolleyResponseListener() {
+        receipeDataService.getList("egg", new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
@@ -89,7 +89,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onResponse(List<Recipe> recipeList) {
                 recipeListTest = recipeList;
-                Log.v("List", recipeList.toString());
+                Log.v("List", recipeListTest.toString());
             }
         });
 

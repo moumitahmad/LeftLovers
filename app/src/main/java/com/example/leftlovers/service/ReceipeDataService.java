@@ -40,7 +40,7 @@ public class ReceipeDataService {
     //Get Recipe List
 
     public void getList(String searchtext, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
-        apiConnection.getList("Tomato", listVolleyResponseListener);
+        apiConnection.getList(searchtext, listVolleyResponseListener);
     }
 
     //Get Recipe by Identifier (URL)
