@@ -73,6 +73,9 @@ public class SearchResultFragment extends Fragment {
 
                 RecipeGridAdapter rga = new RecipeGridAdapter(recipes, requireActivity().getLayoutInflater());
                 recipeGrid.setAdapter(rga);
+
+                // hide progress bar
+                view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
             }
         });
 
