@@ -28,11 +28,17 @@ public class ReceipeDataService {
     //Get Recipe by Category/Balance/Diet usw was es da noch so gibt
     //überlegen ob man alle categorien in eine funktion rein bekommt
     // und ob man getrennte funktionen braucht wenn "searchtext" leer usw
+    // es gibt : Diet, Health Labels, Meal Types, Dish Types, Cuisine Types
+    // vorerst wird cuisine type genommen
+
+    public void getByCategory(String searchtext, String category, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        apiConnection.getListByCategory(searchtext, category, listVolleyResponseListener);
+    }
 
     //Get Ingridient
     //Weitere api einbinden
-    public void getIngredient(String searchText, ApiConnection.VolleyResponseListener volleyResponseListener) {
-     //   apiConnection.getIngredient(searchText, volleyResponseListener);
+    public void getIngredient(String searchText, ApiConnection.IngredientResponseListener ingredientResponseListener) {
+        apiConnection.getIngredient(searchText, ingredientResponseListener);
     }
 
 

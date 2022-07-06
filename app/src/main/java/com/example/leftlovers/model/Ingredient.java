@@ -17,6 +17,8 @@ public class Ingredient implements Parcelable {
         this.imgUrl = imgUrl;
     }
 
+    public Ingredient(){}
+
     public String getName() {
         return name;
     }

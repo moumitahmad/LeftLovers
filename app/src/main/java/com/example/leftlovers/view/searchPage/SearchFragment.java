@@ -57,6 +57,7 @@ public class SearchFragment extends Fragment {
         myIngredients.add(i2);
         Recipe testRecipe = new Recipe("Spaghetti Bolonese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
 
+
         receipeDataService.getRecipe("Tomato", new ApiConnection.VolleyResponseListener() {
             @Override
             public void onError(String message) {
