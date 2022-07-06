@@ -28,6 +28,7 @@ public class SearchbarFragment extends Fragment {
         ingredient = editText.getText().toString();
         return ingredient;
     }
+    
 
     public SearchbarFragment() {
         // Required empty public constructor
@@ -56,7 +57,6 @@ public class SearchbarFragment extends Fragment {
                 Log.v("EditText", getUserInput());
             }
         });
-
 
         return view;
     }
