@@ -10,12 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.ApiConnection;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.util.FetchImg;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +33,9 @@ public class SearchResultFragment extends Fragment {
 
     private ReceipeDataService receipeDataService;
     private String searchText;
+    private GridView recipeGrid;
+    private List<String> recipeNames = new ArrayList<>();
+    private List<String> recipeUrls = new ArrayList<>();
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -53,7 +65,18 @@ public class SearchResultFragment extends Fragment {
 
             @Override
             public void onResponse(Recipe recipe) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                recipeGrid = view.findViewById(R.id.recipe_card_grid);
+
+                for(int i=0; i<20; i++) {
+                    recipeNames.add(recipe.getName());
+                    recipeUrls.add(recipe.getImgUrl());
+                }
+
+                RecipeGridAdapter rga = new RecipeGridAdapter(recipeNames, recipeUrls, getActivity().getLayoutInflater());
+                recipeGrid.setAdapter(rga);
+
+                /*FragmentManager fm = getActivity().getSupportFragmentManager();
                 if(recipe != null && fm.findFragmentById(R.id.recipe_card_grid) == null) { // TODO: change to for each
                     FragmentTransaction ft = fm.beginTransaction();
                     for(int i=0; i<2; i++) {
@@ -61,10 +84,52 @@ public class SearchResultFragment extends Fragment {
                         ft.add(R.id.recipe_card_grid, card);
                     }
                     ft.commit();
-                }
+                }*/
             }
         });
 
         return view;
+    }
+
+    public class RecipeGridAdapter extends BaseAdapter {
+        private List<String> imgNames;
+        private List<String> imgUrl;
+        private LayoutInflater layoutInflater;
+
+        public RecipeGridAdapter(List<String> imgNames, List<String> imgUrl, LayoutInflater layoutInflater) {
+            this.imgNames = imgNames;
+            this.imgUrl = imgUrl;
+            this.layoutInflater = layoutInflater;
+        }
+
+        @Override
+        public int getCount() {
+            return imgUrl.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null) {
+                convertView = layoutInflater.inflate(R.layout.fragment_recipe_card, parent, false);
+            }
+
+            TextView name = convertView.findViewById(R.id.recipe_name);
+            name.setText(imgNames.get(position));
+            ImageView img = convertView.findViewById(R.id.recipe_image);
+            new FetchImg(imgUrl.get(position), img).run();
+
+            return convertView;
+        }
     }
 }
