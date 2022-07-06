@@ -6,17 +6,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.fragment.app.Fragment;
-
-import com.example.leftlovers.R;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class FetchImg extends Thread {
-    private Handler imageHandler = new Handler();
-    private ImageView img;
-    private String url;
+    private final Handler imageHandler = new Handler();
+    private final ImageView img;
+    private final String url;
     private Bitmap bitmap;
 
     public FetchImg(String url, ImageView img) {
@@ -26,7 +23,7 @@ public class FetchImg extends Thread {
 
     @Override
     public void run() {
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = new java.net.URL(url).openStream();
             bitmap = BitmapFactory.decodeStream(inputStream);
@@ -34,12 +31,9 @@ public class FetchImg extends Thread {
             Log.e("fetching image-url: ", e.getMessage());
         }
 
-        imageHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("fetching image-url: ", url);
-                img.setImageBitmap(bitmap);
-            }
+        imageHandler.post(() -> {
+            Log.i("fetching image-url: ", url);
+            img.setImageBitmap(bitmap);
         });
     }
 }

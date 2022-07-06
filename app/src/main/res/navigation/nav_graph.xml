@@ -10,8 +10,8 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
+            android:id="@+id/action_searchFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/fridgeFragment"
@@ -31,5 +31,22 @@
         <argument
             android:name="choosenRecipe"
             app:argType="com.example.leftlovers.model.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeCardFragment"
+        android:name="com.example.leftlovers.view.searchPage.RecipeCardFragment"
+        android:label="fragment_recipe_card"
+        tools:layout="@layout/fragment_recipe_card" />
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.leftlovers.view.searchPage.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="searchText"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
 </navigation>
