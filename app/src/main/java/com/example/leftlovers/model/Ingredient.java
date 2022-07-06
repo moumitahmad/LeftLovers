@@ -8,9 +8,37 @@ public class Ingredient implements Parcelable {
     private String name;
     private String imgUrl;
 
+    //Text with the amount of the Indridient
+    //for example "1 cup of suger"
+    private String measureText;
+
     public Ingredient(String name, String imgUrl) {
         this.name = name;
         this.imgUrl = imgUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public String getMeasureText() {
+        return measureText;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setMeasureText(String measureText) {
+        this.measureText = measureText;
     }
 
     protected Ingredient(Parcel in) {
@@ -30,13 +58,6 @@ public class Ingredient implements Parcelable {
         }
     };
 
-    public String getName() {
-        return name;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
 
     @Override
     public int describeContents() {
