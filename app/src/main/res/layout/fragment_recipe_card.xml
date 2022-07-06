@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="130dp"
-    android:layout_height="wrap_content"
-    tools:context=".view.searchPage.RecipeCardFragment">
+    android:layout_height="wrap_content">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -23,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                tools:src="@tools:sample/backgrounds/scenic"
+                android:contentDescription="Recipe Image" />
 
             <TextView
                 android:id="@+id/recipe_name"

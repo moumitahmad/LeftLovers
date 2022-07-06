@@ -3,6 +3,8 @@ package com.example.leftlovers.view.searchPage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +34,7 @@ public class SearchResultFragment extends Fragment {
     private ReceipeDataService receipeDataService;
     private String searchText;
     private GridView recipeGrid;
-    private final List<String> recipeNames = new ArrayList<>();
-    private final List<String> recipeUrls = new ArrayList<>();
+    private final List<Recipe> recipes = new ArrayList<>();
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -66,23 +67,12 @@ public class SearchResultFragment extends Fragment {
 
                 recipeGrid = view.findViewById(R.id.recipe_card_grid);
 
-                for(int i=0; i<20; i++) {
-                    recipeNames.add(recipe.getName());
-                    recipeUrls.add(recipe.getImgUrl());
+                for(int i=0; i<20; i++) { // TODO: change to for each
+                    recipes.add(recipe);
                 }
 
-                RecipeGridAdapter rga = new RecipeGridAdapter(recipeNames, recipeUrls, requireActivity().getLayoutInflater());
+                RecipeGridAdapter rga = new RecipeGridAdapter(recipes, requireActivity().getLayoutInflater());
                 recipeGrid.setAdapter(rga);
-
-                /*FragmentManager fm = getActivity().getSupportFragmentManager();
-                if(recipe != null && fm.findFragmentById(R.id.recipe_card_grid) == null) { // TODO: change to for each
-                    FragmentTransaction ft = fm.beginTransaction();
-                    for(int i=0; i<2; i++) {
-                        RecipeCardFragment card = RecipeCardFragment.newInstance(recipe);
-                        ft.add(R.id.recipe_card_grid, card);
-                    }
-                    ft.commit();
-                }*/
             }
         });
 
@@ -90,19 +80,17 @@ public class SearchResultFragment extends Fragment {
     }
 
     public class RecipeGridAdapter extends BaseAdapter {
-        private final List<String> imgNames;
-        private final List<String> imgUrl;
+        private List<Recipe> recipes;
         private final LayoutInflater layoutInflater;
 
-        public RecipeGridAdapter(List<String> imgNames, List<String> imgUrl, LayoutInflater layoutInflater) {
-            this.imgNames = imgNames;
-            this.imgUrl = imgUrl;
+        public RecipeGridAdapter(List<Recipe> recipes, LayoutInflater layoutInflater) {
+            this.recipes = recipes;
             this.layoutInflater = layoutInflater;
         }
 
         @Override
         public int getCount() {
-            return imgUrl.size();
+            return recipes.size();
         }
 
         @Override
@@ -122,10 +110,17 @@ public class SearchResultFragment extends Fragment {
                 convertView = layoutInflater.inflate(R.layout.fragment_recipe_card, parent, false);
             }
 
+            // setup UI
             TextView name = convertView.findViewById(R.id.recipe_name);
-            name.setText(imgNames.get(position));
+            name.setText(recipes.get(position).getName());
             ImageView img = convertView.findViewById(R.id.recipe_image);
-            new FetchImg(imgUrl.get(position), img).start();
+            new FetchImg(recipes.get(position).getImgUrl(), img).start();
+
+            // setup navigation
+            convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
+                NavDirections action = SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(recipes.get(position));
+                Navigation.findNavController(view1).navigate(action);
+            });
 
             return convertView;
         }
