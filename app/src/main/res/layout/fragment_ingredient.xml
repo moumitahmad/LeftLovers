@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:src="@tools:sample/backgrounds/scenic"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:contentDescription="Ingredient Image" />
 
     </com.google.android.material.card.MaterialCardView>
 

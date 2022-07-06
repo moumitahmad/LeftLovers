@@ -6,8 +6,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.leftlovers.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

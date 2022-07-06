@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
@@ -50,8 +49,7 @@ public class IngredientFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ingredient, container, false);
 
         // setup view
-        ImageView img = view.findViewById(R.id.ingredient_image);
-        new FetchImg(shownIngredient.getImgUrl(), img).start();
+        new FetchImg(shownIngredient.getImgUrl(), view.findViewById(R.id.ingredient_image)).start();
 
         return view;
     }

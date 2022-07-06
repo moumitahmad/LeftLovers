@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_main"
     tools:context=".view.searchPage.SearchFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:text="@string/search_title"
-        android:textSize="20dp"
+    <fragment
+        android:id="@+id/searchbarFragment"
+        android:name="com.example.leftlovers.view.searchPage.SearchbarFragment"
+        android:layout_width="414dp"
+        android:layout_height="184dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="156dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="411dp"
-        android:layout_height="288dp"
+        android:layout_width="413dp"
+        android:layout_height="225dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="0.072">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.357">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,84 +37,62 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button1"
-                android:id="@+id/button1" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button2"
-                android:id="@+id/button2" />
+                android:insetLeft="10dp"
+                android:text="New Button1" />
 
             <Button
+                android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button3"
-                android:id="@+id/button3" />
+                android:insetLeft="10dp"
+                android:text="New Button2" />
+
             <Button
+                android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button4"
-                android:id="@+id/button4" />
+                android:insetLeft="10dp"
+                android:text="New Button3" />
+
             <Button
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button5"
-                android:id="@+id/button5" />
+                android:insetLeft="10dp"
+                android:text="New Button4" />
+
             <Button
+                android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button6"
-                android:id="@+id/button6" />
+                android:insetLeft="10dp"
+                android:text="New Button5" />
+
             <Button
+                android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button7"
-                android:id="@+id/button7" />
+                android:insetLeft="10dp"
+                android:text="New Button6" />
+
             <Button
+                android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button8"
-                android:id="@+id/button8"/>
+                android:insetLeft="10dp"
+                android:text="New Button7" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:text="New Button8" />
         </LinearLayout>
 
     </HorizontalScrollView>
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="336dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/primary_main"
-        android:paddingLeft="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:text="@string/hello_search_fragment"
-            android:textSize="26sp" />
-    </SearchView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/recipePlaceholder1"
-        style="@style/MaterialAlertDialog.Material3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="spaghetti bolognese"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

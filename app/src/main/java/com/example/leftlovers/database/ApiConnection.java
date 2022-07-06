@@ -153,7 +153,7 @@ public class ApiConnection {
     }
 
     //Get the first 20 recipes by name/ingredient
-    public void getList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRecipeList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"from=0&to=19";
         List<Recipe> recipeList = new ArrayList<>();
 
@@ -225,7 +225,7 @@ public class ApiConnection {
                 }
                 listVolleyResponseListener.onResponse(recipeList);
             }
-        } , new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listVolleyResponseListener.onError("sth went wrong");
