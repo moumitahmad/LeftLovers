@@ -20,6 +20,7 @@ import com.example.leftlovers.database.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.view.SearchbarFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,11 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private ReceipeDataService receipeDataService;
+    private SearchbarFragment searchbarFragment;
     private String IMAGE_EXAMPLE = "https://www.vegini.at/wp-content/uploads/2017/10/Rezeptbild-Spaghetti.jpg";
     private String RECIPE_LINK = "https://www.gutekueche.at/spaggetti-bolognese-rezept-22388";
+    List<Recipe> recipeListTest = new ArrayList<>();
+
 
     public SearchFragment() {
         // Required empty public constructor
@@ -73,6 +77,19 @@ public class SearchFragment extends Fragment {
                         Navigation.findNavController(view).navigate(action);
                     }
                 });
+            }
+        });
+
+        receipeDataService.getList("", new ApiConnection.ListVolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Log.d("Api Connection Error", message);
+            }
+
+            @Override
+            public void onResponse(List<Recipe> recipeList) {
+                recipeListTest = recipeList;
+                Log.v("List", recipeList.toString());
             }
         });
 
