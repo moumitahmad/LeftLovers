@@ -1,7 +1,6 @@
 package com.example.leftlovers.service;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.leftlovers.database.ApiConnection;
 
@@ -39,8 +38,8 @@ public class ReceipeDataService {
 
     //Get Recipe List
 
-    public void getList(String searchtext, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
-        apiConnection.getList("Tomato", listVolleyResponseListener);
+    public void getRecipeList(String searchtext, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        apiConnection.getRecipeList(searchtext, listVolleyResponseListener);
     }
 
     //Get Recipe by Identifier (URL)

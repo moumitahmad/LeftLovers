@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_main"
     tools:context=".view.searchPage.SearchFragment">
 
     <TextView
@@ -103,18 +102,6 @@
             android:text="@string/hello_search_fragment"
             android:textSize="26sp" />
     </SearchView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/recipePlaceholder1"
-        style="@style/MaterialAlertDialog.Material3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Search 'Tomato'"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

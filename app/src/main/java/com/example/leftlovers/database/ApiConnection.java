@@ -104,7 +104,7 @@ public class ApiConnection {
     }
 
 
-    public void getList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRecipeList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION;
         List<Recipe> recipeList = new ArrayList<>();
 

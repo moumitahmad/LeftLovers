@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import com.example.leftlovers.R;
 
@@ -37,18 +38,20 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        /*Ingredient i1 = new Ingredient("Tomatoes", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6s2oKgQVysceJyLpvwWRGBd2zj-b7c_LiTA&usqp=CAU");
-        Ingredient i2 = new Ingredient("Beef", "https://www.gourmetfleisch.de/shop/images/products/main/thumb/14254.jpg");
-        List myIngredients = new ArrayList();
-        myIngredients.add(i1);
-        myIngredients.add(i2);
-        Recipe testRecipe = new Recipe("Spaghetti Bolognese", IMAGE_EXAMPLE, myIngredients, "test Description", RECIPE_LINK);*/
+        // setup buttons
+        SearchView search = view.findViewById(R.id.searchView);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(query);
+                Navigation.findNavController(view).navigate(action);
+                return true;
+            }
 
-
-        Button recipeButton = view.findViewById(R.id.recipePlaceholder1);
-        recipeButton.setOnClickListener(view1 -> {
-            NavDirections action = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment("tomato");
-            Navigation.findNavController(view1).navigate(action);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
 
         return view;

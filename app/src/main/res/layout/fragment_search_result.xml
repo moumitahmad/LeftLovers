@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        app:trackCornerRadius="3dp" />
+        app:trackCornerRadius="3dp"/>
 
     <GridView
         android:id="@+id/recipe_card_grid"

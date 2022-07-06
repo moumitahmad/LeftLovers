@@ -22,7 +22,6 @@ import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.FetchImg;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,7 +33,6 @@ public class SearchResultFragment extends Fragment {
     private ReceipeDataService receipeDataService;
     private String searchText;
     private GridView recipeGrid;
-    private final List<Recipe> recipes = new ArrayList<>();
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -56,22 +54,18 @@ public class SearchResultFragment extends Fragment {
         // get chosen recipe
         searchText = SearchResultFragmentArgs.fromBundle(getArguments()).getSearchText();
 
-        receipeDataService.getRecipe(searchText, new ApiConnection.VolleyResponseListener() {
+        receipeDataService.getRecipeList(searchText, new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
             }
 
             @Override
-            public void onResponse(Recipe recipe) {
+            public void onResponse(List<Recipe> recipeList) {
 
                 recipeGrid = view.findViewById(R.id.recipe_card_grid);
 
-                for(int i=0; i<20; i++) { // TODO: change to for each
-                    recipes.add(recipe);
-                }
-
-                RecipeGridAdapter rga = new RecipeGridAdapter(recipes, requireActivity().getLayoutInflater());
+                RecipeGridAdapter rga = new RecipeGridAdapter(recipeList, requireActivity().getLayoutInflater());
                 recipeGrid.setAdapter(rga);
 
                 // hide progress bar
@@ -83,7 +77,7 @@ public class SearchResultFragment extends Fragment {
     }
 
     public class RecipeGridAdapter extends BaseAdapter {
-        private List<Recipe> recipes;
+        private final List<Recipe> recipes;
         private final LayoutInflater layoutInflater;
 
         public RecipeGridAdapter(List<Recipe> recipes, LayoutInflater layoutInflater) {
@@ -121,7 +115,7 @@ public class SearchResultFragment extends Fragment {
 
             // setup navigation
             convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
-                NavDirections action = SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(recipes.get(position));
+                NavDirections action = (NavDirections) SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(recipes.get(position));
                 Navigation.findNavController(view1).navigate(action);
             });
 
