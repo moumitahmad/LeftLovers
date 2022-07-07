@@ -1,4 +1,4 @@
-package com.example.leftlovers.database.appDB;
+package com.example.leftlovers.database.localDB;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -14,6 +14,7 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM recipe")
     List<Recipe> getAllRecipes();
+
 
     @Insert
     void insertRecipe(Recipe... recipe);

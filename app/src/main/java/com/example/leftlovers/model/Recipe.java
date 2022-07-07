@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey;
 public class Recipe implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    public int uid;
+    public int recipeId;
 
     @ColumnInfo(name = "recipe_name")
     private String name;

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.service.DatabaseService;
 import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,7 +29,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe chosenRecipe;
-    ReceipeDataService receipeDataService;
+    private DatabaseService databaseService;
+
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -37,6 +39,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseService = new DatabaseService(getActivity());
     }
 
     @Override
@@ -82,11 +85,17 @@ public class RecipeDetailFragment extends Fragment {
             if(isBookmarked) {
                 drawableResource = R.drawable.ic_baseline_bookmark_border_24;
                 isBookmarked = false;
+                databaseService.deleteRecipe(chosenRecipe);
             } else {
                 isBookmarked = true;
+                databaseService.saveNewRecipe(chosenRecipe);
+
             }
             bookmarkButton.setImageResource(drawableResource);
             // TODO: save/delete bookmark in local Database
+            //zum Debuggen ->
+            databaseService.loadRecipeList();
+
         });
     }
 }

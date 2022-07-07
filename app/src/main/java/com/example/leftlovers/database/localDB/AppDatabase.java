@@ -1,4 +1,4 @@
-package com.example.leftlovers.database.appDB;
+package com.example.leftlovers.database.localDB;
 
 import android.content.Context;
 
