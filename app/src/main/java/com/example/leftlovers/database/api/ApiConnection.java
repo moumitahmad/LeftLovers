@@ -1,4 +1,4 @@
-package com.example.leftlovers.database;
+package com.example.leftlovers.database.api;
 
 
 import android.content.Context;
@@ -10,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.leftlovers.database.DataSingleton;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 
@@ -154,7 +153,7 @@ public class ApiConnection {
 
     //Get the first 20 recipes by name/ingredient
     public void getRecipeList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"from=0&to=19";
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"&from=0&to=19";
         List<Recipe> recipeList = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
