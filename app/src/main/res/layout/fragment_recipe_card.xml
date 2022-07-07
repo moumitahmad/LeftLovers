@@ -5,38 +5,42 @@
     android:layout_width="130dp"
     android:layout_height="wrap_content">
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/recipe_card"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/recipe_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:cardCornerRadius="10dp"
+            app:strokeColor="@color/text_dark"
+            app:strokeWidth="1dp">
 
             <ImageView
                 android:id="@+id/recipe_image"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:contentDescription="Recipe Image"
                 android:scaleType="centerCrop"
-                tools:src="@tools:sample/backgrounds/scenic"
-                android:contentDescription="Recipe Image" />
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-            <TextView
-                android:id="@+id/recipe_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="test text"
-                android:gravity="center"/>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
+    <TextView
+        android:id="@+id/recipe_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="this is a long test text"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
-    </com.google.android.material.card.MaterialCardView>
-
-
-
+    </LinearLayout>
 
 </FrameLayout>

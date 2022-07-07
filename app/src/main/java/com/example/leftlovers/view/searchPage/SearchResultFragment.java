@@ -76,7 +76,7 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
-    public class RecipeGridAdapter extends BaseAdapter {
+    public static class RecipeGridAdapter extends BaseAdapter {
         private final List<Recipe> recipes;
         private final LayoutInflater layoutInflater;
 
