@@ -1,4 +1,4 @@
-package com.example.leftlovers.database.api;
+package com.example.leftlovers.database;
 
 
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
+import java.util.List;
 
 public class DataSingleton {
     private static DataSingleton instance;

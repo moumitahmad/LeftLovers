@@ -5,33 +5,15 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-
-@Entity
 public class Recipe implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    public int recipeId;
-
-    @ColumnInfo(name = "recipe_name")
-    private String name;
-
-    @ColumnInfo(name = "recipe_link")
-    private String link;
-
-    @Ignore
-    private String imgUrl;
-    @Ignore
     private boolean isBookmarked = false;
-    @Ignore
+    private String name;
+    private String imgUrl;
     private List<Ingredient> ingredients;
-    @Ignore
     private String description;
-
+    private String link;
 
     public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String description, String link) {
         this.name = name;
@@ -80,7 +62,6 @@ public class Recipe implements Parcelable {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
-
 
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
