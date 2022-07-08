@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/addIngredientFragment"
-        android:name="com.example.leftlovers.AddIngredientFragment"
+        android:name="com.example.leftlovers.view.fridgePage.AddIngredientFragment"
         android:label="fragment_add_ingredient"
         tools:layout="@layout/fragment_add_ingredient" />
 </navigation>

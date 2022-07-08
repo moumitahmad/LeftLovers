@@ -68,7 +68,7 @@
             <com.example.leftlovers.util.ExpandableHeightGridView
                 android:id="@+id/other_ingredients_grid"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:numColumns="3"
                 android:paddingBottom="100dp" />
