@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/recipe_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
                 app:srcCompat="@drawable/ic_banner_foreground"
                 android:scaleType="centerCrop"
                 android:contentDescription="Recipe Image Banner" />
@@ -43,14 +43,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ingredient_title"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="5dp"/>
 
-                <GridLayout
+                <com.example.leftlovers.util.ExpandableHeightGridView
                     android:id="@+id/ingredients_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-10dp"
-                    android:paddingBottom="20dp" />
+                    android:gravity="center"
+                    android:numColumns="3"
+                    android:paddingBottom="20dp"
+                    android:listSelector="@android:color/transparent"/>
 
                 <TextView
                     style="@style/TextAppearance.Material3.BodyLarge"

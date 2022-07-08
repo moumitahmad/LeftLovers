@@ -19,6 +19,7 @@ import com.example.leftlovers.R;
 import com.example.leftlovers.database.ApiConnection;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 
 
@@ -32,7 +33,7 @@ public class SearchResultFragment extends Fragment {
 
     private ReceipeDataService receipeDataService;
     private String searchText;
-    private GridView recipeGrid;
+    private ExpandableHeightGridView recipeGrid;
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -67,6 +68,7 @@ public class SearchResultFragment extends Fragment {
 
                 RecipeGridAdapter rga = new RecipeGridAdapter(recipeList, requireActivity().getLayoutInflater());
                 recipeGrid.setAdapter(rga);
+                recipeGrid.setExpanded(true);
 
                 // hide progress bar
                 view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
@@ -76,7 +78,7 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
-    public class RecipeGridAdapter extends BaseAdapter {
+    public static class RecipeGridAdapter extends BaseAdapter {
         private final List<Recipe> recipes;
         private final LayoutInflater layoutInflater;
 

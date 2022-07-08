@@ -5,30 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.searchPage.SearchResultFragment"
-    android:layout_margin="30dp">
+    tools:context=".view.searchPage.SearchResultFragment">
 
-    <fragment
-        android:id="@+id/searchbarFragment"
-        android:name="com.example.leftlovers.view.searchPage.SearchbarFragment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/loading_animation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        app:trackCornerRadius="3dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="30dp">
 
-    <GridView
-        android:id="@+id/recipe_card_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:numColumns="3" />
+            <fragment
+                android:id="@+id/searchbarFragment"
+                android:name="com.example.leftlovers.view.searchPage.SearchbarFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading_animation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:trackCornerRadius="3dp" />
+
+            <com.example.leftlovers.util.ExpandableHeightGridView
+                android:id="@+id/recipe_card_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:numColumns="3" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -154,7 +154,7 @@ public class ApiConnection {
 
     //Get the first 20 recipes by name/ingredient
     public void getRecipeList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"from=0&to=19";
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"&from=0&to=19";
         List<Recipe> recipeList = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

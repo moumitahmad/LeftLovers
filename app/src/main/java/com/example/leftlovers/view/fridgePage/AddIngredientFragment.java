@@ -1,4 +1,4 @@
-package com.example.leftlovers.view;
+package com.example.leftlovers.view.fridgePage;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.leftlovers.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FridgeFragment#newInstance} factory method to
+ * Use the {@link AddIngredientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FridgeFragment extends Fragment {
+public class AddIngredientFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class FridgeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FridgeFragment() {
+    public AddIngredientFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class FridgeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FridgeFragment.
+     * @return A new instance of fragment AddIngredientFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FridgeFragment newInstance(String param1, String param2) {
-        FridgeFragment fragment = new FridgeFragment();
+    public static AddIngredientFragment newInstance(String param1, String param2) {
+        AddIngredientFragment fragment = new AddIngredientFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class FridgeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fridge, container, false);
+        return inflater.inflate(R.layout.fragment_add_ingredient, container, false);
     }
 }
