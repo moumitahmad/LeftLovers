@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
+import com.example.leftlovers.service.DatabaseService;
 import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
@@ -37,6 +38,7 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe chosenRecipe;
+    private DatabaseService databaseService;
 
 
     public RecipeDetailFragment() {
@@ -46,6 +48,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseService = new DatabaseService(getActivity());
         // get chosen recipe
         chosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
     }
@@ -76,8 +79,6 @@ public class RecipeDetailFragment extends Fragment {
         return view;
     }
 
-
-
     private void setupBookmarkButton(View view) {
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
         bookmarkButton.setOnClickListener(view1 -> {
@@ -86,11 +87,17 @@ public class RecipeDetailFragment extends Fragment {
             if(isBookmarked) {
                 drawableResource = R.drawable.ic_baseline_bookmark_border_24;
                 isBookmarked = false;
+                databaseService.deleteRecipe(chosenRecipe);
             } else {
                 isBookmarked = true;
+                databaseService.saveNewRecipe(chosenRecipe);
+
             }
             bookmarkButton.setImageResource(drawableResource);
             // TODO: save/delete bookmark in local Database
+            //zum Debuggen ->
+            databaseService.loadRecipeList();
+
         });
     }
 

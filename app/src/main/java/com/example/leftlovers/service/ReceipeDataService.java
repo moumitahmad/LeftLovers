@@ -2,7 +2,7 @@ package com.example.leftlovers.service;
 
 import android.content.Context;
 
-import com.example.leftlovers.database.ApiConnection;
+import com.example.leftlovers.database.api.ApiConnection;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
