@@ -24,10 +24,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
         // setup bottom app bar
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(bottomNav, navController);
+
+
     }
+
+
 }

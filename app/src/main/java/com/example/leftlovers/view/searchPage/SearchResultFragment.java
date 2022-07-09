@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
-import com.example.leftlovers.database.ApiConnection;
+import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
