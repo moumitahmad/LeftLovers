@@ -1,15 +1,8 @@
 package com.example.leftlovers.view.searchPage;
 
-
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +14,8 @@ import android.widget.TextView;
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
-import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
-import com.example.leftlovers.view.fridgePage.FridgeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

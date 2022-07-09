@@ -101,7 +101,7 @@ public class FridgeFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(view1 -> {
             // navigate to add fragment
-            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToAddIngredientFragment();
+            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToEditIngredientFragment(null);
             Navigation.findNavController(view1).navigate(action);
         });
     }
