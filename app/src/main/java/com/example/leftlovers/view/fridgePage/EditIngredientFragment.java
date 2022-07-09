@@ -18,7 +18,6 @@ import com.example.leftlovers.model.Ingredient;
 public class EditIngredientFragment extends Fragment {
 
     private Ingredient chosenIngredient;
-    private String EDIT_TITLE = "<b>Edit</b> \nyour food";
 
     public EditIngredientFragment() {
         // Required empty public constructor
@@ -39,7 +38,7 @@ public class EditIngredientFragment extends Fragment {
         // new or editing
         if(chosenIngredient == null) { // setup app page
             TextView title = view.findViewById(R.id.edit_title);
-            title.setText(EDIT_TITLE);
+            title.setText(R.string.add_title);
         } else { // setup edit page
 
         }
