@@ -3,6 +3,7 @@ package com.example.leftlovers.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Ingredient implements Parcelable {
@@ -16,10 +17,10 @@ public class Ingredient implements Parcelable {
 
     // own ingredient
     private int amount;
-    private Date expirationDate;
+    private LocalDate expirationDate;
     private String notes;
 
-    public Ingredient(String name, String imgUrl, int amount, Date expirationDate, String notes) {
+    public Ingredient(String name, String imgUrl, int amount, LocalDate expirationDate, String notes) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.amount = amount;
@@ -50,7 +51,7 @@ public class Ingredient implements Parcelable {
         return amount;
     }
 
-    public Date getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 

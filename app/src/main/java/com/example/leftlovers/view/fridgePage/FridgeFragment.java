@@ -24,6 +24,7 @@ import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -56,10 +57,10 @@ public class FridgeFragment extends Fragment {
 
         // TODO: mit room Abfrage austauschen
         String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";
-        Ingredient i1 = new Ingredient("Tomato", url);
-        Ingredient i2 = new Ingredient("Cherry", url);
-        Ingredient i4 = new Ingredient("Eggs", url);
-        Ingredient i5 = new Ingredient("Milk", url);
+        Ingredient i1 = new Ingredient("Tomato", url, 2, LocalDate.now(), "this are some notes");
+        Ingredient i2 = new Ingredient("Cherry", url, 5, LocalDate.parse("2022-08-12"), "this are some notes");
+        Ingredient i4 = new Ingredient("Eggs", url, 10, LocalDate.parse("2030-12-12"), "this are some notes");
+        Ingredient i5 = new Ingredient("Milk", url, 12, LocalDate.parse("2023-10-12"), "this are some notes");
 
         expiringIngredients.add(i1);
         expiringIngredients.add(i2);
