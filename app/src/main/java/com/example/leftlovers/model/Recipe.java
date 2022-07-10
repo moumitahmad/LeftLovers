@@ -81,6 +81,9 @@ public class Recipe implements Parcelable {
         this.imgUrl = imgUrl;
     }
 
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
 
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;

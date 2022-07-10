@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,7 @@ public class RecipeDetailFragment extends Fragment {
             } else {
                 isBookmarked = true;
                 databaseService.saveNewRecipe(chosenRecipe);
+                chosenRecipe.setRecipeId(9);
 
             }
             bookmarkButton.setImageResource(drawableResource);
