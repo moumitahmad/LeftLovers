@@ -52,4 +52,11 @@ public class ReceipeDataService {
         String url = URLEncoder.encode(recipeUrl, "UTF-8");
         apiConnection.getRecipeByIdentifier(recipeUrl, volleyResponseListener);
     }
+
+    //Get Random Recipe List
+    public void getRandom(ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        int range = (20 - 2) + 1;
+        int numberOfMinIngredients = (int)(Math.random() * range) + 2;
+        apiConnection.getRandom(numberOfMinIngredients, listVolleyResponseListener);
+    }
 }
