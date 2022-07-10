@@ -1,4 +1,4 @@
-package com.example.leftlovers.database;
+package com.example.leftlovers.database.api;
 
 
 import android.content.Context;
@@ -10,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.leftlovers.database.DataSingleton;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 
