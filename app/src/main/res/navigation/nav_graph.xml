@@ -27,9 +27,6 @@
         <action
             android:id="@+id/action_fridgeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_fridgeFragment_to_addIngredientFragment"
-            app:destination="@id/addIngredientFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
@@ -64,11 +61,7 @@
         tools:layout="@layout/fragment_edit_ingredient" >
         <argument
             android:name="chosenIngredient"
-            app:argType="com.example.leftlovers.model.Ingredient" />
+            app:argType="com.example.leftlovers.model.Ingredient"
+            app:nullable="true" />
     </fragment>
-    <fragment
-        android:id="@+id/addIngredientFragment"
-        android:name="com.example.leftlovers.view.fridgePage.AddIngredientFragment"
-        android:label="fragment_add_ingredient"
-        tools:layout="@layout/fragment_add_ingredient" />
 </navigation>
