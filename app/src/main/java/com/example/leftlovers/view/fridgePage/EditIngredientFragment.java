@@ -70,7 +70,7 @@ public class EditIngredientFragment extends Fragment {
             title.setText(R.string.add_title);
             // setup default date
             inputExpirationDate.getEditText().setText(expirationDate.toString());
-            inputAmount.setText(DEFAULT_AMOUNT);
+            inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
         } else { // setup edit page
             // load exsisting data
             inputName.getEditText().setText(chosenIngredient.getName());
