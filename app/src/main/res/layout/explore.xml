@@ -8,8 +8,10 @@
 
     <TextView
         android:id="@+id/rName"
-        android:layout_width="168dp"
-        android:layout_height="39dp"
+        android:layout_width="261dp"
+        android:layout_height="35dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textAlignment="center"
         android:textColor="#B2DFDB"
         android:textSize="30dp"
