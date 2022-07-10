@@ -46,7 +46,7 @@ public class IngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ingredient, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_card, container, false);
 
         // setup view
         new FetchImg(shownIngredient.getImgUrl(), view.findViewById(R.id.ingredient_image)).start();

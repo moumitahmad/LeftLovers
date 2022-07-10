@@ -1,25 +1,33 @@
 package com.example.leftlovers.view.searchPage;
 
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
-import com.example.leftlovers.service.DatabaseService;
 import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
+import com.example.leftlovers.view.fridgePage.FridgeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 
 
 /**
@@ -29,7 +37,6 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean isBookmarked = false;
     private Recipe chosenRecipe;
-    private DatabaseService databaseService;
 
 
     public RecipeDetailFragment() {
@@ -39,7 +46,8 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseService = new DatabaseService(getActivity());
+        // get chosen recipe
+        chosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
     }
 
     @Override
@@ -49,8 +57,6 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // setup UI
-        // get chosen recipe
-        chosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
         TextView nameText = view.findViewById(R.id.recipe_name);
         nameText.setText(chosenRecipe.getName());
 
@@ -58,17 +64,10 @@ public class RecipeDetailFragment extends Fragment {
         new FetchImg(chosenRecipe.getImgUrl(), view.findViewById(R.id.recipe_image)).start();
 
         // setup ingredients grid
-        //TODO: make grid responsive
-
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        if(chosenRecipe.getIngredients() != null && fm.findFragmentById(R.id.ingredients_grid) == null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            for (Ingredient ingredient : chosenRecipe.getIngredients()) {
-                IngredientFragment ingFrag = IngredientFragment.newInstance(ingredient);
-                ft.add(R.id.ingredients_grid, ingFrag);
-            }
-            ft.commit();
-        }
+        ExpandableHeightGridView ingredientsGrid = view.findViewById(R.id.ingredients_grid);
+        IngredientGridAdapter iga = new IngredientGridAdapter(chosenRecipe.getIngredients(), requireActivity().getLayoutInflater());
+        ingredientsGrid.setAdapter(iga);
+        ingredientsGrid.setExpanded(true);
 
 
         // setup interactions
@@ -76,6 +75,8 @@ public class RecipeDetailFragment extends Fragment {
 
         return view;
     }
+
+
 
     private void setupBookmarkButton(View view) {
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
@@ -85,17 +86,55 @@ public class RecipeDetailFragment extends Fragment {
             if(isBookmarked) {
                 drawableResource = R.drawable.ic_baseline_bookmark_border_24;
                 isBookmarked = false;
-                databaseService.deleteRecipe(chosenRecipe);
             } else {
                 isBookmarked = true;
-                databaseService.saveNewRecipe(chosenRecipe);
-
             }
             bookmarkButton.setImageResource(drawableResource);
             // TODO: save/delete bookmark in local Database
-            //zum Debuggen ->
-            databaseService.loadRecipeList();
-
         });
+    }
+
+    public static class IngredientGridAdapter extends BaseAdapter {
+        private final List<Ingredient> ingredients;
+        private final LayoutInflater layoutInflater;
+
+        public IngredientGridAdapter(List<Ingredient> ingredients, LayoutInflater layoutInflater) {
+            this.ingredients = ingredients;
+            this.layoutInflater = layoutInflater;
+        }
+
+        @Override
+        public int getCount() {
+            return ingredients.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null) {
+                convertView = layoutInflater.inflate(R.layout.fragment_ingredient_card, parent, false);
+            }
+
+            // setup UI
+            TextView name = convertView.findViewById(R.id.ingredient_name);
+            name.setText(ingredients.get(position).getMeasureText());
+            String ingredientImgUrl = ingredients.get(position).getImgUrl();
+            ImageView img = convertView.findViewById(R.id.ingredient_image);
+            if(ingredientImgUrl != null) { // TODO: still not placeholder
+                new FetchImg(ingredients.get(position).getImgUrl(), img).start();
+            }
+
+            return convertView;
+        }
     }
 }
