@@ -67,19 +67,21 @@ public class ApiConnection {
             public void onResponse(JSONObject response) {
                 JSONObject wholeResponse = response;
 
-                String nameRecipe;
-                String urlImgRecipe;
                 Recipe recipe = new Recipe(searchText);
+
 
                 try {
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");
-                    nameRecipe = firstRecipe.getString("label");
-                    urlImgRecipe = firstRecipe.getString("image");
+                    String nameRecipe = firstRecipe.getString("label");
+                    String urlImgRecipe = firstRecipe.getString("image");
+                    String linkRecipe = firstRecipe.getString("uri");
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
+                    recipe.setLink(linkRecipe);
                     List<Ingredient> ingredientList = getIngredients(firstRecipe);
                     recipe.setIngredients(ingredientList);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -163,6 +165,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String linkRecipe;
 
 
                 try {
@@ -172,10 +175,9 @@ public class ApiConnection {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
-                        Recipe recipe = new Recipe(nameRecipe);
-                        recipe.setImgUrl(urlImgRecipe);
+                        linkRecipe = firstRecipe.getString("uri");
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
-                        recipe.setIngredients(ingredientList);
+                        Recipe recipe = new Recipe(nameRecipe, urlImgRecipe, ingredientList, linkRecipe);
                         recipeList.add(recipe);
                     }
                 } catch (JSONException e) {
@@ -202,8 +204,6 @@ public class ApiConnection {
             public void onResponse(JSONObject response) {
                 JSONObject wholeResponse = response;
 
-                String nameRecipe;
-                String urlImgRecipe;
 
 
                 try {
@@ -211,12 +211,11 @@ public class ApiConnection {
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     for (int i = 0; i<allRecipes.length(); i++) {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
-                        nameRecipe = firstRecipe.getString("label");
-                        urlImgRecipe = firstRecipe.getString("image");
-                        Recipe recipe = new Recipe(nameRecipe);
-                        recipe.setImgUrl(urlImgRecipe);
+                        String nameRecipe = firstRecipe.getString("label");
+                        String urlImgRecipe = firstRecipe.getString("image");
+                        String linkRecipe = firstRecipe.getString("uri");
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
-                        recipe.setIngredients(ingredientList);
+                        Recipe recipe = new Recipe(nameRecipe, urlImgRecipe, ingredientList, linkRecipe);
                         recipeList.add(recipe);
                     }
                 } catch (JSONException e) {
@@ -251,11 +250,12 @@ public class ApiConnection {
 
                     nameRecipe = recipeJson.getString("label");
                     urlImgRecipe = recipeJson.getString("image");
+                    String linkRecipe = recipeJson.getString("uri");
                     List<Ingredient> ingredientList = getIngredients(recipeJson);
                     recipe.setIngredients(ingredientList);
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
-                    Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
+                    recipe.setLink(linkRecipe);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

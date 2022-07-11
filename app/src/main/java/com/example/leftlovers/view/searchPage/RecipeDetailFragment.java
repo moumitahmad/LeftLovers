@@ -21,6 +21,7 @@ import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 
 
 /**
@@ -41,6 +42,7 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseService = new DatabaseService(getActivity());
+     //   databaseService.removeAllRecipes();
     }
 
     @Override
@@ -80,6 +82,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private void setupBookmarkButton(View view) {
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
+        isBookmarked(bookmarkButton);
+
         bookmarkButton.setOnClickListener(view1 -> {
             // toggle FloatingButton image
             int drawableResource = R.drawable.ic_baseline_bookmark_24;
@@ -88,9 +92,10 @@ public class RecipeDetailFragment extends Fragment {
                 isBookmarked = false;
                 databaseService.deleteRecipe(chosenRecipe);
             } else {
+
                 isBookmarked = true;
-                databaseService.saveNewRecipe(chosenRecipe);
-                chosenRecipe.setRecipeId(9);
+                int recipeID = databaseService.saveNewRecipe(chosenRecipe);
+                chosenRecipe.setRecipeId(recipeID);
 
             }
             bookmarkButton.setImageResource(drawableResource);
@@ -99,5 +104,15 @@ public class RecipeDetailFragment extends Fragment {
             databaseService.loadRecipeList();
 
         });
+    }
+
+    private void isBookmarked(FloatingActionButton bookmarkButton) {
+        List<Recipe> recipeFound = databaseService.searchRecipeByURL(chosenRecipe.getLink());
+        if(recipeFound.size()>0) {
+            isBookmarked = true;
+            int idOfFound = recipeFound.get(0).getRecipeId();
+            chosenRecipe.setRecipeId(idOfFound);
+            bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_24);
+        }
     }
 }

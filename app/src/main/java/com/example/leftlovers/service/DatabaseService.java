@@ -25,13 +25,21 @@ public class DatabaseService {
         }
     }
 
-    public void saveNewRecipe(Recipe recipe) {
-        db.recipeDao().insertRecipe(recipe);
+    public List<Recipe> searchRecipeByURL(String url) {
+        List<Recipe> recipeList = db.recipeDao().searchRecipeByURL(url);
+        return recipeList;
+    }
 
+    public int saveNewRecipe(Recipe recipe) {
+       return (int) db.recipeDao().insertRecipe(recipe);
         // finish();
     }
 
     public void deleteRecipe(Recipe recipe) {
         db.recipeDao().delete(recipe);
+    }
+
+    public void removeAllRecipes() {
+        db.recipeDao().removeAllRecipes();
     }
 }

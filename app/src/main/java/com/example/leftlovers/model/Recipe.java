@@ -29,15 +29,13 @@ public class Recipe implements Parcelable {
     private boolean isBookmarked = false;
     @Ignore
     private List<Ingredient> ingredients;
-    @Ignore
-    private String description;
 
 
-    public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String description, String link) {
+
+    public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String link) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.ingredients = ingredients;
-        this.description = description;
         this.link = link;
     }
 
@@ -61,9 +59,6 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public String getLink() {
         return link;
@@ -85,13 +80,14 @@ public class Recipe implements Parcelable {
         this.recipeId = recipeId;
     }
 
+    public int getRecipeId() {
+        return recipeId;
+    }
+
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setLink(String link) {
         this.link = link;
