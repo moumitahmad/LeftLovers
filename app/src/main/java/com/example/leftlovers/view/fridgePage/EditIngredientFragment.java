@@ -63,6 +63,7 @@ public class EditIngredientFragment extends Fragment {
     private LocalDate expirationDate = LocalDate.now();
     private String notes = "";
     private ImageView ingredientImageView;
+    private Uri imageURI;
 
     private enum InputError {
         NAME_ERROR,
@@ -83,10 +84,10 @@ public class EditIngredientFragment extends Fragment {
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
-                            Uri uri = data.getData();
-                            Log.d("IMG RESULT", uri.toString());
+                            imageURI = data.getData();
+                            Log.d("IMG RESULT", imageURI.toString());
                             ingredientImageView = getView().findViewById(R.id.ingredient_image);
-                            ingredientImageView.setImageURI(uri);
+                            ingredientImageView.setImageURI(imageURI);
                             // TODO: save image in local database
                         }
                     }
@@ -163,11 +164,11 @@ public class EditIngredientFragment extends Fragment {
                 // get inputs
                 name = inputName.getEditText().getText().toString();
                 amount = Integer.parseInt(inputAmount.getText().toString());
-                expirationDate = LocalDate.parse(inputName.getEditText().getText().toString());
                 notes = inputNotes.getEditText().getText().toString();
 
                 // validate input
-                for(InputError inputError: validateInputs()) {
+                List<InputError> inputErrors = validateInputs();
+                for(InputError inputError: inputErrors) {
                     // display errors
                     switch(inputError) {
                         case NAME_ERROR:
@@ -179,11 +180,21 @@ public class EditIngredientFragment extends Fragment {
                             inputExpirationDate.setErrorEnabled(true);
                             break;
                     }
-                    return;
                 }
 
-                // TODO: react to validation
+                if(!inputErrors.isEmpty())
+                    return;
+
+                // valid inputs
+                expirationDate = LocalDate.parse(inputExpirationDate.getEditText().getText().toString());
                 // if amount == 0 delete ingredient
+                String msg = "The Fridge has " + amount + " " + name + "s." +
+                        "\n image :" + imageURI +
+                        "\n expiration date :" + expirationDate.toString() +
+                        "\n notes: " + notes;
+                Log.i("INGREDIENT", msg);
+
+                // TODO: save in local db
 
             }
         });
