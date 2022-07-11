@@ -12,12 +12,22 @@
         <action
             android:id="@+id/action_searchFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/fridgeFragment"
-        android:name="com.example.leftlovers.view.FridgeFragment"
+        android:name="com.example.leftlovers.view.fridgePage.FridgeFragment"
         android:label="fragment_fridge"
-        tools:layout="@layout/fragment_fridge" />
+        tools:layout="@layout/fragment_fridge" >
+        <action
+            android:id="@+id/action_fridgeFragment_to_editIngredientFragment"
+            app:destination="@id/editIngredientFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="com.example.leftlovers.view.BookmarkFragment"
@@ -33,11 +43,6 @@
             app:argType="com.example.leftlovers.model.Recipe" />
     </fragment>
     <fragment
-        android:id="@+id/recipeCardFragment"
-        android:name="com.example.leftlovers.view.searchPage.RecipeCardFragment"
-        android:label="fragment_recipe_card"
-        tools:layout="@layout/fragment_recipe_card" />
-    <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.example.leftlovers.view.searchPage.SearchResultFragment"
         android:label="fragment_search_result"
@@ -48,5 +53,18 @@
         <action
             android:id="@+id/action_searchResultFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editIngredientFragment"
+        android:name="com.example.leftlovers.view.fridgePage.EditIngredientFragment"
+        android:label="fragment_edit_ingredient"
+        tools:layout="@layout/fragment_edit_ingredient" >
+        <argument
+            android:name="chosenIngredient"
+            app:argType="com.example.leftlovers.model.Ingredient"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_editIngredientFragment_to_fridgeFragment"
+            app:destination="@id/fridgeFragment" />
     </fragment>
 </navigation>

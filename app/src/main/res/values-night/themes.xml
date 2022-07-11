@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LeftLovers" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.LeftLovers" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_main</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>

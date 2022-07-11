@@ -3,14 +3,30 @@ package com.example.leftlovers.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Ingredient implements Parcelable {
 
     private String name;
     private String imgUrl;
 
-    //Text with the amount of the Indridient
-    //for example "1 cup of suger"
+    //Text with the amount of the Ingredient
+    //for example "1 cup of sugar"
     private String measureText;
+
+    // own ingredient
+    private int amount;
+    private LocalDate expirationDate;
+    private String notes;
+
+    public Ingredient(String name, String imgUrl, int amount, LocalDate expirationDate, String notes) {
+        this.name = name;
+        this.imgUrl = imgUrl;
+        this.amount = amount;
+        this.expirationDate = expirationDate;
+        this.notes = notes;
+    }
 
     public Ingredient(String name, String imgUrl) {
         this.name = name;
@@ -31,6 +47,18 @@ public class Ingredient implements Parcelable {
         return measureText;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -42,6 +70,7 @@ public class Ingredient implements Parcelable {
     public void setMeasureText(String measureText) {
         this.measureText = measureText;
     }
+
 
     protected Ingredient(Parcel in) {
         name = in.readString();

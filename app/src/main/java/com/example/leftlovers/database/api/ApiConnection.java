@@ -39,6 +39,7 @@ public class ApiConnection {
         this.context = context;
     }
 
+
     // Response Listeners for Callbacks
     public interface VolleyResponseListener {
         void onError(String message);
@@ -270,6 +271,47 @@ public class ApiConnection {
             }
         });
 
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void getRandom(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + QUERY_VERIFICATION + "&ingr="+numberOfMinIngredients+"%2B";
+
+        List<Recipe> recipeList = new ArrayList<>();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject wholeResponse = response;
+
+                String nameRecipe;
+                String urlImgRecipe;
+
+
+                try {
+
+                    JSONArray allRecipes = wholeResponse.getJSONArray("hits");
+                    for (int i = 0; i<allRecipes.length(); i++) {
+                        JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
+                        nameRecipe = firstRecipe.getString("label");
+                        urlImgRecipe = firstRecipe.getString("image");
+                        Recipe recipe = new Recipe(nameRecipe);
+                        recipe.setImgUrl(urlImgRecipe);
+                        List<Ingredient> ingredientList = getIngredients(firstRecipe);
+                        recipe.setIngredients(ingredientList);
+                        recipeList.add(recipe);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                listVolleyResponseListener.onResponse(recipeList);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listVolleyResponseListener.onError("sth went wrong");
+            }
+        });
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
