@@ -9,6 +9,7 @@
 
     // search
     <string name="search_title"><b>Search</b> \nfor your meal</string>
+    <string name="search_title_landscape"><b>Search</b> for your meal</string>
 
     // recipe detail
     <string name="recipe_name">Recipe Name</string>
