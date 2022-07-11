@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
+import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +41,7 @@ public class FridgeFragment extends Fragment {
 
     private final List<Ingredient> expiringIngredients = new ArrayList<Ingredient>();
     private final List<Ingredient> otherIngredients = new ArrayList<Ingredient>();
+    private ReceipeDataService receipeDataService;
 
     public FridgeFragment() {
         // Required empty public constructor
@@ -54,6 +58,22 @@ public class FridgeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fridge, container, false);
+        receipeDataService = new ReceipeDataService(getActivity());
+        receipeDataService.getSuggest("toma", new ApiConnection.SuggestVolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+
+                Log.d("EEEEEEEEEEEEEERROR", "!!!");
+            }
+
+            @Override
+            public void onResponse(List<String> recipeList) {
+                Log.d("HEEEEEEEEEEEELLOO", recipeList.get(0));
+                Log.d("HEEEEEEEEEEEELLOO", recipeList.get(1));
+                Log.d("HEEEEEEEEEEEELLOO", recipeList.get(2));
+                Log.d("HEEEEEEEEEEEELLOO", recipeList.get(3));
+            }
+        });
 
         // TODO: mit room Abfrage austauschen
         String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";

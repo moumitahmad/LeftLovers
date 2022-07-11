@@ -65,4 +65,9 @@ public class ReceipeDataService {
         int numberOfMinIngredients = (int)(Math.random() * range) + 2;
         apiConnection.getRandom(numberOfMinIngredients, listVolleyResponseListener);
     }
+
+    //Get suggestions to ingredient names
+    public  void getSuggest(String searchText, ApiConnection.SuggestVolleyResponseListener suggestVolleyResponseListener) {
+        apiConnection.getSuggest(searchText, suggestVolleyResponseListener);
+    }
 }

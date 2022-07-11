@@ -28,7 +28,9 @@ public class ApiConnection {
 
     //Ingredient Database
     public static final String QUERY_SEARCH_INGREDIENT = "https://api.edamam.com/api/food-database/v2/parser?ingr=";
+    public static final String QUERY_INGREDIENT_AUTOCOMPLETE = "https://api.edamam.com/auto-complete?q=";
     public static final String QUERY_INGREDIENT_VERIFICATION = "&app_id=eca84407&app_key=98dfe7baf46037f8befa7a85ac099dfa";
+
 
 
     Context context;
@@ -38,6 +40,7 @@ public class ApiConnection {
     public ApiConnection(Context context) {
         this.context = context;
     }
+
 
 
     // Response Listeners for Callbacks
@@ -57,6 +60,12 @@ public class ApiConnection {
         void onError(String message);
 
         void onResponse(List<Recipe> recipeList);
+    }
+
+    public interface SuggestVolleyResponseListener {
+        void onError(String message);
+
+        void onResponse(List<String> recipeList);
     }
 
     // Get One Recipe by name/ingredient
@@ -310,6 +319,35 @@ public class ApiConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listVolleyResponseListener.onError("sth went wrong");
+            }
+        });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void getSuggest(String searchText, SuggestVolleyResponseListener suggestVolleyResponseListener) {
+        String url = QUERY_INGREDIENT_AUTOCOMPLETE+ searchText + QUERY_INGREDIENT_VERIFICATION;
+
+        List<String> ingredientSuggest = new ArrayList<>();
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONArray wholeResponse = response;
+
+                try {
+                    for (int i = 0; i<wholeResponse.length(); i++) {
+                        String suggest = wholeResponse.getString(i);
+                        ingredientSuggest.add(suggest);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                suggestVolleyResponseListener.onResponse(ingredientSuggest);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                suggestVolleyResponseListener.onError("sth went wrong");
             }
         });
         DataSingleton.getInstance(context).addToRequestQueue(request);
