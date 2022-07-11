@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
+import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -59,6 +62,7 @@ public class EditIngredientFragment extends Fragment {
     private int amount = 1;
     private LocalDate expirationDate = LocalDate.now();
     private String notes = "";
+    private ImageView ingredientImageView;
 
     private enum InputError {
         NAME_ERROR,
@@ -81,8 +85,8 @@ public class EditIngredientFragment extends Fragment {
                             Intent data = result.getData();
                             Uri uri = data.getData();
                             Log.d("IMG RESULT", uri.toString());
-                            ImageView ingredientImage = getView().findViewById(R.id.ingredient_image);
-                            ingredientImage.setImageURI(uri);
+                            ingredientImageView = getView().findViewById(R.id.ingredient_image);
+                            ingredientImageView.setImageURI(uri);
                             // TODO: save image in local database
                         }
                     }
@@ -114,6 +118,7 @@ public class EditIngredientFragment extends Fragment {
             // load exsisting data
             inputName.getEditText().setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
+            // TODO: display image
             inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate().toString());
             inputNotes.getEditText().setText(chosenIngredient.getNotes());
         }
@@ -180,6 +185,26 @@ public class EditIngredientFragment extends Fragment {
                 // TODO: react to validation
                 // if amount == 0 delete ingredient
 
+            }
+        });
+
+        // delete button
+        Button deleteButton = view.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: delete ingredient from local database
+            }
+        });
+
+        // cancel button
+        Button cancelButton = view.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // navigate back to fridge fragment
+                NavDirections action = EditIngredientFragmentDirections.actionEditIngredientFragmentToFridgeFragment();
+                Navigation.findNavController(v).navigate(action);
             }
         });
 

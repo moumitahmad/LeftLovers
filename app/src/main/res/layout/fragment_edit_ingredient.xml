@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".view.fridgePage.EditIngredientFragment">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -151,7 +155,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Cancel"
+                app:icon="@drawable/ic_baseline_cancel_24" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_button"
@@ -164,6 +177,7 @@
                 app:icon="@drawable/ic_baseline_save_24" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,5 +190,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
