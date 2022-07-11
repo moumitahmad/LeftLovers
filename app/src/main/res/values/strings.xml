@@ -25,8 +25,14 @@
     <string name="edit_title"><b>Edit</b> \nyour food</string>
     <string name="add_title"><b>Add</b> \nyour food</string>
     <string name="ingredient_criteria1">name</string>
-    <string name="ingredient_criteria2">amount</string>
+    <string name="ingredient_criteria2">amount:</string>
     <string name="ingredient_criteria3">expiration date</string>
     <string name="ingredient_criteria4">notes</string>
+    <string name="ingredient_upload_title">Upload an image:</string>
+
+    // image-upload
+    <string name="upload_title">Upload an ingredient image</string>
+    <string name="negativ_option">Cancel</string>
+
 
 </resources>
