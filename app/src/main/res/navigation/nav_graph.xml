@@ -63,5 +63,8 @@
             android:name="chosenIngredient"
             app:argType="com.example.leftlovers.model.Ingredient"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_editIngredientFragment_to_fridgeFragment"
+            app:destination="@id/fridgeFragment" />
     </fragment>
 </navigation>

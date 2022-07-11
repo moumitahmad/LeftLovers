@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".view.fridgePage.EditIngredientFragment">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -32,9 +36,52 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient_upload_title"
+            android:layout_marginBottom="5dp"/>
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="15dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ingredient_card"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardCornerRadius="10dp"
+                app:strokeColor="@color/text_dark"
+                app:strokeWidth="1dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/ingredient_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Recipe Image"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_baseline_image_24" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/upload_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:backgroundTint="@color/secondary_main"
+                android:layout_marginLeft="50dp"
+                app:fabSize="mini" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,6 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredient_criteria2"
+                style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_marginRight="10dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -59,6 +107,7 @@
 
             <TextView
                 android:id="@+id/amount_input"
+                style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"/>
@@ -84,7 +133,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +155,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Cancel"
+                app:icon="@drawable/ic_baseline_cancel_24" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_button"
@@ -119,6 +177,7 @@
                 app:icon="@drawable/ic_baseline_save_24" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,5 +190,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
