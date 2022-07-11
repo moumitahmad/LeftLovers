@@ -21,12 +21,17 @@ import androidx.navigation.Navigation;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
@@ -64,6 +69,10 @@ public class EditIngredientFragment extends Fragment {
     private String notes = "";
     private ImageView ingredientImageView;
     private Uri imageURI;
+
+    private static final String[] INGREDIENTS = new String[] {
+            "Eggs", "Tomato", "Edam", "Eclair", "Espresso", "Tabasco", "Turkey", "Tom Yum"
+    };
 
     private enum InputError {
         NAME_ERROR,
@@ -104,7 +113,9 @@ public class EditIngredientFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_ingredient, container, false);
 
         TextView inputAmount = view.findViewById(R.id.amount_input);
-        TextInputLayout inputName = view.findViewById(R.id.name_text_field);
+        AutoCompleteTextView inputName = view.findViewById(R.id.autoComplete);
+
+
         TextInputLayout inputExpirationDate = view.findViewById(R.id.expiration_date_text_field);
         TextInputLayout inputNotes = view.findViewById(R.id.notes_text_field);
 
@@ -117,13 +128,46 @@ public class EditIngredientFragment extends Fragment {
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
         } else { // setup edit page
             // load exsisting data
-            inputName.getEditText().setText(chosenIngredient.getName());
+
+          //TODO !!!!  inputName.getEditText().setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
             // TODO: display image
             inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate().toString());
             inputNotes.getEditText().setText(chosenIngredient.getNotes());
         }
 
+        // setup search
+        inputName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, INGREDIENTS);
+                inputName.setAdapter(adapter);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        /*
+        inputName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        }); */
         // setup amount buttons
         Button minusButton = view.findViewById(R.id.minus_button);
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +206,6 @@ public class EditIngredientFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // get inputs
-                name = inputName.getEditText().getText().toString();
                 amount = Integer.parseInt(inputAmount.getText().toString());
                 notes = inputNotes.getEditText().getText().toString();
 
@@ -172,8 +215,9 @@ public class EditIngredientFragment extends Fragment {
                     // display errors
                     switch(inputError) {
                         case NAME_ERROR:
-                            inputName.setError("Every ingredient requires a name");
-                            inputName.setErrorEnabled(true);
+                            //TODO ERROR BEHANDLUNG
+                            // inputName.setError("Every ingredient requires a name");
+                            // inputName.setErrorEnabled(true);
                             break;
                         case DATE_ERROR:
                             inputExpirationDate.setError("This is not a valid Date. Required format: yyyy-mm-dd");
@@ -249,10 +293,10 @@ public class EditIngredientFragment extends Fragment {
 
     private List<InputError> validateInputs() {
         List<InputError> inputErrors = new ArrayList<>();
-
-        if(name == null || name.equals("")) {
-            inputErrors.add(InputError.NAME_ERROR);
-        }
+        //TODO Ablaufdatum Validate
+     //   if(name == null || name.equals("")) {
+     //       inputErrors.add(InputError.NAME_ERROR);
+     //   }
 
         return inputErrors;
     }
