@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".view.searchPage.RecipeDetailFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/recipe_image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:srcCompat="@drawable/ic_banner_foreground"
+                android:layout_height="104dp"
+                android:contentDescription="Recipe Image Banner"
                 android:scaleType="centerCrop"
-                android:contentDescription="Recipe Image Banner" />
+                app:srcCompat="@drawable/ic_banner_foreground" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,24 +35,24 @@
                     style="@style/TextAppearance.Material3.HeadlineLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/recipe_name"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:text="@string/recipe_name" />
 
                 <TextView
                     style="@style/TextAppearance.Material3.HeadlineSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ingredient_title"
-                    android:paddingBottom="5dp"/>
+                    android:paddingBottom="5dp"
+                    android:text="@string/ingredient_title" />
 
                 <com.example.leftlovers.util.ExpandableHeightGridView
                     android:id="@+id/ingredients_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:listSelector="@android:color/transparent"
                     android:numColumns="3"
-                    android:paddingBottom="20dp"
-                    android:listSelector="@android:color/transparent"/>
+                    android:paddingBottom="20dp" />
 
                 <TextView
                     style="@style/TextAppearance.Material3.BodyLarge"
@@ -72,8 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|end"
         android:layout_margin="20dp"
+        android:contentDescription="Bookmark Button"
         android:src="@drawable/ic_baseline_bookmark_border_24"
-        app:fabSize="normal"
-        android:contentDescription="Bookmark Button" />
+        app:fabSize="normal" />
 
 </FrameLayout>
