@@ -31,13 +31,14 @@ public class Recipe implements Parcelable {
     private List<Ingredient> ingredients;
 
 
-
+    @Ignore
     public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String link) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.ingredients = ingredients;
         this.link = link;
     }
+
 
     public Recipe(String name){
         this.name = name;

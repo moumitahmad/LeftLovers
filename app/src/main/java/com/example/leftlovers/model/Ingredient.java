@@ -3,23 +3,44 @@ package com.example.leftlovers.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDate;
 import java.util.Date;
 
+@Entity
 public class Ingredient implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int ingredientId;
+
+    @ColumnInfo(name = "ingredient_name")
     private String name;
+
+    @ColumnInfo(name = "img_url")
     private String imgUrl;
+
 
     //Text with the amount of the Ingredient
     //for example "1 cup of sugar"
+    @Ignore
     private String measureText;
 
     // own ingredient
+    @ColumnInfo(name = "amount")
     private int amount;
+ // TODO  @ColumnInfo(name = "expirationDate")
+    @Ignore
     private LocalDate expirationDate;
+
+
+    @ColumnInfo(name = "notes")
     private String notes;
 
+    @Ignore
     public Ingredient(String name, String imgUrl, int amount, LocalDate expirationDate, String notes) {
         this.name = name;
         this.imgUrl = imgUrl;
@@ -28,12 +49,22 @@ public class Ingredient implements Parcelable {
         this.notes = notes;
     }
 
+    @Ignore
     public Ingredient(String name, String imgUrl) {
         this.name = name;
         this.imgUrl = imgUrl;
     }
 
+
     public Ingredient(){}
+
+    public int getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
+    }
 
     public String getName() {
         return name;
@@ -69,6 +100,18 @@ public class Ingredient implements Parcelable {
 
     public void setMeasureText(String measureText) {
         this.measureText = measureText;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
 

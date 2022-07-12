@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.leftlovers.database.localDB.AppDatabase;
+import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 
 import java.util.List;
@@ -41,5 +42,26 @@ public class DatabaseService {
 
     public void removeAllRecipes() {
         db.recipeDao().removeAllRecipes();
+    }
+
+    public void loadIngredientList() {
+        List<Ingredient> ingredientList = db.ingredientDao().getAllIngredients();
+        for (Ingredient i:ingredientList) {
+            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", i.getName());
+        }
+    }
+
+
+    public int saveNewIngredient(Ingredient ingredient) {
+        return (int) db.ingredientDao().insertIngredient(ingredient);
+        // finish();
+    }
+
+    public void deleteIngredient(Ingredient ingredient) {
+        db.ingredientDao().delete(ingredient);
+    }
+
+    public void removeAllIngredients() {
+        db.ingredientDao().removeAllIngredients();
     }
 }

@@ -28,6 +28,4 @@ public interface RecipeDao {
     @Query("DELETE FROM recipe")
     void removeAllRecipes();
 
-  //  @Query("DELETE FROM recipe WHERE user_id = :recipe.url")
-  //  void delete(Recipe recipe);
 }
