@@ -18,6 +18,7 @@
 
     // fridge fragment
     <string name="fridge_title"><b>Stock</b> \nyour fridge</string>
+    <string name="fridge_title_landscape"><b>Stock</b> your fridge</string>
     <string name="fridge_subtitle1">I\'ll die soon</string>
     <string name="fridge_subtitle2">Others</string>
 

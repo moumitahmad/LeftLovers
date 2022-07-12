@@ -24,28 +24,29 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExplore"
-        android:layout_width="734dp"
+        android:layout_width="702dp"
 
-        android:layout_height="172dp"
+        android:layout_height="169dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="720dp"
+        android:layout_height="28dp"
         android:text="Explore"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/searchbarFragment"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/searchbarFragment"
+        tools:layout_editor_absoluteX="11dp"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
