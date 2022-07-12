@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
-import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class FilterDialogFragment extends Fragment {
 
-    private ReceipeDataService receipeDataService;
+    private ApiDataService apiDataService;
 
     private List<String> dietFilters = new ArrayList<>();
     private List<String> healthFilters = new ArrayList<>();
@@ -51,7 +51,7 @@ public class FilterDialogFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        receipeDataService = new ReceipeDataService(getActivity());
+        apiDataService = new ApiDataService(getActivity());
         super.onCreate(savedInstanceState);
     }
 
@@ -61,7 +61,7 @@ public class FilterDialogFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_filter_dialog, container, false);
 
-        receipeDataService.getPossibleFiltersFromAPI(new ApiConnection.FilterVolleyResponseListener() {
+        apiDataService.getPossibleFiltersFromAPI(new ApiConnection.FilterVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.e("get api filters", message);

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.leftlovers.R;
 import com.example.leftlovers.adapter.ExploreAdapter;
 import com.example.leftlovers.database.api.ApiConnection;
-import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.model.Recipe;
 
 import java.util.List;
@@ -42,10 +42,10 @@ public class SeachHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_seach_home, container, false);
 
         RecyclerView rvExplore = (RecyclerView) view.findViewById(R.id.rvExplore);
-        ReceipeDataService receipeDataService = new ReceipeDataService(getActivity());
+        ApiDataService apiDataService = new ApiDataService(getActivity());
 
 
-        receipeDataService.getRandomRecipes(new ApiConnection.ListVolleyResponseListener() {
+        apiDataService.getRandomRecipes(new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);

@@ -90,12 +90,12 @@ public class ApiConnection {
                 try {
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");
-                    String nameRecipe = firstRecipe.getString("label");
-                    String urlImgRecipe = firstRecipe.getString("image");
-                    String linkRecipe = firstRecipe.getString("uri");
+                    nameRecipe = firstRecipe.getString("label");
+                    urlImgRecipe = firstRecipe.getString("image");
+                    urlRecipe = firstRecipe.getString("uri");
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
-                    recipe.setLink(linkRecipe);
+                    recipe.setLink(urlRecipe);
                     List<Ingredient> ingredientList = getIngredients(firstRecipe);
                     recipe.setIngredients(ingredientList);
 
@@ -235,11 +235,8 @@ public class ApiConnection {
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
                         urlRecipe = firstRecipe.getString("url");
-                        Recipe recipe = new Recipe(nameRecipe);
-                        recipe.setImgUrl(urlImgRecipe);
-                        recipe.setLink(urlRecipe);
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
-                        Recipe recipe = new Recipe(nameRecipe, urlImgRecipe, ingredientList, linkRecipe);
+                        Recipe recipe = new Recipe(nameRecipe, urlImgRecipe, ingredientList, urlRecipe);
                         recipeList.add(recipe);
                     }
                 } catch (JSONException e) {
@@ -299,7 +296,7 @@ public class ApiConnection {
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public void getRandom(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRandomRecipes(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + QUERY_VERIFICATION + "&ingr="+numberOfMinIngredients+"%2B";
 
         List<Recipe> recipeList = new ArrayList<>();
