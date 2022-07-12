@@ -30,8 +30,8 @@ public class ReceipeDataService {
     // es gibt : Diet, Health Labels, Meal Types, Dish Types, Cuisine Types
     // vorerst wird cuisine type genommen
 
-    public void getByCategory(String searchtext, String category, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
-        apiConnection.getListByCategory(searchtext, category, listVolleyResponseListener);
+    public void getRecipesByCategory(String searchtext, String filterQuery, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        apiConnection.getListByCategory(searchtext, filterQuery, listVolleyResponseListener);
     }
 
     //Get Ingridient
@@ -64,5 +64,9 @@ public class ReceipeDataService {
         int range = (20 - 2) + 1;
         int numberOfMinIngredients = (int)(Math.random() * range) + 2;
         apiConnection.getRandom(numberOfMinIngredients, listVolleyResponseListener);
+    }
+
+    public void getPossibleFiltersFromAPI(ApiConnection.FilterVolleyResponseListener filterVolleyResponseListener) {
+        apiConnection.getPossibleFiltersFromAPI(filterVolleyResponseListener);
     }
 }

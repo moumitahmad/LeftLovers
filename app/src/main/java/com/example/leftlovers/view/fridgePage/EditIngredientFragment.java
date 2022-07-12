@@ -10,17 +10,11 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,22 +25,13 @@ import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
-import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,7 +101,7 @@ public class EditIngredientFragment extends Fragment {
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
         } else { // setup edit page
-            // load exsisting data
+            // load existing data
             inputName.getEditText().setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
             // TODO: display image

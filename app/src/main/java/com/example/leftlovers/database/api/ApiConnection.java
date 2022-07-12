@@ -25,6 +25,7 @@ public class ApiConnection {
     public static final String QUERY_SEARCH_BY_INGRIDIENTS = "https://api.edamam.com/search?q=";
     public static final String QUERY_SEARCH_BY_URL = "https://api.edamam.com/search?r=";
     public static final String QUERY_VERIFICATION = "&app_id=23b2fea2&app_key=c922aee8d3ac99a52aad47208d2b476e";
+    public static final String QUERY_FILTER = "https://api.edamam.com/doc/open-api/recipe-search-v2.json";
 
     //Ingredient Database
     public static final String QUERY_SEARCH_INGREDIENT = "https://api.edamam.com/api/food-database/v2/parser?ingr=";
@@ -57,6 +58,12 @@ public class ApiConnection {
         void onError(String message);
 
         void onResponse(List<Recipe> recipeList);
+    }
+
+    public interface FilterVolleyResponseListener {
+        void onError(String message);
+
+        void onResponse(List<JSONObject> filterList);
     }
 
     // Get One Recipe by name/ingredient
@@ -194,8 +201,8 @@ public class ApiConnection {
     }
 
     //Get Recipe by Category/Balance/Diet
-    public void getListByCategory(String searchText, String category, ListVolleyResponseListener listVolleyResponseListener) {
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + "&cuisineType=" +category;
+    public void getListByCategory(String searchText, String filterQuery, ListVolleyResponseListener listVolleyResponseListener) {
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + filterQuery;
         List<Recipe> recipeList = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -310,6 +317,36 @@ public class ApiConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listVolleyResponseListener.onError("sth went wrong");
+            }
+        });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    // get recipe filter options
+    public void getPossibleFiltersFromAPI(FilterVolleyResponseListener filterVolleyResponseListener) {
+        String url = QUERY_FILTER;
+        List<JSONObject> healthFilterList = new ArrayList<>();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject wholeResponse = response;
+
+                String healthFilterName;
+                try {
+                    JSONArray apiFilterArray = wholeResponse.getJSONObject("paths").getJSONObject("/api/recipes/v2").getJSONObject("get").getJSONArray("parameters");
+                    for(int i=6; i<11; i++) {
+                        healthFilterList.add(apiFilterArray.getJSONObject(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                filterVolleyResponseListener.onResponse(healthFilterList);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                filterVolleyResponseListener.onError("sth went wrong");
             }
         });
         DataSingleton.getInstance(context).addToRequestQueue(request);

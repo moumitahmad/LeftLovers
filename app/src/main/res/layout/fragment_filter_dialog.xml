@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.searchPage.FilterDialogFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_marginBottom="10dp" />
+
+    <com.example.leftlovers.util.ExpandableHeightGridView
+        android:id="@+id/own_ingredients_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:numColumns="3"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filters"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_marginBottom="10dp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dish type filter:"
+        style="@style/TextAppearance.Material3.BodyLarge"/>
+
+    <RadioGroup
+        android:id="@+id/dishType_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="meal type filter:"
+        style="@style/TextAppearance.Material3.BodyLarge"/>
+
+    <RadioGroup
+        android:id="@+id/mealType_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="cuisine type filter:"
+        style="@style/TextAppearance.Material3.BodyLarge"/>
+
+    <RadioGroup
+        android:id="@+id/cuisineType_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="health filter:"
+        style="@style/TextAppearance.Material3.BodyLarge"/>
+
+    <RadioGroup
+        android:id="@+id/health_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="diet filter:"
+        style="@style/TextAppearance.Material3.BodyLarge"/>
+
+    <RadioGroup
+        android:id="@+id/diet_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>

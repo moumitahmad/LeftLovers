@@ -111,8 +111,8 @@ public class FridgeFragment extends Fragment {
         FloatingActionButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(view1 -> {
             // navigate to search fragment
-            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToSearchFragment();
-            Navigation.findNavController(view1).navigate(action);
+            //NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToSearchFragment();
+            //Navigation.findNavController(view1).navigate(action);
         });
     }
 
