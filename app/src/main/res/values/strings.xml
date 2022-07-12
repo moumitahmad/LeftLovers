@@ -5,7 +5,7 @@
     <string name="text_menu_item_2">search</string>
     <string name="text_menu_item_3">bookmarks</string>
 
-    <string name="hello_bookmark_fragment">Hello BOOKMARK fragment</string>
+    <string name="bookmark_title"><b>Save</b> \nyour favorite recipes</string>
 
     // search
     <string name="search_title"><b>Search</b> \nfor your meal</string>
