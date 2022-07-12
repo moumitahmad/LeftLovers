@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -30,7 +31,8 @@ import android.widget.TextView;
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
-import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.service.DatabaseService;
+import com.example.leftlovers.service.ApiDataService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -46,7 +48,8 @@ public class EditIngredientFragment extends Fragment {
 
     private ActivityResultLauncher resultLauncher;
     private String uploadImagePath;
-    private ReceipeDataService receipeDataService;
+    private ApiDataService apiDataService;
+    private DatabaseService databaseService;
 
     private static final int DEFAULT_AMOUNT = 1;
     private Ingredient chosenIngredient;
@@ -60,6 +63,7 @@ public class EditIngredientFragment extends Fragment {
     private AutoCompleteTextView inputName;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> listOfSuggestions;
+    private String selectedSuggestion;
 
 
 
@@ -77,7 +81,8 @@ public class EditIngredientFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        receipeDataService = new ReceipeDataService(getActivity());
+        apiDataService = new ApiDataService(getActivity());
+        databaseService = new DatabaseService(getActivity());
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -94,6 +99,8 @@ public class EditIngredientFragment extends Fragment {
                     }
                 }
         );
+
+       // databaseService.removeAllIngredients();
 
         chosenIngredient = EditIngredientFragmentArgs.fromBundle(getArguments()).getChosenIngredient();
         super.onCreate(savedInstanceState);
@@ -157,6 +164,13 @@ public class EditIngredientFragment extends Fragment {
             }
         });
 
+        inputName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                selectedSuggestion = adapter.getItem(position);
+            }
+        });
+
         // setup amount buttons
         Button minusButton = view.findViewById(R.id.minus_button);
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +199,7 @@ public class EditIngredientFragment extends Fragment {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO
                 selectImg(getContext());
             }
         });
@@ -228,6 +243,27 @@ public class EditIngredientFragment extends Fragment {
                 Log.i("INGREDIENT", msg);
 
                 // TODO: save in local db
+                if (selectedSuggestion!=null) {
+                    if(selectedSuggestion.contains(" ")) {
+                        selectedSuggestion.replace(" ", "%20");
+                    }
+                    selectedSuggestion = "tomato%20soup";
+                    apiDataService.getIngredient(selectedSuggestion, new ApiConnection.IngredientResponseListener() {
+                        @Override
+                        public void onError(String message) {
+                            Log.i("Error", message);
+                        }
+
+                        @Override
+                        public void onResponse(Ingredient ingredient) {
+                            // Ingredient in DB speichern
+                            //TODO Fragment wechseln
+                            //TODO Ingredient ablaufdatum , menge, notes zuweisen
+                            databaseService.saveNewIngredient(ingredient);
+                            databaseService.loadIngredientList();
+                        }
+                    });
+                }
 
             }
         });
@@ -256,7 +292,7 @@ public class EditIngredientFragment extends Fragment {
     }
 
     private void getSuggestFromApi(String search) {
-        receipeDataService.getSuggest(search, new ApiConnection.SuggestVolleyResponseListener() {
+        apiDataService.getSuggest(search, new ApiConnection.SuggestVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("ERROR", message);

@@ -23,8 +23,8 @@ public interface IngredientDao {
     long insertIngredient(Ingredient ingredient);
 
     @Delete
-    void delete(Ingredient ingredient);
+    void deleteIngredient(Ingredient ingredient);
 
-    @Query("DELETE FROM recipe")
+    @Query("DELETE FROM ingredient")
     void removeAllIngredients();
 }

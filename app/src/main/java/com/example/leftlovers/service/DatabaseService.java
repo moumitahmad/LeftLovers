@@ -58,7 +58,7 @@ public class DatabaseService {
     }
 
     public void deleteIngredient(Ingredient ingredient) {
-        db.ingredientDao().delete(ingredient);
+        db.ingredientDao().deleteIngredient(ingredient);
     }
 
     public void removeAllIngredients() {

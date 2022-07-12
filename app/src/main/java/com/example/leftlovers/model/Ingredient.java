@@ -114,7 +114,7 @@ public class Ingredient implements Parcelable {
         this.notes = notes;
     }
 
-
+    @Ignore
     protected Ingredient(Parcel in) {
         name = in.readString();
         imgUrl = in.readString();
