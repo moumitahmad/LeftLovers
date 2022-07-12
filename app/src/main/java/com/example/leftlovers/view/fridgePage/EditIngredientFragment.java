@@ -10,17 +10,11 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,27 +25,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
-import com.example.leftlovers.util.FetchImg;
+import com.example.leftlovers.service.ReceipeDataService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +46,7 @@ public class EditIngredientFragment extends Fragment {
 
     private ActivityResultLauncher resultLauncher;
     private String uploadImagePath;
+    private ReceipeDataService receipeDataService;
 
     private static final int DEFAULT_AMOUNT = 1;
     private Ingredient chosenIngredient;
@@ -70,9 +57,13 @@ public class EditIngredientFragment extends Fragment {
     private ImageView ingredientImageView;
     private Uri imageURI;
 
-    private static final String[] INGREDIENTS = new String[] {
-            "Eggs", "Tomato", "Edam", "Eclair", "Espresso", "Tabasco", "Turkey", "Tom Yum"
-    };
+    private AutoCompleteTextView inputName;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> listOfSuggestions;
+
+
+
+
 
     private enum InputError {
         NAME_ERROR,
@@ -86,6 +77,7 @@ public class EditIngredientFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        receipeDataService = new ReceipeDataService(getActivity());
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -102,6 +94,7 @@ public class EditIngredientFragment extends Fragment {
                     }
                 }
         );
+
         chosenIngredient = EditIngredientFragmentArgs.fromBundle(getArguments()).getChosenIngredient();
         super.onCreate(savedInstanceState);
     }
@@ -109,11 +102,16 @@ public class EditIngredientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_ingredient, container, false);
 
         TextView inputAmount = view.findViewById(R.id.amount_input);
-        AutoCompleteTextView inputName = view.findViewById(R.id.autoComplete);
+
+        listOfSuggestions = new ArrayList<String>();
+        inputName = view.findViewById(R.id.autoComplete);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+        inputName.setAdapter(adapter);
 
 
         TextInputLayout inputExpirationDate = view.findViewById(R.id.expiration_date_text_field);
@@ -141,8 +139,11 @@ public class EditIngredientFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, INGREDIENTS);
-                inputName.setAdapter(adapter);
+                String search =  s.toString();
+                if (!search.equals("")) {
+                    getSuggestFromApi(search);
+
+                }
             }
 
             @Override
@@ -156,18 +157,6 @@ public class EditIngredientFragment extends Fragment {
             }
         });
 
-        /*
-        inputName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        }); */
         // setup amount buttons
         Button minusButton = view.findViewById(R.id.minus_button);
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +253,25 @@ public class EditIngredientFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void getSuggestFromApi(String search) {
+        receipeDataService.getSuggest(search, new ApiConnection.SuggestVolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Log.d("ERROR", message);
+            }
+
+            @Override
+            public void onResponse(ArrayList<String> recipeList) {
+                if (recipeList.size() > 0) {
+                    listOfSuggestions = recipeList;
+                    adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+                    inputName.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void selectImg(Context context) {

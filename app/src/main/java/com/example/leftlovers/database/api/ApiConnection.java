@@ -65,7 +65,7 @@ public class ApiConnection {
     public interface SuggestVolleyResponseListener {
         void onError(String message);
 
-        void onResponse(List<String> recipeList);
+        void onResponse(ArrayList<String> recipeList);
     }
 
     // Get One Recipe by name/ingredient
@@ -327,13 +327,13 @@ public class ApiConnection {
     public void getSuggest(String searchText, SuggestVolleyResponseListener suggestVolleyResponseListener) {
         String url = QUERY_INGREDIENT_AUTOCOMPLETE+ searchText + QUERY_INGREDIENT_VERIFICATION;
 
-        List<String> ingredientSuggest = new ArrayList<>();
+
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONArray wholeResponse = response;
-
+                ArrayList<String> ingredientSuggest = new ArrayList<String>();
                 try {
                     for (int i = 0; i<wholeResponse.length(); i++) {
                         String suggest = wholeResponse.getString(i);
