@@ -32,7 +32,6 @@ public class Recipe implements Parcelable {
     @Ignore
     private String description;
 
-
     public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String description, String link) {
         this.name = name;
         this.imgUrl = imgUrl;

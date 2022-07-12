@@ -60,10 +60,10 @@ public class ReceipeDataService {
     }
 
     //Get Random Recipe List
-    public void getRandom(ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRandomRecipes(ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
         int range = (20 - 2) + 1;
         int numberOfMinIngredients = (int)(Math.random() * range) + 2;
-        apiConnection.getRandom(numberOfMinIngredients, listVolleyResponseListener);
+        apiConnection.getRandomRecipes(numberOfMinIngredients, listVolleyResponseListener);
     }
 
     public void getPossibleFiltersFromAPI(ApiConnection.FilterVolleyResponseListener filterVolleyResponseListener) {

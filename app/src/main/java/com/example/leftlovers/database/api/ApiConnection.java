@@ -171,17 +171,18 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
-
+                String urlRecipe;
 
                 try {
-
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     for (int i = 0; i<allRecipes.length(); i++) {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
+                        urlRecipe = firstRecipe.getString("url");
                         Recipe recipe = new Recipe(nameRecipe);
                         recipe.setImgUrl(urlImgRecipe);
+                        recipe.setLink(urlRecipe);
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
                         recipe.setIngredients(ingredientList);
                         recipeList.add(recipe);
@@ -281,7 +282,7 @@ public class ApiConnection {
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public void getRandom(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRandomRecipes(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + QUERY_VERIFICATION + "&ingr="+numberOfMinIngredients+"%2B";
 
         List<Recipe> recipeList = new ArrayList<>();
@@ -293,6 +294,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String urlRecipe;
 
 
                 try {
@@ -302,8 +304,10 @@ public class ApiConnection {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
+                        urlRecipe = firstRecipe.getString("url");
                         Recipe recipe = new Recipe(nameRecipe);
                         recipe.setImgUrl(urlImgRecipe);
+                        recipe.setLink(urlRecipe);
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
                         recipe.setIngredients(ingredientList);
                         recipeList.add(recipe);

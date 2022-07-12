@@ -45,7 +45,7 @@ public class SeachHomeFragment extends Fragment {
         ReceipeDataService receipeDataService = new ReceipeDataService(getActivity());
 
 
-        receipeDataService.getRecipeList("egg", new ApiConnection.ListVolleyResponseListener() {
+        receipeDataService.getRandomRecipes(new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
@@ -58,6 +58,9 @@ public class SeachHomeFragment extends Fragment {
                 rvExplore.setAdapter(adapter);
                 HorizontalLayout = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
                 rvExplore.setLayoutManager(HorizontalLayout);
+
+                // hide progress bar
+                view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
             }
         });
 

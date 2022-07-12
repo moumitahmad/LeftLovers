@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/rName"
-        android:layout_width="261dp"
+        android:layout_width="275dp"
         android:layout_height="35dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="3"
         android:textAlignment="center"
         android:textColor="#B2DFDB"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -25,7 +25,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/explore_cardview"
         android:layout_width="275dp"
-        android:layout_height="266dp"
+        android:layout_height="300dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"></ImageView>
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
     </com.google.android.material.card.MaterialCardView>
 
 

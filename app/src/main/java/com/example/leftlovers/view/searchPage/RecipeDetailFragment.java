@@ -1,5 +1,7 @@
 package com.example.leftlovers.view.searchPage;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,6 +70,14 @@ public class RecipeDetailFragment extends Fragment {
 
         // setup interactions
         setupBookmarkButton(view);
+
+        Button linkButton = view.findViewById(R.id.link_button);
+        linkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(chosenRecipe.getLink())));
+            }
+        });
 
         return view;
     }
