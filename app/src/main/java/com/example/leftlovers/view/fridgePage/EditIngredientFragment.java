@@ -111,7 +111,7 @@ public class EditIngredientFragment extends Fragment {
         // new or editing
         if(chosenIngredient == null) { // setup app page
             TextView title = view.findViewById(R.id.edit_title);
-            title.setText(R.string.add_title);
+//            title.setText(R.string.add_title);
             // setup default date
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));

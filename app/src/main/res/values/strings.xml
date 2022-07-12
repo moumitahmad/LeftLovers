@@ -22,9 +22,11 @@
     <string name="fridge_subtitle1">I\'ll die soon</string>
     <string name="fridge_subtitle2">Others</string>
 
-    // fride-edit fragment
+    // fridge-edit fragment
     <string name="edit_title"><b>Edit</b> \nyour food</string>
+    <string name="edit_title_landscape"><b>Edit</b> your food</string>
     <string name="add_title"><b>Add</b> \nyour food</string>
+    <string name="add_title_landscape"><b>Add</b> your food</string>
     <string name="ingredient_criteria1">name</string>
     <string name="ingredient_criteria2">amount:</string>
     <string name="ingredient_criteria3">expiration date</string>

@@ -18,15 +18,15 @@
         android:layout_marginRight="30dp"
         android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/edit_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_title"
-        android:layout_marginBottom="30dp"
-        style="@style/TextAppearance.Material3.HeadlineLarge" />
+            <TextView
+                android:id="@+id/edit_title"
+                style="@style/TextAppearance.Material3.HeadlineLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="@string/edit_title" />
 
-        <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name_text_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
