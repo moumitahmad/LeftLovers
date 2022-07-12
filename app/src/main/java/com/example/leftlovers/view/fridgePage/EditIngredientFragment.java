@@ -15,16 +15,24 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
+import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
+import com.example.leftlovers.service.DatabaseService;
+import com.example.leftlovers.service.ApiDataService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,6 +48,8 @@ public class EditIngredientFragment extends Fragment {
 
     private ActivityResultLauncher resultLauncher;
     private String uploadImagePath;
+    private ApiDataService apiDataService;
+    private DatabaseService databaseService;
 
     private static final int DEFAULT_AMOUNT = 1;
     private Ingredient chosenIngredient;
@@ -49,6 +59,15 @@ public class EditIngredientFragment extends Fragment {
     private String notes = "";
     private ImageView ingredientImageView;
     private Uri imageURI;
+
+    private AutoCompleteTextView inputName;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> listOfSuggestions;
+    private String selectedSuggestion;
+
+
+
+
 
     private enum InputError {
         NAME_ERROR,
@@ -62,6 +81,8 @@ public class EditIngredientFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        apiDataService = new ApiDataService(getActivity());
+        databaseService = new DatabaseService(getActivity());
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -78,6 +99,9 @@ public class EditIngredientFragment extends Fragment {
                     }
                 }
         );
+
+       // databaseService.removeAllIngredients();
+
         chosenIngredient = EditIngredientFragmentArgs.fromBundle(getArguments()).getChosenIngredient();
         super.onCreate(savedInstanceState);
     }
@@ -85,11 +109,18 @@ public class EditIngredientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_ingredient, container, false);
 
         TextView inputAmount = view.findViewById(R.id.amount_input);
-        TextInputLayout inputName = view.findViewById(R.id.name_text_field);
+
+        listOfSuggestions = new ArrayList<String>();
+        inputName = view.findViewById(R.id.autoComplete);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+        inputName.setAdapter(adapter);
+
+
         TextInputLayout inputExpirationDate = view.findViewById(R.id.expiration_date_text_field);
         TextInputLayout inputNotes = view.findViewById(R.id.notes_text_field);
 
@@ -101,13 +132,44 @@ public class EditIngredientFragment extends Fragment {
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
         } else { // setup edit page
-            // load existing data
-            inputName.getEditText().setText(chosenIngredient.getName());
+            // load exsisting data
+
+          //TODO !!!!  inputName.getEditText().setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
             // TODO: display image
             inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate().toString());
             inputNotes.getEditText().setText(chosenIngredient.getNotes());
         }
+
+        // setup search
+        inputName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String search =  s.toString();
+                if (!search.equals("")) {
+                    getSuggestFromApi(search);
+
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        inputName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                selectedSuggestion = adapter.getItem(position);
+            }
+        });
 
         // setup amount buttons
         Button minusButton = view.findViewById(R.id.minus_button);
@@ -137,6 +199,7 @@ public class EditIngredientFragment extends Fragment {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO
                 selectImg(getContext());
             }
         });
@@ -147,7 +210,6 @@ public class EditIngredientFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // get inputs
-                name = inputName.getEditText().getText().toString();
                 amount = Integer.parseInt(inputAmount.getText().toString());
                 notes = inputNotes.getEditText().getText().toString();
 
@@ -157,8 +219,9 @@ public class EditIngredientFragment extends Fragment {
                     // display errors
                     switch(inputError) {
                         case NAME_ERROR:
-                            inputName.setError("Every ingredient requires a name");
-                            inputName.setErrorEnabled(true);
+                            //TODO ERROR BEHANDLUNG
+                            // inputName.setError("Every ingredient requires a name");
+                            // inputName.setErrorEnabled(true);
                             break;
                         case DATE_ERROR:
                             inputExpirationDate.setError("This is not a valid Date. Required format: yyyy-mm-dd");
@@ -180,6 +243,27 @@ public class EditIngredientFragment extends Fragment {
                 Log.i("INGREDIENT", msg);
 
                 // TODO: save in local db
+                if (selectedSuggestion!=null) {
+                    if(selectedSuggestion.contains(" ")) {
+                        selectedSuggestion.replace(" ", "%20");
+                    }
+                    selectedSuggestion = "tomato%20soup";
+                    apiDataService.getIngredient(selectedSuggestion, new ApiConnection.IngredientResponseListener() {
+                        @Override
+                        public void onError(String message) {
+                            Log.i("Error", message);
+                        }
+
+                        @Override
+                        public void onResponse(Ingredient ingredient) {
+                            // Ingredient in DB speichern
+                            //TODO Fragment wechseln
+                            //TODO Ingredient ablaufdatum , menge, notes zuweisen
+                            databaseService.saveNewIngredient(ingredient);
+                            databaseService.loadIngredientList();
+                        }
+                    });
+                }
 
             }
         });
@@ -205,6 +289,25 @@ public class EditIngredientFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void getSuggestFromApi(String search) {
+        apiDataService.getSuggest(search, new ApiConnection.SuggestVolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                Log.d("ERROR", message);
+            }
+
+            @Override
+            public void onResponse(ArrayList<String> recipeList) {
+                if (recipeList.size() > 0) {
+                    listOfSuggestions = recipeList;
+                    adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+                    inputName.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void selectImg(Context context) {
@@ -234,10 +337,10 @@ public class EditIngredientFragment extends Fragment {
 
     private List<InputError> validateInputs() {
         List<InputError> inputErrors = new ArrayList<>();
-
-        if(name == null || name.equals("")) {
-            inputErrors.add(InputError.NAME_ERROR);
-        }
+        //TODO Ablaufdatum Validate
+     //   if(name == null || name.equals("")) {
+     //       inputErrors.add(InputError.NAME_ERROR);
+     //   }
 
         return inputErrors;
     }

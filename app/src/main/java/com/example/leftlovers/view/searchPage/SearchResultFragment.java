@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Recipe;
-import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class SearchResultFragment extends Fragment {
 
-    private ReceipeDataService receipeDataService;
+    private ApiDataService apiDataService;
     private String searchText;
     private @Nullable String[] filters;
     private ExpandableHeightGridView recipeGrid;
@@ -43,7 +43,7 @@ public class SearchResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receipeDataService = new ReceipeDataService(getActivity());
+        apiDataService = new ApiDataService(getActivity());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SearchResultFragment extends Fragment {
             }
         }
 
-        receipeDataService.getRecipesByCategory(searchText, filterQuery.toString(), new ApiConnection.ListVolleyResponseListener() {
+        apiDataService.getRecipeList(searchText, new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);

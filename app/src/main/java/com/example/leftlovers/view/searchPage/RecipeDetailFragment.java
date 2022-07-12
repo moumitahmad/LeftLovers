@@ -1,5 +1,6 @@
 package com.example.leftlovers.view.searchPage;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.service.DatabaseService;
-import com.example.leftlovers.service.ReceipeDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +44,7 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseService = new DatabaseService(getActivity());
+     //   databaseService.removeAllRecipes();
         // get chosen recipe
         chosenRecipe = RecipeDetailFragmentArgs.fromBundle(getArguments()).getChoosenRecipe();
     }
@@ -84,6 +85,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private void setupBookmarkButton(View view) {
         FloatingActionButton bookmarkButton = view.findViewById(R.id.bookmark_button);
+        isBookmarked(bookmarkButton);
+
         bookmarkButton.setOnClickListener(view1 -> {
             // toggle FloatingButton image
             int drawableResource = R.drawable.ic_baseline_bookmark_24;
@@ -93,7 +96,8 @@ public class RecipeDetailFragment extends Fragment {
                 databaseService.deleteRecipe(chosenRecipe);
             } else {
                 isBookmarked = true;
-                databaseService.saveNewRecipe(chosenRecipe);
+                int recipeID = databaseService.saveNewRecipe(chosenRecipe);
+                chosenRecipe.setRecipeId(recipeID);
 
             }
             bookmarkButton.setImageResource(drawableResource);
@@ -102,6 +106,16 @@ public class RecipeDetailFragment extends Fragment {
             databaseService.loadRecipeList();
 
         });
+    }
+
+    private void isBookmarked(FloatingActionButton bookmarkButton) {
+        List<Recipe> recipeFound = databaseService.searchRecipeByURL(chosenRecipe.getLink());
+        if(recipeFound.size()>0) {
+            isBookmarked = true;
+            int idOfFound = recipeFound.get(0).getRecipeId();
+            chosenRecipe.setRecipeId(idOfFound);
+            bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_24);
+        }
     }
 
     public static class IngredientGridAdapter extends BaseAdapter {

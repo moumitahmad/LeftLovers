@@ -7,12 +7,12 @@ import com.example.leftlovers.database.api.ApiConnection;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class ReceipeDataService {
+public class ApiDataService {
 
     ApiConnection apiConnection;
     Context context;
 
-    public ReceipeDataService(Context context) {
+    public ApiDataService(Context context) {
         this.context = context;
         apiConnection = new ApiConnection(context);
     }
@@ -24,18 +24,13 @@ public class ReceipeDataService {
         apiConnection.getRecipe(searchtext, volleyResponseListener);
     }
 
-    //Get Recipe by Category/Balance/Diet usw was es da noch so gibt
-    //überlegen ob man alle categorien in eine funktion rein bekommt
-    // und ob man getrennte funktionen braucht wenn "searchtext" leer usw
-    // es gibt : Diet, Health Labels, Meal Types, Dish Types, Cuisine Types
-    // vorerst wird cuisine type genommen
+    //Get Recipe by Category/Balance/Diet
 
     public void getRecipesByCategory(String searchtext, String filterQuery, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
         apiConnection.getListByCategory(searchtext, filterQuery, listVolleyResponseListener);
     }
 
     //Get Ingridient
-    //Weitere api einbinden
     public void getIngredient(String searchText, ApiConnection.IngredientResponseListener ingredientResponseListener) {
         apiConnection.getIngredient(searchText, ingredientResponseListener);
     }
@@ -68,5 +63,10 @@ public class ReceipeDataService {
 
     public void getPossibleFiltersFromAPI(ApiConnection.FilterVolleyResponseListener filterVolleyResponseListener) {
         apiConnection.getPossibleFiltersFromAPI(filterVolleyResponseListener);
+    }
+
+    //Get suggestions to ingredient names
+    public  void getSuggest(String searchText, ApiConnection.SuggestVolleyResponseListener suggestVolleyResponseListener) {
+        apiConnection.getSuggest(searchText, suggestVolleyResponseListener);
     }
 }
