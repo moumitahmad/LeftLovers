@@ -36,9 +36,16 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:paddingBottom="20dp"
-            android:text="load more"
+            android:text="@string/more_button"
             android:textColor="@color/primary_dark"
             android:visibility="invisible"/>
-
+        
+        <TextView
+            android:id="@+id/result_error_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/result_error_text"
+            android:textColor="@color/error"
+            android:visibility="invisible"/>
 
 </LinearLayout>

@@ -10,6 +10,9 @@
     // search
     <string name="search_title"><b>Search</b> \nfor your meal</string>
     <string name="search_title_landscape"><b>Search</b> for your meal</string>
+    <string name="more_button">load more</string>
+    <string name="result_error_text">No results found.</string>
+    <string name="api_connection_error_text">Check your internet Connection. /nThe Recipe API could not be reached.</string>
 
     // recipe detail
     <string name="recipe_name">Recipe Name</string>

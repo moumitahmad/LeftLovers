@@ -40,8 +40,9 @@ public class SearchResultFragment extends Fragment {
     private @Nullable String[] filters;
     private @Nullable String[] chosenIngredients;
     private ExpandableHeightGridView recipeGrid;
+    private static final int MAX_INGREDIENTS_LOAD = 15;
     private int startID = 0;
-    private int endID = 15;
+    private int endID = MAX_INGREDIENTS_LOAD;
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -76,14 +77,26 @@ public class SearchResultFragment extends Fragment {
             searchText += ", " + ingredient;
         }
 
+        TextView errorText = view.findViewById(R.id.result_error_text);
+
         apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), startID, endID, new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
+                errorText.setText(R.string.api_connection_error_text);
+                errorText.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onResponse(List<Recipe> recipeList) {
+                errorText.setVisibility(View.INVISIBLE);
+
+                if(recipeList.isEmpty()) {
+                    errorText.setText(R.string.result_error_text);
+                    errorText.setVisibility(View.VISIBLE);
+                    return;
+                }
 
                 recipeGrid = view.findViewById(R.id.recipe_card_grid);
 
@@ -93,12 +106,12 @@ public class SearchResultFragment extends Fragment {
 
                 // hide progress bar
                 view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
-                if(recipeList.size() == 15)
+                if(recipeList.size() == MAX_INGREDIENTS_LOAD)
                     view.findViewById(R.id.load_more_button).setVisibility(View.VISIBLE);
 
                 // update start/end-ID
                 startID = endID;
-                endID += 15;
+                endID += MAX_INGREDIENTS_LOAD;
             }
         });
 
@@ -113,10 +126,14 @@ public class SearchResultFragment extends Fragment {
                     @Override
                     public void onError(String message) {
                         Log.d("Api Connection Error", message);
+                        errorText.setText(R.string.api_connection_error_text);
+                        errorText.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onResponse(List<Recipe> recipeList) {
+                        errorText.setVisibility(View.INVISIBLE);
 
                         ExpandableHeightGridView newGrid = new ExpandableHeightGridView(getContext());
                         newGrid.setGravity(Gravity.CENTER);
@@ -131,8 +148,12 @@ public class SearchResultFragment extends Fragment {
 
                         // hide progress bar
                         view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
-                        if(recipeList.size() == 15)
+                        if(recipeList.size() == MAX_INGREDIENTS_LOAD)
                             view.findViewById(R.id.load_more_button).setVisibility(View.VISIBLE);
+
+                        // update start/end-ID
+                        startID = endID;
+                        endID += MAX_INGREDIENTS_LOAD;
                     }
                 });
             }
