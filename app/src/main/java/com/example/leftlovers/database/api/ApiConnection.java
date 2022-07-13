@@ -131,9 +131,15 @@ public class ApiConnection {
                     JSONArray allIngredientInfos = wholeResponse.getJSONArray("parsed");
                     JSONObject jsonIngredient = allIngredientInfos.getJSONObject(0).getJSONObject("food");
                     nameIngredient = jsonIngredient.getString("label");
-                    urlImgIngredient = jsonIngredient.getString("image");
                     ingredient.setName(nameIngredient);
-                    ingredient.setImgUrl(urlImgIngredient);
+                    if (jsonIngredient.toString().contains("image")) {
+                        urlImgIngredient = jsonIngredient.getString("image");
+                        ingredient.setImgUrl(urlImgIngredient);
+                    } else {
+                        ingredient.setImgUrl("https://cms.groupeditors.com/img/ghnw20170509-080329-833.jpg");
+                    }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

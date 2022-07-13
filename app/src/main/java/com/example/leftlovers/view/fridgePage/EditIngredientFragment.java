@@ -274,6 +274,7 @@ public class EditIngredientFragment extends Fragment {
                     String dateString = expirationDate.toString();
                     chosenIngredient.setExpirationDate(dateString);
                     chosenIngredient.setNotes(notes);
+                    chosenIngredient.setAmount(amount);
                     if (fromDb == false) {
                         // HIER update oder insert
                         int id = databaseService.saveNewIngredient(chosenIngredient);
