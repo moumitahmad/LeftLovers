@@ -16,7 +16,7 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipe")
     List<Recipe> getAllRecipes();
 
-    @Query("SELECT * FROM recipe WHERE recipe_link=:URL")
+    @Query("SELECT * FROM recipe WHERE recipe_id=:URL")
     List<Recipe> searchRecipeByURL(String URL);
 
     @Insert

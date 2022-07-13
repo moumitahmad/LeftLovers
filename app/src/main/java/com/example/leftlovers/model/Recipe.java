@@ -20,11 +20,15 @@ public class Recipe implements Parcelable {
     @ColumnInfo(name = "recipe_name")
     private String name;
 
-    @ColumnInfo(name = "recipe_link")
-    private String link;
+    @ColumnInfo(name = "recipe_id")
+    private String identifingUri;
+
+    @ColumnInfo(name = "recipe_img")
+    private String imgUrl;
 
     @Ignore
-    private String imgUrl;
+    private String instructionsUrl;
+
     @Ignore
     private boolean isBookmarked = false;
     @Ignore
@@ -32,11 +36,12 @@ public class Recipe implements Parcelable {
 
 
     @Ignore
-    public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String link) {
+    public Recipe(String name, String imgUrl, List<Ingredient> ingredients, String identifingUri, String instructionsUrl) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.ingredients = ingredients;
-        this.link = link;
+        this.identifingUri = identifingUri;
+        this.instructionsUrl = instructionsUrl;
     }
 
 
@@ -61,8 +66,8 @@ public class Recipe implements Parcelable {
     }
 
 
-    public String getLink() {
-        return link;
+    public String getIdentifingUri() {
+        return identifingUri;
     }
 
     public void setBookmarked(boolean bookmarked) {
@@ -89,9 +94,17 @@ public class Recipe implements Parcelable {
         this.ingredients = ingredients;
     }
 
+    public String getInstructionsUrl() {
+        return instructionsUrl;
+    }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setInstructionsUrl(String instructionsUrl) {
+        this.instructionsUrl = instructionsUrl;
+    }
+
+
+    public void setIdentifingUri(String identifingUri) {
+        this.identifingUri = identifingUri;
     }
 
     @Override
