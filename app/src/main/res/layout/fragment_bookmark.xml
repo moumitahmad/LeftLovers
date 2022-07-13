@@ -28,6 +28,22 @@
                 android:layout_marginTop="80dp"
                 style="@style/TextAppearance.Material3.HeadlineLarge" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading_animation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:trackCornerRadius="3dp" />
+
+            <TextView
+                android:id="@+id/bookmark_error_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bookmark_error_text"
+                android:textColor="@color/error"
+                android:visibility="invisible"/>
+
             <com.example.leftlovers.util.ExpandableHeightGridView
                 android:id="@+id/bookmark_grid"
                 android:layout_width="match_parent"

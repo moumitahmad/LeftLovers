@@ -76,7 +76,7 @@ public class RecipeDetailFragment extends Fragment {
         linkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(chosenRecipe.getLink())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(chosenRecipe.getInstructionsUrl())));
             }
         });
 
@@ -102,14 +102,12 @@ public class RecipeDetailFragment extends Fragment {
             }
             bookmarkButton.setImageResource(drawableResource);
             // TODO: save/delete bookmark in local Database
-            //zum Debuggen ->
-            databaseService.loadRecipeList();
 
         });
     }
 
     private void isBookmarked(FloatingActionButton bookmarkButton) {
-        List<Recipe> recipeFound = databaseService.searchRecipeByURL(chosenRecipe.getLink());
+        List<Recipe> recipeFound = databaseService.searchRecipeByURL(chosenRecipe.getIdentifingUri());
         if(recipeFound.size()>0) {
             isBookmarked = true;
             int idOfFound = recipeFound.get(0).getRecipeId();

@@ -45,13 +45,13 @@ public class ApiDataService {
 
     //Get Recipe by Identifier (URL)
 
-    public void getUrl(String recipeUrl, ApiConnection.VolleyResponseListener volleyResponseListener) throws UnsupportedEncodingException {
+    public void getRecipeByIdentifier(String recipeUrl, ApiConnection.VolleyResponseListener volleyResponseListener) throws UnsupportedEncodingException {
         // URL needs to be encoded to send it to Api
         // Url zum Debugen :
         //  recipeUrl = "http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_1b6dfeaf0988f96b187c7c9bb69a14fa&app_id=23b2fea2";
 
         String url = URLEncoder.encode(recipeUrl, "UTF-8");
-        apiConnection.getRecipeByIdentifier(recipeUrl, volleyResponseListener);
+        apiConnection.getRecipeByIdentifier(url, volleyResponseListener);
     }
 
     //Get Random Recipe List
