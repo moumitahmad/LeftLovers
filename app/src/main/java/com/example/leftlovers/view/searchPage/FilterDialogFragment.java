@@ -8,14 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
+import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.service.ApiDataService;
-import com.example.leftlovers.util.ExpandableHeightGridView;
+import com.example.leftlovers.service.DatabaseService;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import org.json.JSONArray;
@@ -31,6 +33,11 @@ import java.util.List;
 public class FilterDialogFragment extends Fragment {
 
     private ApiDataService apiDataService;
+    private DatabaseService databaseService;
+
+    private List<Ingredient> ownIngredients;
+
+    private static List<String> chosenIngredientFilter = new ArrayList<>();
 
     private List<String> dietFilters = new ArrayList<>();
     private List<String> healthFilters = new ArrayList<>();
@@ -44,6 +51,10 @@ public class FilterDialogFragment extends Fragment {
         return chosenFilters;
     }
 
+    public static List<String> getChosenIngredientFilter() {
+        return chosenIngredientFilter;
+    }
+
 
     public FilterDialogFragment() {
         // Required empty public constructor
@@ -52,6 +63,7 @@ public class FilterDialogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         apiDataService = new ApiDataService(getActivity());
+        databaseService = new DatabaseService(getActivity());
         super.onCreate(savedInstanceState);
     }
 
@@ -60,6 +72,11 @@ public class FilterDialogFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_filter_dialog, container, false);
+
+        // setup ingredient filter
+        ownIngredients = databaseService.loadIngredientList();
+        LinearLayout ingredientLayout = view.findViewById(R.id.own_ingredients_filter);
+        setupIngredientFilterUI(ingredientLayout);
 
         apiDataService.getPossibleFiltersFromAPI(new ApiConnection.FilterVolleyResponseListener() {
             @Override
@@ -81,6 +98,24 @@ public class FilterDialogFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setupIngredientFilterUI(LinearLayout ingredientLayout) {
+        for(Ingredient ingredient: ownIngredients) {
+            MaterialCheckBox ingredientFilter = new MaterialCheckBox(getContext());
+            ingredientFilter.setText(ingredient.getName());
+            ingredientFilter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) { // ingredients selected
+                        chosenIngredientFilter.add(ingredient.getName());
+                    } else { // ingredient deselected
+                        chosenIngredientFilter.remove(ingredient.getName());
+                    }
+                }
+            });
+            ingredientLayout.addView(ingredientFilter);
+        }
     }
 
     private void setupRadioGroup(RadioGroup group, int categoryID, List<String> filters) {

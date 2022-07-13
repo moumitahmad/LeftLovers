@@ -32,8 +32,9 @@ import java.util.List;
 public class SearchResultFragment extends Fragment {
 
     private ApiDataService apiDataService;
-    private String searchText;
+    private @Nullable String searchText;
     private @Nullable String[] filters;
+    private @Nullable String[] chosenIngredients;
     private ExpandableHeightGridView recipeGrid;
 
     public SearchResultFragment() {
@@ -56,6 +57,7 @@ public class SearchResultFragment extends Fragment {
         // get chosen recipe
         searchText = SearchResultFragmentArgs.fromBundle(getArguments()).getSearchText();
         filters = SearchResultFragmentArgs.fromBundle(getArguments()).getFilters();
+        chosenIngredients = SearchResultFragmentArgs.fromBundle(getArguments()).getChosenIngredients();
 
         StringBuilder filterQuery = new StringBuilder();
         for(int i=0; i<filters.length; i++) {
@@ -64,7 +66,11 @@ public class SearchResultFragment extends Fragment {
             }
         }
 
-        apiDataService.getRecipeList(searchText, new ApiConnection.ListVolleyResponseListener() {
+        for(String ingredient: chosenIngredients) {
+            searchText += ", " + ingredient;
+        }
+
+        apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);

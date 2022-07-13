@@ -37,12 +37,17 @@
         tools:layout="@layout/fragment_search_result" >
         <argument
             android:name="searchText"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_searchResultFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
         <argument
             android:name="filters"
+            app:argType="string[]"
+            app:nullable="true" />
+        <argument
+            android:name="chosenIngredients"
             app:argType="string[]"
             app:nullable="true" />
     </fragment>

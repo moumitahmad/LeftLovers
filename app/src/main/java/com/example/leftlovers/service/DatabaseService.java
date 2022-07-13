@@ -44,11 +44,8 @@ public class DatabaseService {
         db.recipeDao().removeAllRecipes();
     }
 
-    public void loadIngredientList() {
-        List<Ingredient> ingredientList = db.ingredientDao().getAllIngredients();
-        for (Ingredient i:ingredientList) {
-            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", i.getName());
-        }
+    public List<Ingredient> loadIngredientList() {
+        return db.ingredientDao().getAllIngredients();
     }
 
 

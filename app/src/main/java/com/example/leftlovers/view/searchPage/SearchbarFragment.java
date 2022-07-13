@@ -88,9 +88,11 @@ public class SearchbarFragment extends Fragment {
     private void displaySearchResults() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         String[] filters = FilterDialogFragment.getChosenFilters();
+        String[] chosenIngredients = FilterDialogFragment.getChosenIngredientFilter().toArray(new String[0]);
         Bundle args = new Bundle();
         args.putString("searchText", searchText);
         args.putStringArray("filters", filters);
+        args.putStringArray("chosenIngredients", chosenIngredients);
         transaction.setReorderingAllowed(true);
         transaction.replace(R.id.search_page_content, SearchResultFragment.class, args);
         transaction.commit();

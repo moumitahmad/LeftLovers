@@ -13,13 +13,12 @@
         style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_marginBottom="10dp" />
 
-    <com.example.leftlovers.util.ExpandableHeightGridView
-        android:id="@+id/own_ingredients_grid"
+    <LinearLayout
+        android:id="@+id/own_ingredients_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:numColumns="3"
-        android:layout_marginBottom="15dp" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
