@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.model.Recipe;
@@ -21,6 +22,9 @@ public interface IngredientDao {
 
     @Insert
     long insertIngredient(Ingredient ingredient);
+
+    @Update
+    void updateIngredient(Ingredient ingredient);
 
     @Delete
     void deleteIngredient(Ingredient ingredient);

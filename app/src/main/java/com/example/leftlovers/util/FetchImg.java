@@ -32,7 +32,7 @@ public class FetchImg extends Thread {
         }
 
         imageHandler.post(() -> {
-            Log.i("fetching image-url: ", url);
+            Log.i("fetching image-url: ", url+" ");
             img.setImageBitmap(bitmap);
         });
     }

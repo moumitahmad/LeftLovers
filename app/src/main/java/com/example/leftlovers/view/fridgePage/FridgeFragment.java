@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.model.Ingredient;
+import com.example.leftlovers.service.DatabaseService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +32,8 @@ public class FridgeFragment extends Fragment {
 
     private final List<Ingredient> expiringIngredients = new ArrayList<Ingredient>();
     private final List<Ingredient> otherIngredients = new ArrayList<Ingredient>();
+    private List<Ingredient> allIngredients = new ArrayList<Ingredient>();
+    private DatabaseService databaseService;
 
     public FridgeFragment() {
         // Required empty public constructor
@@ -47,10 +50,12 @@ public class FridgeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fridge, container, false);
+        databaseService = new DatabaseService(getActivity());
+       // databaseService.removeAllIngredients();
 
 
         // TODO: mit room Abfrage austauschen
-        String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";
+    /*    String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";
         Ingredient i1 = new Ingredient("Tomato", url, 2, LocalDate.now(), "this are some notes");
         Ingredient i2 = new Ingredient("Cherry", url, 5, LocalDate.parse("2022-08-12"), "this are some notes");
         Ingredient i4 = new Ingredient("Eggs", url, 10, LocalDate.parse("2030-12-12"), "this are some notes");
@@ -66,18 +71,20 @@ public class FridgeFragment extends Fragment {
         otherIngredients.add(i4);
         otherIngredients.add(i4);
         otherIngredients.add(i5);
-        otherIngredients.add(i5);
+        otherIngredients.add(i5); */
+
+        allIngredients = databaseService.loadIngredientList();
 
         // setup ui
         // expiring section
         ExpandableHeightGridView exIngredientsGrid = view.findViewById(R.id.expiring_ingredients_grid);
-        IngredientGridAdapter iga1 = new IngredientGridAdapter(expiringIngredients, requireActivity().getLayoutInflater());
+        IngredientGridAdapter iga1 = new IngredientGridAdapter(allIngredients, requireActivity().getLayoutInflater());
         exIngredientsGrid.setAdapter(iga1);
         exIngredientsGrid.setExpanded(true);
 
         // other section
         ExpandableHeightGridView otherIngredientsGrid = view.findViewById(R.id.other_ingredients_grid);
-        IngredientGridAdapter iga2 = new IngredientGridAdapter(otherIngredients, requireActivity().getLayoutInflater());
+        IngredientGridAdapter iga2 = new IngredientGridAdapter(allIngredients, requireActivity().getLayoutInflater());
         otherIngredientsGrid.setAdapter(iga2);
         otherIngredientsGrid.setExpanded(true);
 

@@ -33,6 +33,7 @@ import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Ingredient;
 import com.example.leftlovers.service.DatabaseService;
 import com.example.leftlovers.service.ApiDataService;
+import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -59,6 +60,7 @@ public class EditIngredientFragment extends Fragment {
     private String notes = "";
     private ImageView ingredientImageView;
     private Uri imageURI;
+    private boolean fromDb=false;
 
     private AutoCompleteTextView inputName;
     private ArrayAdapter<String> adapter;
@@ -100,7 +102,6 @@ public class EditIngredientFragment extends Fragment {
                 }
         );
 
-       // databaseService.removeAllIngredients();
 
         chosenIngredient = EditIngredientFragmentArgs.fromBundle(getArguments()).getChosenIngredient();
         super.onCreate(savedInstanceState);
@@ -123,6 +124,7 @@ public class EditIngredientFragment extends Fragment {
 
         TextInputLayout inputExpirationDate = view.findViewById(R.id.expiration_date_text_field);
         TextInputLayout inputNotes = view.findViewById(R.id.notes_text_field);
+        ingredientImageView = view.findViewById(R.id.ingredient_image);
 
         // new or editing
         if(chosenIngredient == null) { // setup app page
@@ -131,13 +133,16 @@ public class EditIngredientFragment extends Fragment {
             // setup default date
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
+            chosenIngredient = new Ingredient();
         } else { // setup edit page
             // load exsisting data
-
-          //TODO !!!!  inputName.getEditText().setText(chosenIngredient.getName());
+            fromDb = true;
+            inputName.setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
-            // TODO: display image
-            inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate().toString());
+            // TODO: display image fehler beheben name wird nicht geladen
+
+            new FetchImg(chosenIngredient.getImgUrl(), ingredientImageView).start();
+            inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate());
             inputNotes.getEditText().setText(chosenIngredient.getNotes());
         }
 
@@ -168,6 +173,26 @@ public class EditIngredientFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 selectedSuggestion = adapter.getItem(position);
+
+                if(selectedSuggestion.contains(" "))
+                    selectedSuggestion.replace(" ", "%20");
+
+                apiDataService.getIngredient(selectedSuggestion, new ApiConnection.IngredientResponseListener() {
+                    @Override
+                    public void onError(String message) {
+                        Log.i("Error", message);
+                    }
+
+                    @Override
+                    public void onResponse(Ingredient ingredient) {
+                        chosenIngredient.setName(ingredient.getName());
+                        chosenIngredient.setImgUrl(ingredient.getImgUrl());
+                        new FetchImg(chosenIngredient.getImgUrl(), ingredientImageView).start();
+                        //TODO Button enable setzen
+                    }
+                });
+
+
             }
         });
 
@@ -199,7 +224,6 @@ public class EditIngredientFragment extends Fragment {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 selectImg(getContext());
             }
         });
@@ -242,29 +266,21 @@ public class EditIngredientFragment extends Fragment {
                         "\n notes: " + notes;
                 Log.i("INGREDIENT", msg);
 
-                // TODO: save in local db
+                // Ingredient in DB speichern
                 if (selectedSuggestion!=null) {
-                    if(selectedSuggestion.contains(" ")) {
-                        selectedSuggestion.replace(" ", "%20");
+                    String dateString = expirationDate.toString();
+                    chosenIngredient.setExpirationDate(dateString);
+                    chosenIngredient.setNotes(notes);
+                    if (fromDb == false) {
+                        // HIER update oder insert
+                        int id = databaseService.saveNewIngredient(chosenIngredient);
+                        chosenIngredient.setIngredientId(id);
+                        databaseService.loadIngredientList();
+                    } else {
+                        databaseService.updateIngredient(chosenIngredient);
                     }
-                    selectedSuggestion = "tomato%20soup";
-                    apiDataService.getIngredient(selectedSuggestion, new ApiConnection.IngredientResponseListener() {
-                        @Override
-                        public void onError(String message) {
-                            Log.i("Error", message);
-                        }
-
-                        @Override
-                        public void onResponse(Ingredient ingredient) {
-                            // Ingredient in DB speichern
-                            //TODO Fragment wechseln
-                            //TODO Ingredient ablaufdatum , menge, notes zuweisen
-                            databaseService.saveNewIngredient(ingredient);
-                            databaseService.loadIngredientList();
-                        }
-                    });
+                    returnToFridge(v);
                 }
-
             }
         });
 
@@ -274,6 +290,8 @@ public class EditIngredientFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: delete ingredient from local database
+                databaseService.deleteIngredient(chosenIngredient);
+                returnToFridge(v);
             }
         });
 
@@ -283,12 +301,16 @@ public class EditIngredientFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // navigate back to fridge fragment
-                NavDirections action = EditIngredientFragmentDirections.actionEditIngredientFragmentToFridgeFragment();
-                Navigation.findNavController(v).navigate(action);
+                returnToFridge(v);
             }
         });
 
         return view;
+    }
+
+    private void returnToFridge(View v) {
+        NavDirections action = EditIngredientFragmentDirections.actionEditIngredientFragmentToFridgeFragment();
+        Navigation.findNavController(v).navigate(action);
     }
 
     private void getSuggestFromApi(String search) {

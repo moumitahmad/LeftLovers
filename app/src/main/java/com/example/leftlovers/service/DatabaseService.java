@@ -44,17 +44,21 @@ public class DatabaseService {
         db.recipeDao().removeAllRecipes();
     }
 
-    public void loadIngredientList() {
+    public List<Ingredient> loadIngredientList() {
         List<Ingredient> ingredientList = db.ingredientDao().getAllIngredients();
         for (Ingredient i:ingredientList) {
-            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", i.getName());
+            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", i.getName() + i.getIngredientId());
         }
+        return ingredientList;
     }
 
 
     public int saveNewIngredient(Ingredient ingredient) {
         return (int) db.ingredientDao().insertIngredient(ingredient);
-        // finish();
+    }
+
+    public void updateIngredient(Ingredient ingredient) {
+        db.ingredientDao().updateIngredient(ingredient);
     }
 
     public void deleteIngredient(Ingredient ingredient) {

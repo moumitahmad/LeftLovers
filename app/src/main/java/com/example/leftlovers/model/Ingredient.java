@@ -32,16 +32,15 @@ public class Ingredient implements Parcelable {
     // own ingredient
     @ColumnInfo(name = "amount")
     private int amount;
- // TODO  @ColumnInfo(name = "expirationDate")
-    @Ignore
-    private LocalDate expirationDate;
+    @ColumnInfo(name = "expirationDate")
+    private String expirationDate;
 
 
     @ColumnInfo(name = "notes")
     private String notes;
 
     @Ignore
-    public Ingredient(String name, String imgUrl, int amount, LocalDate expirationDate, String notes) {
+    public Ingredient(String name, String imgUrl, int amount, String expirationDate, String notes) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.amount = amount;
@@ -82,7 +81,7 @@ public class Ingredient implements Parcelable {
         return amount;
     }
 
-    public LocalDate getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
@@ -106,7 +105,7 @@ public class Ingredient implements Parcelable {
         this.amount = amount;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
