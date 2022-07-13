@@ -16,6 +16,7 @@ import com.example.leftlovers.R;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.util.FetchImg;
 import com.example.leftlovers.view.searchPage.SearchFragmentDirections;
+//import com.example.leftlovers.view.searchPage.SearchFragmentDirections;
 
 import java.util.List;
 
@@ -72,7 +73,8 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             exploreView.findViewById(R.id.explore_cardview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NavDirections action = com.example.leftlovers.view.searchPage.SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(mRecipes.get(holder.getAdapterPosition()));
+                    //TODO: action2 entfernen
+                    NavDirections action = com.example.leftlovers.view.searchPage.SearchFragmentDirections.actionSearchFragment2ToRecipeDetailFragment(mRecipes.get(holder.getAdapterPosition()));
                     Navigation.findNavController(view).navigate(action);
                 }
             });

@@ -19,11 +19,8 @@ public class DatabaseService {
         db = AppDatabase.getDbInstance(context);
     }
 
-    public void loadRecipeList() {
-        List<Recipe> recipeList = db.recipeDao().getAllRecipes();
-        for (Recipe r:recipeList) {
-            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", r.getName());
-        }
+    public List<Recipe> loadRecipeList() {
+        return db.recipeDao().getAllRecipes();
     }
 
     public List<Recipe> searchRecipeByURL(String url) {
@@ -45,11 +42,7 @@ public class DatabaseService {
     }
 
     public List<Ingredient> loadIngredientList() {
-        List<Ingredient> ingredientList = db.ingredientDao().getAllIngredients();
-        for (Ingredient i:ingredientList) {
-            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", i.getName() + i.getIngredientId());
-        }
-        return ingredientList;
+        return db.ingredientDao().getAllIngredients();
     }
 
 

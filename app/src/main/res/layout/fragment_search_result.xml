@@ -7,39 +7,45 @@
     android:orientation="vertical"
     tools:context=".view.searchPage.SearchResultFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <com.example.leftlovers.util.ExpandableHeightGridView
+            android:id="@+id/recipe_card_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="30dp">
+            android:gravity="center"
+            android:numColumns="3" />
 
-            <fragment
-                android:id="@+id/searchbarFragment"
-                android:name="com.example.leftlovers.view.searchPage.SearchbarFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+        <LinearLayout
+            android:id="@+id/result_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/loading_animation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                app:trackCornerRadius="3dp" />
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loading_animation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:trackCornerRadius="3dp" />
 
-            <com.example.leftlovers.util.ExpandableHeightGridView
-                android:id="@+id/recipe_card_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:numColumns="3" />
-
-        </LinearLayout>
-    </ScrollView>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/load_more_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:paddingBottom="20dp"
+            android:text="@string/more_button"
+            android:textColor="@color/primary_dark"
+            android:visibility="invisible"/>
+        
+        <TextView
+            android:id="@+id/result_error_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/result_error_text"
+            android:textColor="@color/error"
+            android:visibility="invisible"/>
 
 </LinearLayout>

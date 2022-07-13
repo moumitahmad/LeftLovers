@@ -124,6 +124,7 @@ public class EditIngredientFragment extends Fragment {
 
         TextInputLayout inputExpirationDate = view.findViewById(R.id.expiration_date_text_field);
         TextInputLayout inputNotes = view.findViewById(R.id.notes_text_field);
+        Button deleteButton = view.findViewById(R.id.delete_button);
         ingredientImageView = view.findViewById(R.id.ingredient_image);
 
         // new or editing
@@ -133,6 +134,7 @@ public class EditIngredientFragment extends Fragment {
             // setup default date
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
+            deleteButton.setVisibility(View.INVISIBLE);
             chosenIngredient = new Ingredient();
         } else { // setup edit page
             // load exsisting data
@@ -285,7 +287,6 @@ public class EditIngredientFragment extends Fragment {
         });
 
         // delete button
-        Button deleteButton = view.findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

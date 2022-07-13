@@ -26,8 +26,8 @@ public class ApiDataService {
 
     //Get Recipe by Category/Balance/Diet
 
-    public void getByCategory(String searchtext, String category, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
-        apiConnection.getListByCategory(searchtext, category, listVolleyResponseListener);
+    public void getRecipesByCategory(String searchtext, String filterQuery, int startID, int endID,ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        apiConnection.getListByCategory(searchtext, filterQuery, startID, endID, listVolleyResponseListener);
     }
 
     //Get Ingridient
@@ -55,10 +55,14 @@ public class ApiDataService {
     }
 
     //Get Random Recipe List
-    public void getRandom(ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRandomRecipes(ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
         int range = (20 - 2) + 1;
         int numberOfMinIngredients = (int)(Math.random() * range) + 2;
-        apiConnection.getRandom(numberOfMinIngredients, listVolleyResponseListener);
+        apiConnection.getRandomRecipes(numberOfMinIngredients, listVolleyResponseListener);
+    }
+
+    public void getPossibleFiltersFromAPI(ApiConnection.FilterVolleyResponseListener filterVolleyResponseListener) {
+        apiConnection.getPossibleFiltersFromAPI(filterVolleyResponseListener);
     }
 
     //Get suggestions to ingredient names

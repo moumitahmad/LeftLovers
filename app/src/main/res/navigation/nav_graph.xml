@@ -5,18 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/searchFragment">
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.leftlovers.view.searchPage.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_searchResultFragment"
-            app:destination="@id/searchResultFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/fridgeFragment"
         android:name="com.example.leftlovers.view.fridgePage.FridgeFragment"
         android:label="fragment_fridge"
@@ -25,14 +13,18 @@
             android:id="@+id/action_fridgeFragment_to_editIngredientFragment"
             app:destination="@id/editIngredientFragment" />
         <action
-            android:id="@+id/action_fridgeFragment_to_searchFragment"
+            android:id="@+id/action_fridgeFragment_to_searchFragment2"
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="com.example.leftlovers.view.BookmarkFragment"
         android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.leftlovers.view.searchPage.RecipeDetailFragment"
@@ -49,10 +41,19 @@
         tools:layout="@layout/fragment_search_result" >
         <argument
             android:name="searchText"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_searchResultFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <argument
+            android:name="filters"
+            app:argType="string[]"
+            app:nullable="true" />
+        <argument
+            android:name="chosenIngredients"
+            app:argType="string[]"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/editIngredientFragment"
@@ -66,5 +67,19 @@
         <action
             android:id="@+id/action_editIngredientFragment_to_fridgeFragment"
             app:destination="@id/fridgeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterDialogFragment"
+        android:name="com.example.leftlovers.view.searchPage.FilterDialogFragment"
+        android:label="fragment_filter_dialog"
+        tools:layout="@layout/fragment_filter_dialog" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.leftlovers.view.searchPage.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment2_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
 </navigation>

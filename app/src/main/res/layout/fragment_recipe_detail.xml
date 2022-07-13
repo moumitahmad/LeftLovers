@@ -23,7 +23,7 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="Recipe Image Banner" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -35,34 +35,46 @@
                     style="@style/TextAppearance.Material3.HeadlineLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:text="@string/recipe_name"
-                    android:paddingBottom="10dp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/link_button"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:paddingBottom="20dp"
+                    android:text="show recipe instructions"
+                    android:textColor="@color/primary_dark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_name" />
 
                 <TextView
+                    android:id="@+id/ingredient_title"
                     style="@style/TextAppearance.Material3.HeadlineSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:text="@string/ingredient_title"
-                    android:paddingBottom="5dp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/link_button" />" />
 
                 <com.example.leftlovers.util.ExpandableHeightGridView
                     android:id="@+id/ingredients_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:listSelector="@android:color/transparent"
                     android:numColumns="3"
-                    android:paddingBottom="20dp"
-                    android:listSelector="@android:color/transparent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/ingredient_title"
+                    tools:layout_editor_absoluteX="40dp" />
 
-                <TextView
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/recipe_text"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -74,6 +86,7 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_baseline_bookmark_border_24"
         app:fabSize="normal"
+        app:backgroundTint="@color/secondary_main"
         android:contentDescription="Bookmark Button" />
 
 </FrameLayout>
