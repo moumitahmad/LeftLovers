@@ -26,8 +26,8 @@ public class ApiDataService {
 
     //Get Recipe by Category/Balance/Diet
 
-    public void getRecipesByCategory(String searchtext, String filterQuery, ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
-        apiConnection.getListByCategory(searchtext, filterQuery, listVolleyResponseListener);
+    public void getRecipesByCategory(String searchtext, String filterQuery, int startID, int endID,ApiConnection.ListVolleyResponseListener listVolleyResponseListener) {
+        apiConnection.getListByCategory(searchtext, filterQuery, startID, endID, listVolleyResponseListener);
     }
 
     //Get Ingridient

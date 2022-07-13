@@ -213,8 +213,8 @@ public class ApiConnection {
     }
 
     //Get Recipe by Category/Balance/Diet
-    public void getListByCategory(String searchText, String filterQuery, ListVolleyResponseListener listVolleyResponseListener) {
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + filterQuery;
+    public void getListByCategory(String searchText, String filterQuery, int startID, int endID, ListVolleyResponseListener listVolleyResponseListener) {
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + filterQuery + "&from=" + startID + "&to=" + endID;
         List<Recipe> recipeList = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

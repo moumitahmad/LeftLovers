@@ -7,6 +7,19 @@
     android:orientation="vertical"
     tools:context=".view.searchPage.SearchResultFragment">
 
+        <com.example.leftlovers.util.ExpandableHeightGridView
+            android:id="@+id/recipe_card_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:numColumns="3" />
+
+        <LinearLayout
+            android:id="@+id/result_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/loading_animation"
             android:layout_width="match_parent"
@@ -15,12 +28,17 @@
             android:indeterminate="true"
             app:trackCornerRadius="3dp" />
 
-        <com.example.leftlovers.util.ExpandableHeightGridView
-            android:id="@+id/recipe_card_grid"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/load_more_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:numColumns="3" />
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:paddingBottom="20dp"
+            android:text="load more"
+            android:textColor="@color/primary_dark"
+            android:visibility="invisible"/>
 
 
 </LinearLayout>

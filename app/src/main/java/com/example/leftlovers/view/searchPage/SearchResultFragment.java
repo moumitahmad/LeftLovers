@@ -8,11 +8,15 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
@@ -36,6 +40,8 @@ public class SearchResultFragment extends Fragment {
     private @Nullable String[] filters;
     private @Nullable String[] chosenIngredients;
     private ExpandableHeightGridView recipeGrid;
+    private int startID = 0;
+    private int endID = 15;
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -70,7 +76,7 @@ public class SearchResultFragment extends Fragment {
             searchText += ", " + ingredient;
         }
 
-        apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), new ApiConnection.ListVolleyResponseListener() {
+        apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), startID, endID, new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
@@ -87,6 +93,48 @@ public class SearchResultFragment extends Fragment {
 
                 // hide progress bar
                 view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
+                if(recipeList.size() == 15)
+                    view.findViewById(R.id.load_more_button).setVisibility(View.VISIBLE);
+
+                // update start/end-ID
+                startID = endID;
+                endID += 15;
+            }
+        });
+
+        Button moreButton = view.findViewById(R.id.load_more_button);
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // show progress bar
+                view.findViewById(R.id.loading_animation).setVisibility(View.VISIBLE);
+
+                apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), startID, endID, new ApiConnection.ListVolleyResponseListener() {
+                    @Override
+                    public void onError(String message) {
+                        Log.d("Api Connection Error", message);
+                    }
+
+                    @Override
+                    public void onResponse(List<Recipe> recipeList) {
+
+                        ExpandableHeightGridView newGrid = new ExpandableHeightGridView(getContext());
+                        newGrid.setGravity(Gravity.CENTER);
+                        newGrid.setNumColumns(3);
+
+                        RecipeGridAdapter rga = new RecipeGridAdapter(recipeList, requireActivity().getLayoutInflater());
+                        newGrid.setAdapter(rga);
+                        newGrid.setExpanded(true);
+
+                        LinearLayout gridLayout = view.findViewById(R.id.result_grid);
+                        gridLayout.addView(newGrid);
+
+                        // hide progress bar
+                        view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
+                        if(recipeList.size() == 15)
+                            view.findViewById(R.id.load_more_button).setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
 
