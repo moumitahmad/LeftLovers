@@ -101,7 +101,6 @@ public class RecipeDetailFragment extends Fragment {
 
             }
             bookmarkButton.setImageResource(drawableResource);
-            // TODO: save/delete bookmark in local Database
 
         });
     }
@@ -152,7 +151,7 @@ public class RecipeDetailFragment extends Fragment {
             name.setText(ingredients.get(position).getMeasureText());
             String ingredientImgUrl = ingredients.get(position).getImgUrl();
             ImageView img = convertView.findViewById(R.id.ingredient_image);
-            if(ingredientImgUrl != null) { // TODO: still not placeholder
+            if(ingredientImgUrl != null) {
                 new FetchImg(ingredients.get(position).getImgUrl(), img).start();
             }
 

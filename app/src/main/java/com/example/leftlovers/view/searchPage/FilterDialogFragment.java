@@ -38,15 +38,15 @@ public class FilterDialogFragment extends Fragment {
 
     private List<Ingredient> ownIngredients;
 
-    private static List<String> chosenIngredientFilter = new ArrayList<>();
+    private static final List<String> chosenIngredientFilter = new ArrayList<>();
 
-    private List<String> dietFilters = new ArrayList<>();
-    private List<String> healthFilters = new ArrayList<>();
-    private List<String> cuisineTypeFilters = new ArrayList<>();
-    private List<String> mealTypeFilters = new ArrayList<>();
-    private List<String> dishTypeFilters = new ArrayList<>();
+    private final List<String> dietFilters = new ArrayList<>();
+    private final List<String> healthFilters = new ArrayList<>();
+    private final List<String> cuisineTypeFilters = new ArrayList<>();
+    private final List<String> mealTypeFilters = new ArrayList<>();
+    private final List<String> dishTypeFilters = new ArrayList<>();
 
-    private static String[] chosenFilters = new String[5];
+    private static final String[] chosenFilters = new String[5];
 
     public static String[] getChosenFilters() {
         return chosenFilters;
@@ -173,7 +173,6 @@ public class FilterDialogFragment extends Fragment {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            return;
         }
     }
 

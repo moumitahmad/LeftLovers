@@ -1,5 +1,6 @@
 package com.example.leftlovers.view.searchPage;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
@@ -26,8 +26,6 @@ import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 
-
-import java.util.List;
 
 
 /**
@@ -138,6 +136,8 @@ public class SearchResultFragment extends Fragment {
                         ExpandableHeightGridView newGrid = new ExpandableHeightGridView(getContext());
                         newGrid.setGravity(Gravity.CENTER);
                         newGrid.setNumColumns(3);
+                        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                            newGrid.setNumColumns(5);
 
                         RecipeGridAdapter rga = new RecipeGridAdapter(recipeList, requireActivity().getLayoutInflater());
                         newGrid.setAdapter(rga);
@@ -201,7 +201,6 @@ public class SearchResultFragment extends Fragment {
 
             // setup navigation
             convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
-                // TODO: remove 2
                 NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragment2ToRecipeDetailFragment(recipes.get(position));
                 Navigation.findNavController(view1).navigate(action);
             });

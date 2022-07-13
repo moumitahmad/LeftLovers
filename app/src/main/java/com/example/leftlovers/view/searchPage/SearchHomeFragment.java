@@ -18,7 +18,6 @@ import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.model.Recipe;
 
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.BookmarkFragment">
+
+    <ScrollView
+        android:id="@+id/search_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <TextView
+                android:id="@+id/bookmark_headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bookmark_title"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                style="@style/TextAppearance.Material3.HeadlineLarge" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading_animation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:trackCornerRadius="3dp" />
+
+            <TextView
+                android:id="@+id/bookmark_error_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bookmark_error_text"
+                android:textColor="@color/error"
+                android:visibility="invisible"/>
+
+            <com.example.leftlovers.util.ExpandableHeightGridView
+                android:id="@+id/bookmark_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:numColumns="5" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
