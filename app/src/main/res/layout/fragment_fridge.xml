@@ -73,6 +73,16 @@
                 android:numColumns="3"
                 android:paddingBottom="100dp" />
 
+            <TextView
+                android:id="@+id/fridge_subtitle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fridge_subtitle3"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="20dp"
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
     </ScrollView>

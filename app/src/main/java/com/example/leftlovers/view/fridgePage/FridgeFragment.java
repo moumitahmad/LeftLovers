@@ -86,6 +86,17 @@ public class FridgeFragment extends Fragment {
         otherIngredientsGrid.setAdapter(iga2);
         otherIngredientsGrid.setExpanded(true);
 
+        // hide Headings
+
+        if (expiringIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle1).setVisibility(View.INVISIBLE);
+        if (otherIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle2).setVisibility(View.INVISIBLE);
+
+         if (otherIngredients.size()<1 && expiringIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle3).setVisibility(View.VISIBLE);
+
+
         // hide progress bar
         view.findViewById(R.id.loading_expiring).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.loading_other).setVisibility(View.INVISIBLE);

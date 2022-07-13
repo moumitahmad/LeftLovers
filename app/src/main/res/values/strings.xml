@@ -23,6 +23,7 @@
     <string name="fridge_title_landscape"><b>Stock</b> your fridge</string>
     <string name="fridge_subtitle1">I\'ll die soon</string>
     <string name="fridge_subtitle2">Others</string>
+    <string name="fridge_subtitle3">Add some food</string>
 
     // fride-edit fragment
     <string name="edit_title"><b>Edit</b> \nyour food</string>
