@@ -48,7 +48,10 @@ public class DatabaseService {
 
     public int saveNewIngredient(Ingredient ingredient) {
         return (int) db.ingredientDao().insertIngredient(ingredient);
-        // finish();
+    }
+
+    public void updateIngredient(Ingredient ingredient) {
+        db.ingredientDao().updateIngredient(ingredient);
     }
 
     public void deleteIngredient(Ingredient ingredient) {
