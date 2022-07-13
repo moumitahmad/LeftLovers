@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.searchPage.FilterDialogFragment"
     android:orientation="vertical">
 
+
     <TextView
+        android:id="@+id/filter_error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/api_connection_error_text"
+        android:textColor="@color/error"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/ingredient_filter_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ingredients"
         style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_marginBottom="10dp" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/ingredient_loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:trackCornerRadius="3dp" />
 
     <LinearLayout
         android:id="@+id/own_ingredients_filter"
@@ -27,6 +46,13 @@
         style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_marginBottom="10dp" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/filter_loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:trackCornerRadius="3dp"/>
 
     <TextView
         android:layout_width="match_parent"

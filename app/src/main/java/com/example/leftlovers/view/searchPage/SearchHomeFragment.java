@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SeachHomeFragment extends Fragment {
+public class SearchHomeFragment extends Fragment {
 
     LinearLayoutManager HorizontalLayout;
 
-    public SeachHomeFragment() {
+    public SearchHomeFragment() {
         // Required empty public constructor
     }
 
