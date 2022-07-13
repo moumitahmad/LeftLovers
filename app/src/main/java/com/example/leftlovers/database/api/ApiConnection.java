@@ -136,7 +136,7 @@ public class ApiConnection {
                         urlImgIngredient = jsonIngredient.getString("image");
                         ingredient.setImgUrl(urlImgIngredient);
                     } else {
-                        ingredient.setImgUrl("https://cms.groupeditors.com/img/ghnw20170509-080329-833.jpg");
+                        ingredient.setImgUrl("https://www.thespruceeats.com/thmb/7DgEaM4BrK68jdjb579uoBT9mwg=/940x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/machaca-con-huevos-2342632-step-01-a58a2bd4ad18432db5c18d2a08d2e0f1.jpg");
                     }
 
 
