@@ -25,7 +25,7 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         app:trackCornerRadius="3dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExplore"
