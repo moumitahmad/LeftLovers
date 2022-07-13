@@ -1,12 +1,14 @@
 package com.example.leftlovers.view.fridgePage;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import com.example.leftlovers.util.FetchImg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,40 +57,45 @@ public class FridgeFragment extends Fragment {
         databaseService = new DatabaseService(getActivity());
        // databaseService.removeAllIngredients();
 
-
         // TODO: mit room Abfrage austauschen
-    /*    String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";
-        Ingredient i1 = new Ingredient("Tomato", url, 2, LocalDate.now(), "this are some notes");
-        Ingredient i2 = new Ingredient("Cherry", url, 5, LocalDate.parse("2022-08-12"), "this are some notes");
-        Ingredient i4 = new Ingredient("Eggs", url, 10, LocalDate.parse("2030-12-12"), "this are some notes");
-        Ingredient i5 = new Ingredient("Milk", url, 12, LocalDate.parse("2023-10-12"), "this are some notes");
-
-        expiringIngredients.add(i1);
-        expiringIngredients.add(i2);
-        expiringIngredients.add(i2);
-        expiringIngredients.add(i2);
-        expiringIngredients.add(i2);
-
-        otherIngredients.add(i4);
-        otherIngredients.add(i4);
-        otherIngredients.add(i4);
-        otherIngredients.add(i5);
-        otherIngredients.add(i5); */
-
         allIngredients = databaseService.loadIngredientList();
+
+        for (int i=0; i<allIngredients.size(); i++) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.parse(allIngredients.get(i).getExpirationDate(), formatter);
+            long daysBetween = ChronoUnit.DAYS.between( LocalDate.now() , localDate );
+
+            if (daysBetween>4) {
+                otherIngredients.add(allIngredients.get(i));
+            } else {
+                expiringIngredients.add(allIngredients.get(i));
+            }
+
+        }
 
         // setup ui
         // expiring section
         ExpandableHeightGridView exIngredientsGrid = view.findViewById(R.id.expiring_ingredients_grid);
-        IngredientGridAdapter iga1 = new IngredientGridAdapter(allIngredients, requireActivity().getLayoutInflater());
+        IngredientGridAdapter iga1 = new IngredientGridAdapter(expiringIngredients, requireActivity().getLayoutInflater());
         exIngredientsGrid.setAdapter(iga1);
         exIngredientsGrid.setExpanded(true);
 
         // other section
         ExpandableHeightGridView otherIngredientsGrid = view.findViewById(R.id.other_ingredients_grid);
-        IngredientGridAdapter iga2 = new IngredientGridAdapter(allIngredients, requireActivity().getLayoutInflater());
+        IngredientGridAdapter iga2 = new IngredientGridAdapter(otherIngredients, requireActivity().getLayoutInflater());
         otherIngredientsGrid.setAdapter(iga2);
         otherIngredientsGrid.setExpanded(true);
+
+        // hide Headings
+
+        if (expiringIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle1).setVisibility(View.INVISIBLE);
+        if (otherIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle2).setVisibility(View.INVISIBLE);
+
+         if (otherIngredients.size()<1 && expiringIngredients.size()<1)
+            view.findViewById(R.id.fridge_subtitle3).setVisibility(View.VISIBLE);
+
 
         // hide progress bar
         view.findViewById(R.id.loading_expiring).setVisibility(View.INVISIBLE);
@@ -153,7 +162,12 @@ public class FridgeFragment extends Fragment {
             TextView name = convertView.findViewById(R.id.recipe_name);
             name.setText(ingredients.get(position).getName());
             ImageView img = convertView.findViewById(R.id.recipe_image);
-            new FetchImg(ingredients.get(position).getImgUrl(), img).start();
+            if (ingredients.get(position).getImgUrl().contains("://www.")) {
+                new FetchImg(ingredients.get(position).getImgUrl(), img).start();
+            } else {
+                Uri localImageUri = Uri.parse(ingredients.get(position).getImgUrl());
+                img.setImageURI(localImageUri);
+            }
 
             // setup navigation
             convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {

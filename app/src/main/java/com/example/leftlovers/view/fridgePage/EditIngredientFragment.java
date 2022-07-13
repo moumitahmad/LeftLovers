@@ -97,11 +97,12 @@ public class EditIngredientFragment extends Fragment {
                             ingredientImageView = getView().findViewById(R.id.ingredient_image);
                             ingredientImageView.setImageURI(imageURI);
                             // TODO: save image in local database
+                            chosenIngredient = new Ingredient();
+                            chosenIngredient.setImgUrl(imageURI.toString());
                         }
                     }
                 }
         );
-
 
         chosenIngredient = EditIngredientFragmentArgs.fromBundle(getArguments()).getChosenIngredient();
         super.onCreate(savedInstanceState);
@@ -134,16 +135,20 @@ public class EditIngredientFragment extends Fragment {
             // setup default date
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
-            deleteButton.setVisibility(View.INVISIBLE);
             chosenIngredient = new Ingredient();
+            deleteButton.setVisibility(View.INVISIBLE);
         } else { // setup edit page
             // load exsisting data
             fromDb = true;
+            selectedSuggestion = chosenIngredient.getName();
             inputName.setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
-            // TODO: display image fehler beheben name wird nicht geladen
-
-            new FetchImg(chosenIngredient.getImgUrl(), ingredientImageView).start();
+            if (chosenIngredient.getImgUrl().contains("://www.")) {
+                new FetchImg(chosenIngredient.getImgUrl(), ingredientImageView).start();
+            } else {
+                Uri localImageUri = Uri.parse(chosenIngredient.getImgUrl());
+                ingredientImageView.setImageURI(localImageUri);
+            }
             inputExpirationDate.getEditText().setText(chosenIngredient.getExpirationDate());
             inputNotes.getEditText().setText(chosenIngredient.getNotes());
         }
@@ -273,6 +278,7 @@ public class EditIngredientFragment extends Fragment {
                     String dateString = expirationDate.toString();
                     chosenIngredient.setExpirationDate(dateString);
                     chosenIngredient.setNotes(notes);
+                    chosenIngredient.setAmount(amount);
                     if (fromDb == false) {
                         // HIER update oder insert
                         int id = databaseService.saveNewIngredient(chosenIngredient);
