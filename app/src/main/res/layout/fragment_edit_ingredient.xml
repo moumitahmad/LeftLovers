@@ -13,9 +13,7 @@
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_margin="30dp"
         android:orientation="vertical">
 
     <TextView
@@ -24,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/edit_title"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="80dp"
         style="@style/TextAppearance.Material3.HeadlineLarge"
         />
 
@@ -107,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 app:icon="@drawable/ic_baseline_remove_24"
+                app:iconTint="@color/primary_dark"
                 style="@style/Widget.Material3.Button.IconButton"/>
 
             <TextView
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 app:icon="@drawable/ic_baseline_add_24"
-                app:strokeColor="@color/primary_dark" />
+                app:iconTint="@color/primary_dark" />
 
         </LinearLayout>
 
@@ -167,6 +167,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:textColor="@color/primary_dark"
+                app:iconTint="@color/primary_dark"
                 android:text="Cancel"
                 app:icon="@drawable/ic_baseline_cancel_24" />
 

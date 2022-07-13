@@ -103,7 +103,6 @@ public class BookmarkFragment extends Fragment {
             // setup UI
             TextView name = convertView.findViewById(R.id.recipe_name);
             name.setText(recipes.get(position).getName());
-            //TODO: save, display image
             ImageView img = convertView.findViewById(R.id.recipe_image);
             new FetchImg(recipes.get(position).getImgUrl(), img).start();
 
@@ -119,7 +118,6 @@ public class BookmarkFragment extends Fragment {
 
                         @Override
                         public void onResponse(Recipe recipe) {
-                            // TODO: remove 2
                             NavDirections action = (NavDirections) BookmarkFragmentDirections.actionBookmarkFragmentToRecipeDetailFragment(recipe);
                             Navigation.findNavController(view1).navigate(action);
                         }

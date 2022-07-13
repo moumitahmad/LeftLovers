@@ -55,9 +55,7 @@ public class FridgeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fridge, container, false);
         databaseService = new DatabaseService(getActivity());
-       // databaseService.removeAllIngredients();
 
-        // TODO: mit room Abfrage austauschen
         allIngredients = databaseService.loadIngredientList();
 
         for (int i=0; i<allIngredients.size(); i++) {
