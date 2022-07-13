@@ -96,7 +96,6 @@ public class EditIngredientFragment extends Fragment {
                             Log.d("IMG RESULT", imageURI.toString());
                             ingredientImageView = getView().findViewById(R.id.ingredient_image);
                             ingredientImageView.setImageURI(imageURI);
-                            // TODO: save image in local database
                             chosenIngredient = new Ingredient();
                             chosenIngredient.setImgUrl(imageURI.toString());
                         }
@@ -195,7 +194,6 @@ public class EditIngredientFragment extends Fragment {
                         chosenIngredient.setName(ingredient.getName());
                         chosenIngredient.setImgUrl(ingredient.getImgUrl());
                         new FetchImg(chosenIngredient.getImgUrl(), ingredientImageView).start();
-                        //TODO Button enable setzen
                     }
                 });
 
@@ -266,12 +264,7 @@ public class EditIngredientFragment extends Fragment {
 
                 // valid inputs
                 expirationDate = LocalDate.parse(inputExpirationDate.getEditText().getText().toString());
-                // if amount == 0 delete ingredient
-                String msg = "The Fridge has " + amount + " " + name + "s." +
-                        "\n image :" + imageURI +
-                        "\n expiration date :" + expirationDate.toString() +
-                        "\n notes: " + notes;
-                Log.i("INGREDIENT", msg);
+
 
                 // Ingredient in DB speichern
                 if (selectedSuggestion!=null) {
@@ -285,7 +278,11 @@ public class EditIngredientFragment extends Fragment {
                         chosenIngredient.setIngredientId(id);
                         databaseService.loadIngredientList();
                     } else {
-                        databaseService.updateIngredient(chosenIngredient);
+                        if (amount<1) {
+                            databaseService.deleteIngredient(chosenIngredient);
+                        } else {
+                            databaseService.updateIngredient(chosenIngredient);
+                        }
                     }
                     returnToFridge(v);
                 }
@@ -296,7 +293,6 @@ public class EditIngredientFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: delete ingredient from local database
                 databaseService.deleteIngredient(chosenIngredient);
                 returnToFridge(v);
             }
