@@ -24,21 +24,25 @@
         android:layout_height="wrap_content"
         android:text="@string/edit_title"
         android:layout_marginBottom="30dp"
-        style="@style/TextAppearance.Material3.HeadlineLarge" />
+        style="@style/TextAppearance.Material3.HeadlineLarge"
+        />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/name_text_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ingredient_criteria1"
-            android:layout_marginBottom="15dp">
+    <!--
+    <SearchView
+        android:id="@+id/inputIngredientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_light"
+        android:queryHint="name" /> -->
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/autoComplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Select a food"
+                android:completionThreshold="1"
+                android:completionHint="Select a food"
+                />
 
         <TextView
             style="@style/TextAppearance.Material3.BodyLarge"

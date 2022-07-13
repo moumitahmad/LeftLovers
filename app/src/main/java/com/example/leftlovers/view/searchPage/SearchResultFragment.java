@@ -2,6 +2,7 @@ package com.example.leftlovers.view.searchPage;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -11,14 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
 import com.example.leftlovers.model.Recipe;
-import com.example.leftlovers.service.ReceipeDataService;
+import com.example.leftlovers.service.ApiDataService;
 import com.example.leftlovers.util.ExpandableHeightGridView;
 import com.example.leftlovers.util.FetchImg;
 
@@ -31,8 +31,10 @@ import java.util.List;
  */
 public class SearchResultFragment extends Fragment {
 
-    private ReceipeDataService receipeDataService;
-    private String searchText;
+    private ApiDataService apiDataService;
+    private @Nullable String searchText;
+    private @Nullable String[] filters;
+    private @Nullable String[] chosenIngredients;
     private ExpandableHeightGridView recipeGrid;
 
     public SearchResultFragment() {
@@ -42,7 +44,7 @@ public class SearchResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receipeDataService = new ReceipeDataService(getActivity());
+        apiDataService = new ApiDataService(getActivity());
     }
 
     @Override
@@ -54,8 +56,21 @@ public class SearchResultFragment extends Fragment {
         // setup UI
         // get chosen recipe
         searchText = SearchResultFragmentArgs.fromBundle(getArguments()).getSearchText();
+        filters = SearchResultFragmentArgs.fromBundle(getArguments()).getFilters();
+        chosenIngredients = SearchResultFragmentArgs.fromBundle(getArguments()).getChosenIngredients();
 
-        receipeDataService.getRecipeList(searchText, new ApiConnection.ListVolleyResponseListener() {
+        StringBuilder filterQuery = new StringBuilder();
+        for(int i=0; i<filters.length; i++) {
+            if(filters[i] != null) {
+                filterQuery.append("&").append(getCategoryByID(i)).append("=").append(filters[i]);
+            }
+        }
+
+        for(String ingredient: chosenIngredients) {
+            searchText += ", " + ingredient;
+        }
+
+        apiDataService.getRecipesByCategory(searchText, filterQuery.toString(), new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
@@ -117,11 +132,23 @@ public class SearchResultFragment extends Fragment {
 
             // setup navigation
             convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
-                NavDirections action = (NavDirections) SearchResultFragmentDirections.actionSearchResultFragmentToRecipeDetailFragment(recipes.get(position));
+                // TODO: remove 2
+                NavDirections action = (NavDirections) SearchFragmentDirections.actionSearchFragment2ToRecipeDetailFragment(recipes.get(position));
                 Navigation.findNavController(view1).navigate(action);
             });
 
             return convertView;
         }
+    }
+
+    private String getCategoryByID(int id) {
+        switch(id) {
+            case 0: return "dishType";
+            case 1: return "mealType";
+            case 2: return "cuisineType";
+            case 3: return "health";
+            case 4: return "diet";
+        }
+        return null;
     }
 }

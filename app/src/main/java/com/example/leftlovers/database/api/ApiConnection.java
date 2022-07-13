@@ -25,9 +25,11 @@ public class ApiConnection {
     public static final String QUERY_SEARCH_BY_INGRIDIENTS = "https://api.edamam.com/search?q=";
     public static final String QUERY_SEARCH_BY_URL = "https://api.edamam.com/search?r=";
     public static final String QUERY_VERIFICATION = "&app_id=23b2fea2&app_key=c922aee8d3ac99a52aad47208d2b476e";
+    public static final String QUERY_FILTER = "https://api.edamam.com/doc/open-api/recipe-search-v2.json";
 
     //Ingredient Database
     public static final String QUERY_SEARCH_INGREDIENT = "https://api.edamam.com/api/food-database/v2/parser?ingr=";
+    public static final String QUERY_INGREDIENT_AUTOCOMPLETE = "https://api.edamam.com/auto-complete?q=";
     public static final String QUERY_INGREDIENT_VERIFICATION = "&app_id=eca84407&app_key=98dfe7baf46037f8befa7a85ac099dfa";
 
 
@@ -59,6 +61,18 @@ public class ApiConnection {
         void onResponse(List<Recipe> recipeList);
     }
 
+    public interface SuggestVolleyResponseListener {
+        void onError(String message);
+
+        void onResponse(ArrayList<String> recipeList);
+    }
+
+    public interface FilterVolleyResponseListener {
+        void onError(String message);
+
+        void onResponse(List<JSONObject> filterList);
+    }
+
     // Get One Recipe by name/ingredient
     public void getRecipe(String searchText, VolleyResponseListener volleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION;
@@ -70,6 +84,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String urlRecipe;
                 Recipe recipe = new Recipe(searchText);
 
                 try {
@@ -77,10 +92,13 @@ public class ApiConnection {
                     JSONObject firstRecipe = allRecipes.getJSONObject(0).getJSONObject("recipe");
                     nameRecipe = firstRecipe.getString("label");
                     urlImgRecipe = firstRecipe.getString("image");
+                    urlRecipe = firstRecipe.getString("uri");
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
+                    recipe.setLink(urlRecipe);
                     List<Ingredient> ingredientList = getIngredients(firstRecipe);
                     recipe.setIngredients(ingredientList);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,17 +182,18 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
-
+                String urlRecipe;
 
                 try {
-
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     for (int i = 0; i<allRecipes.length(); i++) {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
+                        urlRecipe = firstRecipe.getString("url");
                         Recipe recipe = new Recipe(nameRecipe);
                         recipe.setImgUrl(urlImgRecipe);
+                        recipe.setLink(urlRecipe);
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
                         recipe.setIngredients(ingredientList);
                         recipeList.add(recipe);
@@ -194,8 +213,8 @@ public class ApiConnection {
     }
 
     //Get Recipe by Category/Balance/Diet
-    public void getListByCategory(String searchText, String category, ListVolleyResponseListener listVolleyResponseListener) {
-        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + "&cuisineType=" +category;
+    public void getListByCategory(String searchText, String filterQuery, ListVolleyResponseListener listVolleyResponseListener) {
+        String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION + filterQuery;
         List<Recipe> recipeList = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -205,6 +224,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String urlRecipe;
 
 
                 try {
@@ -214,10 +234,9 @@ public class ApiConnection {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
-                        Recipe recipe = new Recipe(nameRecipe);
-                        recipe.setImgUrl(urlImgRecipe);
+                        urlRecipe = firstRecipe.getString("url");
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
-                        recipe.setIngredients(ingredientList);
+                        Recipe recipe = new Recipe(nameRecipe, urlImgRecipe, ingredientList, urlRecipe);
                         recipeList.add(recipe);
                     }
                 } catch (JSONException e) {
@@ -245,6 +264,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String urlRecipe;
                 Recipe recipe = new Recipe(recipeUrl);
 
                 try {
@@ -252,10 +272,12 @@ public class ApiConnection {
 
                     nameRecipe = recipeJson.getString("label");
                     urlImgRecipe = recipeJson.getString("image");
+                    urlRecipe = recipeJson.getString("url");
                     List<Ingredient> ingredientList = getIngredients(recipeJson);
                     recipe.setIngredients(ingredientList);
                     recipe.setName(nameRecipe);
                     recipe.setImgUrl(urlImgRecipe);
+                    recipe.setLink(urlRecipe);
                     Toast.makeText(context, nameRecipe, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -274,7 +296,7 @@ public class ApiConnection {
         DataSingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public void getRandom(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
+    public void getRandomRecipes(int numberOfMinIngredients, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + QUERY_VERIFICATION + "&ingr="+numberOfMinIngredients+"%2B";
 
         List<Recipe> recipeList = new ArrayList<>();
@@ -286,6 +308,7 @@ public class ApiConnection {
 
                 String nameRecipe;
                 String urlImgRecipe;
+                String urlRecipe;
 
 
                 try {
@@ -295,8 +318,10 @@ public class ApiConnection {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
                         nameRecipe = firstRecipe.getString("label");
                         urlImgRecipe = firstRecipe.getString("image");
+                        urlRecipe = firstRecipe.getString("url");
                         Recipe recipe = new Recipe(nameRecipe);
                         recipe.setImgUrl(urlImgRecipe);
+                        recipe.setLink(urlRecipe);
                         List<Ingredient> ingredientList = getIngredients(firstRecipe);
                         recipe.setIngredients(ingredientList);
                         recipeList.add(recipe);
@@ -310,6 +335,65 @@ public class ApiConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listVolleyResponseListener.onError("sth went wrong");
+            }
+        });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void getSuggest(String searchText, SuggestVolleyResponseListener suggestVolleyResponseListener) {
+        String url = QUERY_INGREDIENT_AUTOCOMPLETE+ searchText + QUERY_INGREDIENT_VERIFICATION;
+
+
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONArray wholeResponse = response;
+                ArrayList<String> ingredientSuggest = new ArrayList<String>();
+                try {
+                    for (int i = 0; i<wholeResponse.length(); i++) {
+                        String suggest = wholeResponse.getString(i);
+                        ingredientSuggest.add(suggest);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                suggestVolleyResponseListener.onResponse(ingredientSuggest);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                suggestVolleyResponseListener.onError("sth went wrong");
+            }
+        });
+        DataSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    // get recipe filter options
+    public void getPossibleFiltersFromAPI(FilterVolleyResponseListener filterVolleyResponseListener) {
+        String url = QUERY_FILTER;
+        List<JSONObject> healthFilterList = new ArrayList<>();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject wholeResponse = response;
+
+                String healthFilterName;
+                try {
+                    JSONArray apiFilterArray = wholeResponse.getJSONObject("paths").getJSONObject("/api/recipes/v2").getJSONObject("get").getJSONArray("parameters");
+                    for(int i=6; i<11; i++) {
+                        healthFilterList.add(apiFilterArray.getJSONObject(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                filterVolleyResponseListener.onResponse(healthFilterList);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                filterVolleyResponseListener.onError("sth went wrong");
             }
         });
         DataSingleton.getInstance(context).addToRequestQueue(request);

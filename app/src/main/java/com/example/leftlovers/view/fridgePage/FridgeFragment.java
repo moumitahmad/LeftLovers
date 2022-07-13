@@ -3,18 +3,14 @@ package com.example.leftlovers.view.fridgePage;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,10 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +47,7 @@ public class FridgeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fridge, container, false);
+
 
         // TODO: mit room Abfrage austauschen
         String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tomates_cerises_Luc_Viatour.jpg/220px-Tomates_cerises_Luc_Viatour.jpg";
@@ -111,8 +105,8 @@ public class FridgeFragment extends Fragment {
         FloatingActionButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(view1 -> {
             // navigate to search fragment
-            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToSearchFragment();
-            Navigation.findNavController(view1).navigate(action);
+            //NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToSearchFragment();
+            //Navigation.findNavController(view1).navigate(action);
         });
     }
 

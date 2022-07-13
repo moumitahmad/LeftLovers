@@ -90,7 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:contentDescription="Add Button"
-        android:src="@drawable/ic_baseline_add_24" />
+        android:src="@drawable/ic_baseline_add_24"
+        app:backgroundTint="@color/primary_dark" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_button"
@@ -100,7 +101,8 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="40dp"
         android:src="@drawable/ic_baseline_search_24"
-        android:contentDescription="Search Button" />
+        android:contentDescription="Search Button"
+        app:backgroundTint="@color/primary_dark" />
     </LinearLayout>
 
 </FrameLayout>

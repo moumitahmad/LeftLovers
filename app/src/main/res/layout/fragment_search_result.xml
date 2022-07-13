@@ -7,39 +7,20 @@
     android:orientation="vertical"
     tools:context=".view.searchPage.SearchResultFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loading_animation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="30dp">
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:trackCornerRadius="3dp" />
 
-            <fragment
-                android:id="@+id/searchbarFragment"
-                android:name="com.example.leftlovers.view.searchPage.SearchbarFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+        <com.example.leftlovers.util.ExpandableHeightGridView
+            android:id="@+id/recipe_card_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:numColumns="3" />
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/loading_animation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                app:trackCornerRadius="3dp" />
-
-            <com.example.leftlovers.util.ExpandableHeightGridView
-                android:id="@+id/recipe_card_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:numColumns="3" />
-
-        </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>
