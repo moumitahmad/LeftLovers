@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.database.api.ApiConnection;
@@ -78,14 +79,23 @@ public class FilterDialogFragment extends Fragment {
         LinearLayout ingredientLayout = view.findViewById(R.id.own_ingredients_filter);
         setupIngredientFilterUI(ingredientLayout);
 
+        TextView errorText = view.findViewById(R.id.filter_error_text);
+
         apiDataService.getPossibleFiltersFromAPI(new ApiConnection.FilterVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.e("get api filters", message);
+                errorText.setText(R.string.api_connection_error_text);
+                errorText.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.filter_loading_animation).setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onResponse(List<JSONObject> filterList) {
+                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.filter_loading_animation).setVisibility(View.VISIBLE);
+
                 sortFilters(filterList);
 
                 // setup filter grids
@@ -94,6 +104,9 @@ public class FilterDialogFragment extends Fragment {
                 setupRadioGroup(view.findViewById(R.id.cuisineType_grid), 2, cuisineTypeFilters);
                 setupRadioGroup(view.findViewById(R.id.health_grid), 3, healthFilters);
                 setupRadioGroup(view.findViewById(R.id.diet_grid), 4, dietFilters);
+
+                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.filter_loading_animation).setVisibility(View.INVISIBLE);
             }
         });
 

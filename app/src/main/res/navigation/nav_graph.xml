@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment2">
+    app:startDestination="@id/searchFragment">
     <fragment
         android:id="@+id/fridgeFragment"
         android:name="com.example.leftlovers.view.fridgePage.FridgeFragment"
@@ -14,13 +14,17 @@
             app:destination="@id/editIngredientFragment" />
         <action
             android:id="@+id/action_fridgeFragment_to_searchFragment2"
-            app:destination="@id/searchFragment2" />
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="com.example.leftlovers.view.BookmarkFragment"
         android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.leftlovers.view.searchPage.RecipeDetailFragment"
@@ -70,7 +74,7 @@
         android:label="fragment_filter_dialog"
         tools:layout="@layout/fragment_filter_dialog" />
     <fragment
-        android:id="@+id/searchFragment2"
+        android:id="@+id/searchFragment"
         android:name="com.example.leftlovers.view.searchPage.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >

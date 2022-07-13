@@ -32,7 +32,7 @@ public class SearchFragment extends Fragment {
         if (savedInstanceState == null) {
             getActivity().getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.search_page_content, SeachHomeFragment.class, null)
+                .add(R.id.search_page_content, SearchHomeFragment.class, null)
                 .commit();
         }
         return view;

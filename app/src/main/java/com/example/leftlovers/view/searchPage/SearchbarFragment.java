@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,6 @@ import android.widget.Button;
 import android.widget.SearchView;
 
 import com.example.leftlovers.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SearchbarFragment extends Fragment {
@@ -43,35 +39,14 @@ public class SearchbarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searchbar, container, false);
 
-        // setup buttons
-        Button filterButton = view.findViewById(R.id.filter_button);
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // toggle filter dialog
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                if(filterIsOpen) {
-                    if(openResults) {
-                        displaySearchResults();
-                    } else {
-                        transaction.replace(R.id.search_page_content, SeachHomeFragment.class, null);
-                    }
-                    filterIsOpen = false;
-                } else {
-                    transaction.replace(R.id.search_page_content, FilterDialogFragment.class, null);
-                    filterIsOpen = true;
-                }
-                transaction.commit();
-            }
-        });
-
+        // setup search view
         SearchView search = view.findViewById(R.id.searchView);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchText = query;
                 search.setQuery(searchText, false);
-                displaySearchResults();
+                displaySearchResults(search);
                 openResults = true;
                 return true;
             }
@@ -82,13 +57,54 @@ public class SearchbarFragment extends Fragment {
             }
         });
 
+
+        // setup buttons
+        Button filterButton = view.findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // toggle filter dialog
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                if(filterIsOpen) {
+                    if(openResults) {
+                        displaySearchResults(search);
+                    } else {
+                        transaction.replace(R.id.search_page_content, SearchHomeFragment.class, null);
+                    }
+                    filterIsOpen = false;
+                } else {
+                    transaction.replace(R.id.search_page_content, FilterDialogFragment.class, null);
+                    filterIsOpen = true;
+                }
+                transaction.commit();
+            }
+        });
+
+        Button searchButton = view.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchText = search.getQuery().toString();
+                displaySearchResults(search);
+                openResults = true;
+            }
+        });
+
         return view;
     }
 
-    private void displaySearchResults() {
+    private void displaySearchResults(SearchView search) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         String[] filters = FilterDialogFragment.getChosenFilters();
         String[] chosenIngredients = FilterDialogFragment.getChosenIngredientFilter().toArray(new String[0]);
+        if(chosenIngredients.length != 0) {
+            StringBuilder query = new StringBuilder();
+            for (String ingredient : chosenIngredients) {
+                query.append(" ").append(ingredient);
+            }
+            search.setQuery(query.toString(), false);
+        }
+
         Bundle args = new Bundle();
         args.putString("searchText", searchText);
         args.putStringArray("filters", filters);
