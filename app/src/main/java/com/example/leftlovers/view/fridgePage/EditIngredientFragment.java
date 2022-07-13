@@ -68,9 +68,6 @@ public class EditIngredientFragment extends Fragment {
     private String selectedSuggestion;
 
 
-
-
-
     private enum InputError {
         NAME_ERROR,
         DATE_ERROR

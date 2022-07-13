@@ -16,6 +16,7 @@ import com.example.leftlovers.R;
 import com.example.leftlovers.model.Recipe;
 import com.example.leftlovers.util.FetchImg;
 
+import java.util.List;
 
 //Basic adapter
 public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHolder> {
