@@ -19,11 +19,8 @@ public class DatabaseService {
         db = AppDatabase.getDbInstance(context);
     }
 
-    public void loadRecipeList() {
-        List<Recipe> recipeList = db.recipeDao().getAllRecipes();
-        for (Recipe r:recipeList) {
-            Log.i("IIIIIIIIIIIIICH BIN IN DER DB ", r.getName());
-        }
+    public List<Recipe> loadRecipeList() {
+        return db.recipeDao().getAllRecipes();
     }
 
     public List<Recipe> searchRecipeByURL(String url) {

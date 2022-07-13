@@ -20,7 +20,11 @@
         android:id="@+id/bookmarkFragment"
         android:name="com.example.leftlovers.view.BookmarkFragment"
         android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.leftlovers.view.searchPage.RecipeDetailFragment"
