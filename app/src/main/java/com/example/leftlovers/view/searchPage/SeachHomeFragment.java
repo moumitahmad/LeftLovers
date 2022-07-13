@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.leftlovers.R;
 import com.example.leftlovers.adapter.ExploreAdapter;
@@ -44,15 +45,27 @@ public class SeachHomeFragment extends Fragment {
         RecyclerView rvExplore = (RecyclerView) view.findViewById(R.id.rvExplore);
         ApiDataService apiDataService = new ApiDataService(getActivity());
 
+        TextView errorText = view.findViewById(R.id.home_error_text);
 
         apiDataService.getRandomRecipes(new ApiConnection.ListVolleyResponseListener() {
             @Override
             public void onError(String message) {
                 Log.d("Api Connection Error", message);
+                errorText.setText(R.string.api_connection_error_text);
+                errorText.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onResponse(List<Recipe> recipeList) {
+
+                if(recipeList.isEmpty()) {
+                    errorText.setText(R.string.api_connection_error_text);
+                    errorText.setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
+                }
+
+                errorText.setVisibility(View.INVISIBLE);
                 ExploreAdapter adapter = new ExploreAdapter(recipeList);
 
                 rvExplore.setAdapter(adapter);
