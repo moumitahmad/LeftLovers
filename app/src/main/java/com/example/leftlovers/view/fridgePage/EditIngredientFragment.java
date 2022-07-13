@@ -139,6 +139,7 @@ public class EditIngredientFragment extends Fragment {
         } else { // setup edit page
             // load exsisting data
             fromDb = true;
+            selectedSuggestion = chosenIngredient.getName();
             inputName.setText(chosenIngredient.getName());
             inputAmount.setText(String.valueOf(chosenIngredient.getAmount()));
             // TODO: display image fehler beheben name wird nicht geladen
