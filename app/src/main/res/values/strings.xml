@@ -22,7 +22,7 @@
     <string name="fridge_title_landscape"><b>Stock</b> your fridge</string>
     <string name="fridge_subtitle1">I\'ll die soon</string>
     <string name="fridge_subtitle2">Others</string>
-    <string name="fridge_subtitle3">Add some food</string>
+    <string name="fridge_subtitle3">No food available in your fridge. \nAdd some.</string>
 
     // fride-edit fragment
     <string name="edit_title"><b>Edit</b> \nyour food</string>
@@ -40,6 +40,7 @@
     // bookmark
     <string name="bookmark_title"><b>Save</b> \nyour favorite recipes</string>
     <string name="bookmark_error_text">No recipes saved yet.</string>
+    <string name="ingredient_name_error">Every ingredient requiers a name</string>
 
 
 </resources>

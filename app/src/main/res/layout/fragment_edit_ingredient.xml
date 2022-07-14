@@ -26,13 +26,7 @@
         style="@style/TextAppearance.Material3.HeadlineLarge"
         />
 
-    <!--
-    <SearchView
-        android:id="@+id/inputIngredientName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/text_light"
-        android:queryHint="name" /> -->
+
 
             <AutoCompleteTextView
                 android:id="@+id/autoComplete"
@@ -42,6 +36,15 @@
                 android:completionThreshold="1"
                 android:completionHint="Select a food"
                 />
+            <TextView
+                android:id="@+id/name_error_text"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredient_name_error"
+                android:textColor="@color/error"
+                android:visibility="invisible"
+                android:layout_marginBottom="5dp"/>
 
         <TextView
             style="@style/TextAppearance.Material3.BodyLarge"

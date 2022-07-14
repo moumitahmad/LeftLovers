@@ -38,6 +38,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -237,17 +239,17 @@ public class EditIngredientFragment extends Fragment {
             public void onClick(View v) {
                 // get inputs
                 amount = Integer.parseInt(inputAmount.getText().toString());
+                String inputDate = inputExpirationDate.getEditText().getText().toString();
                 notes = inputNotes.getEditText().getText().toString();
 
                 // validate input
-                List<InputError> inputErrors = validateInputs();
+                List<InputError> inputErrors = validateInputs(inputDate, inputName.getText().toString());
+                TextView nameErrorText = view.findViewById(R.id.name_error_text);
                 for(InputError inputError: inputErrors) {
                     // display errors
                     switch(inputError) {
                         case NAME_ERROR:
-                            //TODO ERROR BEHANDLUNG
-                            // inputName.setError("Every ingredient requires a name");
-                            // inputName.setErrorEnabled(true);
+                            nameErrorText.setVisibility(View.VISIBLE);
                             break;
                         case DATE_ERROR:
                             inputExpirationDate.setError("This is not a valid Date. Required format: yyyy-mm-dd");
@@ -259,8 +261,11 @@ public class EditIngredientFragment extends Fragment {
                 if(!inputErrors.isEmpty())
                     return;
 
+                inputExpirationDate.setErrorEnabled(false);
+                nameErrorText.setVisibility(View.INVISIBLE);
+
                 // valid inputs
-                expirationDate = LocalDate.parse(inputExpirationDate.getEditText().getText().toString());
+                expirationDate = LocalDate.parse(inputDate);
 
 
                 // Ingredient in DB speichern
@@ -357,13 +362,25 @@ public class EditIngredientFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private List<InputError> validateInputs() {
+    private List<InputError> validateInputs(String date, String name) {
         List<InputError> inputErrors = new ArrayList<>();
-        //TODO Ablaufdatum Validate
-     //   if(name == null || name.equals("")) {
-     //       inputErrors.add(InputError.NAME_ERROR);
-     //   }
-
+        if(!isValidDate(date)) {
+            inputErrors.add(InputError.DATE_ERROR);
+        }
+        if(name == null || name.equals("")) {
+            inputErrors.add(InputError.NAME_ERROR);
+        }
         return inputErrors;
+    }
+
+    public static boolean isValidDate(String inDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(inDate.trim());
+        } catch (ParseException pe) {
+            return false;
+        }
+        return true;
     }
 }
