@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/api_connection_error_text"
         android:textColor="@color/error"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/ingredient_filter_title"
@@ -30,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        app:trackCornerRadius="3dp" />
+        app:trackCornerRadius="3dp"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/own_ingredients_filter"
@@ -52,7 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        app:trackCornerRadius="3dp"/>
+        app:trackCornerRadius="3dp"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"

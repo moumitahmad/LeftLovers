@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/edit_title"
         android:layout_marginBottom="30dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         style="@style/TextAppearance.Material3.HeadlineLarge"
         />
 
@@ -32,9 +32,10 @@
                 android:id="@+id/autoComplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Select a food"
+                android:hint="Select a ingredient"
                 android:completionThreshold="1"
                 android:completionHint="Select a food"
+                android:layout_marginBottom="10dp"
                 />
             <TextView
                 android:id="@+id/name_error_text"
@@ -43,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ingredient_name_error"
                 android:textColor="@color/error"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:layout_marginBottom="5dp"/>
 
         <TextView

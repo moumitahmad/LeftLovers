@@ -28,11 +28,10 @@ public class FetchImg extends Thread {
             inputStream = new java.net.URL(url).openStream();
             bitmap = BitmapFactory.decodeStream(inputStream);
         } catch (IOException e) {
-            Log.e("fetching image-url: ", e.getMessage());
+            Log.e("fetching image-url Error: ", e.getMessage());
         }
 
         imageHandler.post(() -> {
-            Log.i("fetching image-url: ", url+" ");
             img.setImageBitmap(bitmap);
         });
     }

@@ -30,21 +30,21 @@ public class DatabaseService {
 
     public int saveNewRecipe(Recipe recipe) {
        return (int) db.recipeDao().insertRecipe(recipe);
-        // finish();
     }
 
     public void deleteRecipe(Recipe recipe) {
         db.recipeDao().delete(recipe);
     }
 
+    // for debugging
     public void removeAllRecipes() {
         db.recipeDao().removeAllRecipes();
     }
 
+
     public List<Ingredient> loadIngredientList() {
         return db.ingredientDao().getAllIngredients();
     }
-
 
     public int saveNewIngredient(Ingredient ingredient) {
         return (int) db.ingredientDao().insertIngredient(ingredient);
@@ -58,6 +58,7 @@ public class DatabaseService {
         db.ingredientDao().deleteIngredient(ingredient);
     }
 
+    // for debugging
     public void removeAllIngredients() {
         db.ingredientDao().removeAllIngredients();
     }

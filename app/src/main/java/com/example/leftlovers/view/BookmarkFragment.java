@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,8 +33,6 @@ public class BookmarkFragment extends Fragment {
     private DatabaseService databaseService;
     private static ApiDataService apiDataService;
 
-    private List<Recipe> bookmarks;
-
     public BookmarkFragment() {
         // Required empty public constructor
     }
@@ -55,7 +52,7 @@ public class BookmarkFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
 
         // setup bookmark grid
-        bookmarks = databaseService.loadRecipeList();
+        List<Recipe> bookmarks = databaseService.loadRecipeList();
         view.findViewById(R.id.loading_animation).setVisibility(View.INVISIBLE);
         if(bookmarks.isEmpty()) {
             view.findViewById(R.id.bookmark_error_text).setVisibility(View.VISIBLE);
@@ -118,7 +115,7 @@ public class BookmarkFragment extends Fragment {
 
                         @Override
                         public void onResponse(Recipe recipe) {
-                            NavDirections action = (NavDirections) BookmarkFragmentDirections.actionBookmarkFragmentToRecipeDetailFragment(recipe);
+                            NavDirections action = BookmarkFragmentDirections.actionBookmarkFragmentToRecipeDetailFragment(recipe);
                             Navigation.findNavController(view1).navigate(action);
                         }
                     });

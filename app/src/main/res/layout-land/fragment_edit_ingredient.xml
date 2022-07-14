@@ -48,7 +48,16 @@
                         android:layout_marginEnd="20dp"
                         android:completionHint="Select a food"
                         android:completionThreshold="1"
-                        android:hint="Select a food" />
+                        android:hint="Select a ingredient" />
+                    <TextView
+                        android:id="@+id/name_error_text"
+                        style="@style/TextAppearance.Material3.BodySmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ingredient_name_error"
+                        android:textColor="@color/error"
+                        android:visibility="gone"
+                        android:layout_marginBottom="5dp"/>
                 </LinearLayout>
 
                 <LinearLayout

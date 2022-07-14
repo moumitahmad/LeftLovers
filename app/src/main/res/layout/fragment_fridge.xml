@@ -34,7 +34,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/primary_dark"
                 style="@style/TextAppearance.Material3.HeadlineSmall"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/fridge_subtitle1"
@@ -50,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"
-                app:trackCornerRadius="3dp" />
+                app:trackCornerRadius="3dp"
+                android:visibility="gone"/>
 
             <com.example.leftlovers.util.ExpandableHeightGridView
                 android:id="@+id/expiring_ingredients_grid"
@@ -74,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"
-                app:trackCornerRadius="3dp" />
+                app:trackCornerRadius="3dp"
+                android:visibility="gone"/>
 
             <com.example.leftlovers.util.ExpandableHeightGridView
                 android:id="@+id/other_ingredients_grid"

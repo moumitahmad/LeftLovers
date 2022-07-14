@@ -34,9 +34,6 @@ public class ApiConnection {
 
 
     Context context;
- //   String nameRecipe;
-//    String urlImgRecipe;
-
     public ApiConnection(Context context) {
         this.context = context;
     }
@@ -104,7 +101,7 @@ public class ApiConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error", error.getMessage());  // Hier später was anderes hin
+                Log.e("Error", error.getMessage());
                 volleyResponseListener.onError("sth went wrong");
             }
         });
@@ -173,7 +170,7 @@ public class ApiConnection {
         return ingredientList;
     }
 
-    //Get the first 20 recipes by name/ingredient
+    // Get the first 20 recipes by name/ingredient
     public void getRecipeList(String searchText, ListVolleyResponseListener listVolleyResponseListener) {
         String url = QUERY_SEARCH_BY_INGRIDIENTS + searchText + QUERY_VERIFICATION+"&from=0&to=19";
         List<Recipe> recipeList = new ArrayList<>();
@@ -311,9 +308,7 @@ public class ApiConnection {
                 String urlRecipe;
                 String uriRecipe;
 
-
                 try {
-
                     JSONArray allRecipes = wholeResponse.getJSONArray("hits");
                     for (int i = 0; i<allRecipes.length(); i++) {
                         JSONObject firstRecipe = allRecipes.getJSONObject(i).getJSONObject("recipe");
@@ -376,11 +371,9 @@ public class ApiConnection {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                JSONObject wholeResponse = response;
 
-                String healthFilterName;
                 try {
-                    JSONArray apiFilterArray = wholeResponse.getJSONObject("paths").getJSONObject("/api/recipes/v2").getJSONObject("get").getJSONArray("parameters");
+                    JSONArray apiFilterArray = response.getJSONObject("paths").getJSONObject("/api/recipes/v2").getJSONObject("get").getJSONArray("parameters");
                     for(int i=6; i<11; i++) {
                         healthFilterList.add(apiFilterArray.getJSONObject(i));
                     }
