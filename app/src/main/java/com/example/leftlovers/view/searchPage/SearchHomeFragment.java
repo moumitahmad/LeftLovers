@@ -42,7 +42,7 @@ public class SearchHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seach_home, container, false);
 
-        RecyclerView rvExplore = (RecyclerView) view.findViewById(R.id.rvExplore);
+        RecyclerView rvExplore = view.findViewById(R.id.rvExplore);
         ApiDataService apiDataService = new ApiDataService(getActivity());
 
         TextView errorText = view.findViewById(R.id.home_error_text);

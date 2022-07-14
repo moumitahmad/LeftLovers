@@ -8,8 +8,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Ingredient implements Parcelable {

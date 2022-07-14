@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/api_connection_error_text"
             android:textColor="@color/error"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 

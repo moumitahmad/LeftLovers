@@ -62,7 +62,7 @@
                     android:paddingBottom="5dp"
                     android:text="@string/ingredient_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/link_button" />" />
+                    app:layout_constraintTop_toBottomOf="@+id/link_button" />
 
                 <com.example.leftlovers.util.ExpandableHeightGridView
                     android:id="@+id/ingredients_grid"

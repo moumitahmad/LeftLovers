@@ -13,8 +13,8 @@
             android:id="@+id/action_fridgeFragment_to_editIngredientFragment"
             app:destination="@id/editIngredientFragment" />
         <action
-            android:id="@+id/action_fridgeFragment_to_searchFragment2"
-            app:destination="@id/searchFragment" />
+            android:id="@+id/action_fridgeFragment_to_filterDialogFragment"
+            app:destination="@id/filterDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"

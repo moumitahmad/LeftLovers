@@ -87,8 +87,8 @@ public class FilterDialogFragment extends Fragment {
                 Log.e("get api filters", message);
                 errorText.setText(R.string.api_connection_error_text);
                 errorText.setVisibility(View.VISIBLE);
-                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.filter_loading_animation).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.GONE);
+                view.findViewById(R.id.filter_loading_animation).setVisibility(View.GONE);
             }
 
             @Override
@@ -105,8 +105,8 @@ public class FilterDialogFragment extends Fragment {
                 setupRadioGroup(view.findViewById(R.id.health_grid), 3, healthFilters);
                 setupRadioGroup(view.findViewById(R.id.diet_grid), 4, dietFilters);
 
-                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.filter_loading_animation).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.ingredient_loading_animation).setVisibility(View.GONE);
+                view.findViewById(R.id.filter_loading_animation).setVisibility(View.GONE);
             }
         });
 

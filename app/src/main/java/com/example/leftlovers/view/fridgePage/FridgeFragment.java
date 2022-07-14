@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ public class FridgeFragment extends Fragment {
 
     private final List<Ingredient> expiringIngredients = new ArrayList<Ingredient>();
     private final List<Ingredient> otherIngredients = new ArrayList<Ingredient>();
-    private List<Ingredient> allIngredients = new ArrayList<Ingredient>();
     private DatabaseService databaseService;
 
     public FridgeFragment() {
@@ -46,6 +44,7 @@ public class FridgeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseService = new DatabaseService(getActivity());
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -54,11 +53,10 @@ public class FridgeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fridge, container, false);
-        databaseService = new DatabaseService(getActivity());
 
-        allIngredients = databaseService.loadIngredientList();
+        List<Ingredient> allIngredients = databaseService.loadIngredientList();
 
-        for (int i=0; i<allIngredients.size(); i++) {
+        for (int i = 0; i< allIngredients.size(); i++) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(allIngredients.get(i).getExpirationDate(), formatter);
             long daysBetween = ChronoUnit.DAYS.between( LocalDate.now() , localDate );
@@ -87,17 +85,17 @@ public class FridgeFragment extends Fragment {
         // hide Headings
 
         if (expiringIngredients.size()<1)
-            view.findViewById(R.id.fridge_subtitle1).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.fridge_subtitle1).setVisibility(View.GONE);
         if (otherIngredients.size()<1)
-            view.findViewById(R.id.fridge_subtitle2).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.fridge_subtitle2).setVisibility(View.GONE);
 
          if (otherIngredients.size()<1 && expiringIngredients.size()<1)
             view.findViewById(R.id.fridge_subtitle3).setVisibility(View.VISIBLE);
 
 
         // hide progress bar
-        view.findViewById(R.id.loading_expiring).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.loading_other).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.loading_expiring).setVisibility(View.GONE);
+        view.findViewById(R.id.loading_other).setVisibility(View.GONE);
 
         // action buttons
         setupAddButton(view);
@@ -119,7 +117,7 @@ public class FridgeFragment extends Fragment {
         FloatingActionButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(view1 -> {
             // navigate to search fragment
-            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToSearchFragment2();
+            NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToFilterDialogFragment();
             Navigation.findNavController(view1).navigate(action);
         });
     }
@@ -169,7 +167,7 @@ public class FridgeFragment extends Fragment {
 
             // setup navigation
             convertView.findViewById(R.id.recipe_card).setOnClickListener(view1 -> {
-                NavDirections action = (NavDirections) FridgeFragmentDirections.actionFridgeFragmentToEditIngredientFragment(ingredients.get(position));
+                NavDirections action = FridgeFragmentDirections.actionFridgeFragmentToEditIngredientFragment(ingredients.get(position));
                 Navigation.findNavController(view1).navigate(action);
             });
 

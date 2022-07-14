@@ -50,13 +50,11 @@ import java.util.List;
 public class EditIngredientFragment extends Fragment {
 
     private ActivityResultLauncher resultLauncher;
-    private String uploadImagePath;
     private ApiDataService apiDataService;
     private DatabaseService databaseService;
 
     private static final int DEFAULT_AMOUNT = 1;
     private Ingredient chosenIngredient;
-    private String name = "";
     private int amount = 1;
     private LocalDate expirationDate = LocalDate.now();
     private String notes = "";
@@ -91,6 +89,7 @@ public class EditIngredientFragment extends Fragment {
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
+                            assert data != null;
                             imageURI = data.getData();
                             Log.d("IMG RESULT", imageURI.toString());
                             ingredientImageView = getView().findViewById(R.id.ingredient_image);
@@ -115,9 +114,9 @@ public class EditIngredientFragment extends Fragment {
 
         TextView inputAmount = view.findViewById(R.id.amount_input);
 
-        listOfSuggestions = new ArrayList<String>();
+        listOfSuggestions = new ArrayList<>();
         inputName = view.findViewById(R.id.autoComplete);
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
         inputName.setAdapter(adapter);
 
 
@@ -134,9 +133,9 @@ public class EditIngredientFragment extends Fragment {
             inputExpirationDate.getEditText().setText(expirationDate.toString());
             inputAmount.setText(String.valueOf(DEFAULT_AMOUNT));
             chosenIngredient = new Ingredient();
-            deleteButton.setVisibility(View.INVISIBLE);
+            deleteButton.setVisibility(View.GONE);
         } else { // setup edit page
-            // load exsisting data
+            // load existing data
             fromDb = true;
             selectedSuggestion = chosenIngredient.getName();
             inputName.setText(chosenIngredient.getName());
@@ -262,20 +261,20 @@ public class EditIngredientFragment extends Fragment {
                     return;
 
                 inputExpirationDate.setErrorEnabled(false);
-                nameErrorText.setVisibility(View.INVISIBLE);
+                nameErrorText.setVisibility(View.GONE);
 
                 // valid inputs
                 expirationDate = LocalDate.parse(inputDate);
 
 
-                // Ingredient in DB speichern
+                // save Ingredient in DB
                 if (selectedSuggestion!=null) {
                     String dateString = expirationDate.toString();
                     chosenIngredient.setExpirationDate(dateString);
                     chosenIngredient.setNotes(notes);
                     chosenIngredient.setAmount(amount);
-                    if (fromDb == false) {
-                        // HIER update oder insert
+                    if (!fromDb) {
+                        // update or insert
                         int id = databaseService.saveNewIngredient(chosenIngredient);
                         chosenIngredient.setIngredientId(id);
                         databaseService.loadIngredientList();
@@ -329,7 +328,7 @@ public class EditIngredientFragment extends Fragment {
             public void onResponse(ArrayList<String> recipeList) {
                 if (recipeList.size() > 0) {
                     listOfSuggestions = recipeList;
-                    adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
+                    adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listOfSuggestions);
                     inputName.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
